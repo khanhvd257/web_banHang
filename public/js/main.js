@@ -1,33 +1,50 @@
 
-    //CHECK TONG ORDER TRONG GIO HANG
-    //FILE gioHang.php
-    function checkOrder() {
-        var inputElems = document.getElementsByClassName('checkOrder'),
-            count = 0,
-            total = 0;
-        for (var i = 0; i < inputElems.length; i++) {
-            if (inputElems[i].checked == true) {
-                count++;
-                total += parseInt(inputElems[i].value);
-            }
+//CHECK TONG ORDER TRONG GIO HANG
+//FILE gioHang.php
+function checkOrder() {
+    var inputElems = document.getElementsByClassName('checkOrder'),
+        count = 0,
+        total = 0;
+    for (var i = 0; i < inputElems.length; i++) {
+        if (inputElems[i].checked == true) {
+            count++;
+            total += parseInt(inputElems[i].value);
         }
-        var docTien = new DocTienBangChu();
-        
-        document.getElementById('tongThanhToan').innerText = "Tổng thanh toán " + count + " (SP): " + formatCash(total) + " VND " + " ("+docTien.doc(total)+" )";
-        document.getElementById('ThanhToan').style.display = 'flex';
-
-        if (total == 0) {
-            document.getElementById('ThanhToan').style.display = 'none';
-
-        }
-        ThanhToanCheck();
     }
+    var docTien = new DocTienBangChu();
+    document.getElementById('tongThanhToan').innerText = "Tổng thanh toán " + count + " (SP): " + formatCash(total) + " VND " + " (" + docTien.doc(total) + " )";
+    document.getElementById('ThanhToan').style.display = 'flex';
+
+    if (total == 0) {
+        document.getElementById('ThanhToan').style.display = 'none';
+    }
+    if (count > 0) {
+        document.getElementById("btnThanhToan").style.display = "flex";
+    }
+    if (count == 0) {
+        document.getElementById("btnThanhToan").style.display = "none";
+    }
+}
+
+//hàm chọn bỏ tất cả tích or tắt
 function checkAllOrder(source) {
     checkboxes = document.getElementsByName('order');
     for (var i = 0, n = checkboxes.length; i < n; i++) {
         checkboxes[i].checked = source.checked;
     }
     checkOrder();
+}
+function DisplayBtnThanhToan() {
+    var inputElems = document.getElementsByClassName('checkOrder'),
+        count = 0;
+    for (var i = 0; i < inputElems.length; i++) {
+        if (inputElems[i].checked == true) {
+            count++;
+        }
+    }
+    if (count > 0) {
+        document.getElementById("btnThanhToan").style.display = "flex";
+    }
 }
 
 
@@ -37,6 +54,7 @@ function ThanhToanCheck() {
     var inputElems = document.getElementsByClassName('checkOrder');
     for (var i = 0; i < inputElems.length; i++) {
         if (inputElems[i].checked == true) {
+            //id cua Product
             arrThanhToan.push(inputElems[i].id);
         }
     }
@@ -44,6 +62,8 @@ function ThanhToanCheck() {
     document.getElementById('arrOrder').value = str;
     if (str === "") {
         alert('Vui Lòng chọn sản phẩm thanh toán');
+    }else{
+        alert('Thanh toán thành công')
     }
 
 }

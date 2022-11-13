@@ -36,9 +36,9 @@ $danhmuc = mysqli_query($conn, $sql);
 			</ul>
 			<ul class="navbar_user ">
 				<div class="searchFrom">
-					<form action="" method="post">
-						<input type="text" style="border: none; box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px; font-family: fangsong;" placeholder="Tìm kiếm sản phẩm">
-						<li><button class=" button_Search"><i class="fa fa-search" aria-hidden="true"></i></button>
+					<form action="http://localhost/BTL_WEB/product/searchName" method="post" name="formSearch">
+						<input name="txtSearchName" type="text" style="border: none; box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px; font-family: fangsong;" placeholder="Tìm kiếm sản phẩm">
+						<li><button type="submit" class=" button_Search" name="btnSearchProduct"><i class="fa fa-search" aria-hidden="true"></i></button>
 					</form>
 				</div>
 				<li class="checkout">

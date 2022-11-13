@@ -6,12 +6,12 @@ class Order extends controller
     function __construct()
     {
         unset($_SESSION['pageSub']);
-        $_SESSION['page']="Order";
+        $_SESSION['page'] = "Order";
         $this->order = $this->model('OrderSP');
     }
 
     public function index()
-    
+
     {
         if (isset($_SESSION['user']['userID'])) {
             $result = $this->order->getAll($_SESSION['user']['userID']);
@@ -19,7 +19,7 @@ class Order extends controller
                 'page' => 'content/gioHang',
                 'dataOrder' => $result
             ]);
-        }else{
+        } else {
             header('Location: /BTL_WEB/auth');
         }
     }
@@ -56,16 +56,15 @@ class Order extends controller
     }
     public function thanhToan()
     {
-       if(isset($_SESSION['user'])){
-        $this->order->UpdateOrder();
-        $result = $this->order->getAll($_SESSION['user']['userID']);
-        $this->view('MasterLayout', [
-            'page' => 'content/gioHang',
-            'dataOrder' => $result
-        ]);
-       }else{
-        header('Location: /BTL_WEB/auth');
-       }
+        if (isset($_SESSION['user'])) {
+            $this->order->UpdateOrder();
+            $result = $this->order->getAll($_SESSION['user']['userID']);
+            $this->view('MasterLayout', [
+                'page' => 'content/gioHang',
+                'dataOrder' => $result
+            ]);
+        } else {
+            header('Location: /BTL_WEB/auth');
+        }
     }
-
 }

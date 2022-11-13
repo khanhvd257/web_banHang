@@ -37,6 +37,8 @@ class Product extends controller
             'data' => $result
         ]);
     }
+
+    //SẢN PHẨM USER ĐÃ MUA
     public function DaMua()
     {
         $_SESSION['page'] = "Đã mua hàng";
@@ -47,6 +49,22 @@ class Product extends controller
                 'page' => 'content/daThanhToan',
                 'dataThanhToan' => $result
             ]);
+        }
+    }
+
+    // TÌM KIẾM SẢN PHẨM THEO TÊN
+    public function SearchName()
+    {
+        if (isset($_POST['btnSearchProduct'])) {
+            $stringName = $_POST['txtSearchName'];
+            $result = $this->sanpham->TimKiemSP($stringName);
+            $_SESSION['page'] = "Tìm kiếm";
+            $this->view('MasterLayout', [
+                'page' => 'content/product',
+                'dataProduct' => $result
+            ]);
+        } else {
+            header('Location: /BTL_WEB/home');
         }
     }
 }
