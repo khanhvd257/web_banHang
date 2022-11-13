@@ -1,20 +1,38 @@
 <?php
 $sanpham = mysqli_fetch_assoc($data['data']);
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <style>
     .wrap_item {
+
         display: flex;
         justify-content: center;
 
     }
 
     .img_item {
+        box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
+        border-radius: 12px;
+        margin-top: 36px;
         max-width: 360px;
-        max-height: 720px;
+        max-height: 550px;
+        min-width: 360px;
+        min-height: 360px;
+        transition: all 0.5s ease-out;
     }
+
+    .img_item:hover {
+        transform: scale(1.1);
+        transition: all 0.4s;
+    }
+
+    /* START ZOOM ANH */
+
+    /* END ZOOM ANH */
+
 
     .wrap_detail {
         margin-top: 6%;
@@ -32,6 +50,7 @@ $sanpham = mysqli_fetch_assoc($data['data']);
     }
 
     .title {
+        text-shadow: 5px 3px 4px #f2afafd1;
         color: red;
         font-size: 35px;
         font-family: emoji;
@@ -91,9 +110,16 @@ $sanpham = mysqli_fetch_assoc($data['data']);
 
 <body>
     <div class="wrap_item">
-        <div class="wrap_img">
-            <img class="img_item" src="http://localhost/BTL_WEB/public/img/Login.gif" alt="">
-        </div>
+        <?php if ($sanpham['pathImage'] == "") : ?>
+            <div class="wrap_img">
+                <img class="img_item" src="http://localhost/BTL_WEB/public/img/defautImg.gif" alt="gif"></a>
+            </div>
+        <?php endif ?>
+        <?php if ($sanpham['pathImage'] != "") : ?>
+            <div class="wrap_img">
+                <img class="img_item" src="http://localhost/BTL_WEB/uploads/<?php echo $sanpham['pathImage'] ?>" alt="gif"></a>
+            </div>
+        <?php endif ?>
         <div class="wrap_detail">
             <div class="title">
                 <?php echo $sanpham['tenSanPham'] ?>

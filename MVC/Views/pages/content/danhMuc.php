@@ -13,7 +13,6 @@
             justify-content: flex-start;
         }
 
-
         .container_item {
             box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
             margin: 20px 20px;
@@ -25,7 +24,7 @@
             max-height: 340px;
             flex-direction: column;
             align-items: center;
-            background: linear-gradient(#ee8d9af2, #4d2577);
+            background: linear-gradient(223deg, #ed93a0, #7f4782);
             color: #fff;
             overflow: hidden;
             transition: all 200ms;
@@ -40,7 +39,7 @@
 
 
         .imgItem {
-            border: solid #fff;
+            border-top: solid #fff;
             max-width: 220px;
             max-height: 200px;
             min-width: 220px;
@@ -82,10 +81,11 @@
             max-width: 80px;
             min-width: 80px;
             white-space: nowrap;
+            transition: all 0.3s;
         }
 
         .btnMua:hover {
-            transition: all;
+            transition: all 0.3s;
             background: #ee8d9af2;
             color: white;
 
@@ -96,10 +96,13 @@
         }
 
         .tenSP {
+            text-shadow: 5px 3px 4px #202020;
             margin-top: 12px;
             text-align: center;
             width: 100%;
             font-size: 18px;
+            white-space: nowrap;
+            max-height: 20px;
             text-transform: capitalize;
             font-family: monospace;
         }
@@ -107,7 +110,17 @@
         .giaSP {
             font-size: 14px;
             text-align: center;
+            min-width: 150PX;
             margin: 8px 0px;
+        }
+
+        .giaSP::after {
+            content: " VND";
+        }
+
+        .giaSP::before {
+            content: "Giá: ";
+
         }
 
         .motaItem {
@@ -115,30 +128,102 @@
             display: flex;
             justify-content: space-evenly;
         }
+
+        .button-hover-addcart {
+            border: none;
+            background: transparent;
+            color: #2805057a;
+            text-transform: uppercase;
+            overflow: hidden;
+            letter-spacing: 0.07rem;
+            transition: all 0.2s ease-in-out;
+            position: relative;
+        }
+
+        .button-hover-addcart span {
+            transition: all 0.2s ease-in-out;
+        }
+
+        .button-hover-addcart .fa {
+            position: absolute;
+            font-size: 1.2rem;
+            top: 50%;
+            /* -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%); */
+            transform: translateY(-50%);
+            color: #fff;
+            right: -20px;
+            transition: 0.4s right cubic-bezier(0.38, 0.6, 0.48, 1);
+        }
+
+        .button-hover-addcart:hover {
+            border-color: #fff;
+            background: transparent;
+            transition: border-color 0.2s;
+        }
+
+        .button-hover-addcart:hover span {
+            margin-right: 20px;
+            color: #fff;
+        }
+
+        .button-hover-addcart:hover .fa {
+            right: 0px;
+        }
+
+        .notFound {
+            text-align: center;
+            transform: translateY(168px);
+            font-family: fantasy;
+            font-weight: 900;
+            letter-spacing: 8px;
+            color: #8f5387;
+
+        }
     </style>
 </head>
 
 <body>
-    <div class="wrap_container">
-        <?php while ($sanpham = mysqli_fetch_assoc($data['data'])) : ?>
-            <div class="container_item">
-                <div class="imgItem_container">
-                    <a href="http://localhost/btl_web/product/detail/<?php echo $sanpham['productID'] ?>"><img class="imgItem" src="http://localhost/BTL_WEB/public/img/LOGO.gif" alt="gif"></a>
-                </div>
-                <div class="tenSpham_container">
-                    <div class="tenSP"><?php echo $sanpham['tenSanPham'] ?></div>
-                    <div class="motaItem">
-                        <span class="badge badge-warning giaSP "><?php echo "Giá: " . $sanpham['giaSanPham'] . '$' ?></span>
-                    </div>
-                    <div class="motaItem">
-                        <button class="btnMua">Thêm giỏ</button>
-                        <button class="btnMua">Mua hàng</button>
-                    </div>
-                </div>
-            </div>
-        <?php endwhile ?>
+    <?php if (mysqli_num_rows($data['data']) > 0) : ?>
+        <div class="wrap_container">
+            <?php while ($sanpham = mysqli_fetch_assoc($data['data'])) : ?>
+                <div class="container_item">
+                    <?php if ($sanpham['pathImage'] == "") : ?>
+                        <div class="imgItem_container">
+                            <a href="http://localhost/btl_web/product/detail/<?php echo $sanpham['productID'] ?>">
+                                <img class="imgItem" src="http://localhost/BTL_WEB/public/img/defautImg.gif" alt="gif"></a>
+                        </div>
+                    <?php endif ?>
+                    <?php if ($sanpham['pathImage'] != "") : ?>
+                        <div class="imgItem_container">
+                            <a href="http://localhost/btl_web/product/detail/<?php echo $sanpham['productID'] ?>">
+                                <img class="imgItem" src="http://localhost/BTL_WEB/uploads/<?php echo $sanpham['pathImage'] ?>" alt="gif"></a>
+                        </div>
+                    <?php endif ?>
 
-    </div>
+                    <div class="tenSpham_container">
+                        <div class="tenSP"><?php echo $sanpham['tenSanPham'] ?></div>
+                        <div class="motaItem">
+                            <span class="badge badge-warning giaSP "><?php echo $sanpham['giaSanPham'] ?></span>
+                        </div>
+                        <div class="motaItem">
+                            <a href="http://localhost/btl_web/order/orderSingle/<?php echo $sanpham['productID'] ?>">
+                                <button class="button-hover-addcart button"><span>Mua ngay</span><i class="fa fa-shopping-cart"></i></button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            <?php endwhile ?>
+
+        </div>
+    <?php endif ?>
+    <?php if (mysqli_num_rows($data['data']) == 0) : ?>
+
+        <H4 class="notFound">
+            DANH MỤC HIỆN KHÔNG CÓ SẢN PHẨM NÀO
+        </H4>
+    <?php endif ?>
+
 </body>
 
 </html>
