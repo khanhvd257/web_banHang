@@ -5,10 +5,12 @@ class Order extends controller
     public $order;
     function __construct()
     {
+        $_SESSION['page']="order";
         $this->order = $this->model('OrderSP');
     }
 
     public function index()
+    
     {
         if (isset($_SESSION['user']['userID'])) {
             $result = $this->order->getAll($_SESSION['user']['userID']);

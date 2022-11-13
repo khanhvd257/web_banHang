@@ -136,13 +136,16 @@ $danhmuc = mysqli_query($conn, $sql);
 			</div>
 		</div>
 		<div class="wrap_Container" style="display: flex;    display: flex; flex-direction: column; flex-grow: 1;">
-		<marquee style="color: red;">SHOP NHÓM 6 ORDER TẤT CẢ MẶT HÀNG TỪ TRÊN TRỜI DƯỚI ĐẤT CÁC GÌ CŨNG BÁN</marquee>
+		<marquee style="color: red">SHOP NHÓM 6 ORDER TẤT CẢ MẶT HÀNG TỪ TRÊN TRỜI DƯỚI ĐẤT CÁC GÌ CŨNG BÁN</marquee>
 			<nav aria-label="breadcrumb" style="max-height: 60px; border-radius:0; margin-top: 1px;">
 				<ol class="breadcrumb" style="height: 100%; border-radius:0;align-items: center;">
 					<li class="breadcrumb-item"><a href="http://localhost/btl_web">Trang Chủ</a></li>
 					<li class="breadcrumb-item active" aria-current="page">Product</li>
 				</ol>
 			</nav>
+			<?php if(isset($_SESSION['page']))
+				if($_SESSION['page']=="home")
+			:?> 
 			<div class="container_carousel">
 				<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
 					<ol class="carousel-indicators">
@@ -171,6 +174,7 @@ $danhmuc = mysqli_query($conn, $sql);
 					</a>
 				</div>
 			</div>
+			<?php endif?>
 			<div class="content_Render">
 				<?php
 				include_once './MVC/Views/pages/' . $data['page'] . '.php';

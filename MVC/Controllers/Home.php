@@ -4,6 +4,7 @@ class Home extends controller{
     public $order;
     function __construct()
     {
+        $_SESSION['page']= "home";
         $this->product = $this->model('SanPham');
         $this->order = $this->model('OrderSP');
     }
