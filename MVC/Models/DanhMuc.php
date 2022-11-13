@@ -6,6 +6,11 @@ class DanhMuc extends ConnectDB{
         $kq=mysqli_query($this->con,$sql);   
         return $kq;
     }
+    public function getByID($ID){
+        $sql = "SELECT * FROM tblDanhMuc WHERE danhMucID ='$ID'";
+        $kq=mysqli_query($this->con,$sql);   
+        return $kq;
+    }
 
 }
 

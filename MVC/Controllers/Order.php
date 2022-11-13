@@ -5,7 +5,8 @@ class Order extends controller
     public $order;
     function __construct()
     {
-        $_SESSION['page']="order";
+        unset($_SESSION['pageSub']);
+        $_SESSION['page']="Order";
         $this->order = $this->model('OrderSP');
     }
 

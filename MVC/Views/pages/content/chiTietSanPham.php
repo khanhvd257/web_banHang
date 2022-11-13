@@ -1,13 +1,12 @@
 <?php
 $sanpham = mysqli_fetch_assoc($data['data']);
-
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <style>
     .wrap_item {
-
+        min-height: 700px;
         display: flex;
         justify-content: center;
 

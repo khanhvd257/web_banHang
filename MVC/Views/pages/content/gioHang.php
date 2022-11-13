@@ -144,56 +144,61 @@ if (!isset($_SESSION['user'])) {
         </div>
     </div>
     <?php if (mysqli_num_rows($data['dataOrder']) > 0) : ?>
-    <div class="datHang">
-        <form action="http://localhost/btl_web/order/thanhToan" method="post">
-            <input id="arrOrder" name="strOrder" value="111" style="display: none;"></input>
-            <button type="submit" onclick="ThanhToanCheck()" name="btnOrder" class="btn btn-success">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
-                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
-                </svg>
-                THANH TOÁN <span id="soLuongCheck"></span>
-            </button>
-        </form>
+        <div class="datHang">
+            <form action="http://localhost/btl_web/order/thanhToan" method="post">
+                <input id="arrOrder" name="strOrder" value="111" style="display: none;"></input>
+                <button type="submit" onclick="ThanhToanCheck()" name="btnOrder" class="btn btn-success">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+                    </svg>
+                    THANH TOÁN <span id="soLuongCheck"></span>
+                </button>
+            </form>
         <?php endif ?>
-    </div>
-    <?php if (mysqli_num_rows($data['dataOrder']) > 0) : ?>
-        <div class="wrapOrder">
-            <div id="ThanhToan"><span id="tongThanhToan"></span></div>
-            <div class="container_Item">
-                <div class="check_box">
-                    <input onchange="checkAllOrder(this)" type="checkbox" class="checkAllOrder" name="order">
-                </div>
-                <div class="imgItem lablecs">HÌNH ẢNH SP</div>
-                <div class="tenSP lablecs">TÊN SẢN PHẨM</div>
-                <div class="giaSp lablecs txt_center">GIÁ BÁN</div>
-                <div class="soLuong lablecs txt_center">SỐ LƯỢNG MUA</div>
-                <div class="SLkho lablecs txt_center">SỐ LƯỢNG KHO</div>
-                <div class="thanhTien lablecs txt_center">THÀNH TIỀN</div>
-                <div class="btn_huyOrder lablecs txt_center">HỦY ORDER</div>
-            </div>
-            <?php while ($orderRow = mysqli_fetch_assoc($data['dataOrder'])) : ?>
+        </div>
+        <?php if (mysqli_num_rows($data['dataOrder']) > 0) : ?>
+            <div class="wrapOrder">
+                <div id="ThanhToan"><span id="tongThanhToan"></span></div>
                 <div class="container_Item">
                     <div class="check_box">
-                        <input id="<?php echo $orderRow['productID'] ?>" onchange="checkOrder()" type="checkbox" class="checkOrder" value="<?php echo ($orderRow['TongSL'] * $orderRow['giaSanPham']) ?>" name="order">
+                        <input onchange="checkAllOrder(this)" type="checkbox" class="checkAllOrder" name="order">
                     </div>
-                    <img class="imgItem lablecss" src="http://localhost/btl_web/public/img/LOGO.gif" alt="">
-                    <div class="tenSP lablecss"><?php echo $orderRow['tenSanPham'] ?></div>
-                    <div class="giaSp lablecss  txt_center"><?php echo $orderRow['giaSanPham'] ?></div>
-                    <div class="soLuong lablecss txt_center"><?php echo $orderRow['TongSL'] ?></div>
-                    <div class="SLkho lablecss txt_center"><?php echo $orderRow['soLuongKho'] ?></div>
-                    <span class="thanhTien lablecss txt_center"><?php echo ($orderRow['TongSL'] * $orderRow['giaSanPham'])  ?></span>
-                    <div class="btn_huyOrder">
-                        <a href="http://localhost/btl_web/order/deteOrder/<?php echo $orderRow['productID'] ?>">
-                            <button type="button" class="btn btn-danger btn_huy_item">
-                                HỦY ĐẶT
-                            </button>
-                        </a>
-
-                    </div>
+                    <div class="imgItem lablecs">HÌNH ẢNH SP</div>
+                    <div class="tenSP lablecs">TÊN SẢN PHẨM</div>
+                    <div class="giaSp lablecs txt_center">GIÁ BÁN</div>
+                    <div class="soLuong lablecs txt_center">SỐ LƯỢNG MUA</div>
+                    <div class="SLkho lablecs txt_center">SỐ LƯỢNG KHO</div>
+                    <div class="thanhTien lablecs txt_center">THÀNH TIỀN</div>
+                    <div class="btn_huyOrder lablecs txt_center">HỦY ORDER</div>
                 </div>
-            <?php endwhile ?>
-        </div>
-    <?php endif ?>
+                <?php while ($orderRow = mysqli_fetch_assoc($data['dataOrder'])) : ?>
+                    <div class="container_Item">
+                        <div class="check_box">
+                            <input id="<?php echo $orderRow['productID'] ?>" onchange="checkOrder()" type="checkbox" class="checkOrder" value="<?php echo ($orderRow['TongSL'] * $orderRow['giaSanPham']) ?>" name="order">
+                        </div>
+                        <?php if ($orderRow['pathImage'] == "") : ?>
+                            <img class="imgItem lablecss" src="http://localhost/BTL_WEB/public/img/defautImg.gif" alt="gif">
+                        <?php endif ?>
+                        <?php if ($orderRow['pathImage'] != "") : ?>
+                            <img class="imgItem lablecss" src="http://localhost/BTL_WEB/uploads/<?php echo $orderRow['pathImage'] ?>" alt="gif">
+                        <?php endif ?>
+                        <div class="tenSP lablecss"><?php echo $orderRow['tenSanPham'] ?></div>
+                        <div class="giaSp lablecss  txt_center"><?php echo $orderRow['giaSanPham'] ?></div>
+                        <div class="soLuong lablecss txt_center"><?php echo $orderRow['TongSL'] ?></div>
+                        <div class="SLkho lablecss txt_center"><?php echo $orderRow['soLuongKho'] ?></div>
+                        <span class="thanhTien lablecss txt_center"><?php echo ($orderRow['TongSL'] * $orderRow['giaSanPham'])  ?></span>
+                        <div class="btn_huyOrder">
+                            <a href="http://localhost/btl_web/order/deteOrder/<?php echo $orderRow['productID'] ?>">
+                                <button type="button" class="btn btn-danger btn_huy_item">
+                                    HỦY ĐẶT
+                                </button>
+                            </a>
+
+                        </div>
+                    </div>
+                <?php endwhile ?>
+            </div>
+        <?php endif ?>
 
 
 
@@ -217,5 +222,4 @@ if (!isset($_SESSION['user'])) {
         document.getElementById('arrOrder').setAttribute('value', str);
 
     }
-
 </script>

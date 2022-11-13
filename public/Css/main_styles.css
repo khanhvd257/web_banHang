@@ -552,7 +552,10 @@ section {
 }
 
 .navbar_user {
+	min-width: 368px;
 	margin-left: 37px;
+	display: flex;
+	align-items: center;
 }
 
 .navbar_user li {
@@ -583,6 +586,15 @@ section {
 
 .navbar_user li a:hover {
 	color: #b5aec4;
+}
+.button_Search{
+	border: none;
+    margin: 8px;
+    transform: translateX(1px);
+    font-size: 20px;
+    cursor: pointer;
+    background: transparent;
+    color: white;
 }
 
 .checkout a {

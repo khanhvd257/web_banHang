@@ -35,7 +35,12 @@ $danhmuc = mysqli_query($conn, $sql);
 
 			</ul>
 			<ul class="navbar_user ">
-				<li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a>
+				<div class="searchFrom">
+					<form action="" method="post">
+						<input type="text" style="border: none; box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px; font-family: fangsong;" placeholder="Tìm kiếm sản phẩm">
+						<li><button class=" button_Search"><i class="fa fa-search" aria-hidden="true"></i></button>
+					</form>
+				</div>
 				<li class="checkout">
 					<a href="http://localhost/BTL_WEB/order">
 						<i class="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -136,45 +141,59 @@ $danhmuc = mysqli_query($conn, $sql);
 			</div>
 		</div>
 		<div class="wrap_Container" style="display: flex;    display: flex; flex-direction: column; flex-grow: 1;">
-		<marquee style="color: red">SHOP NHÓM 6 ORDER TẤT CẢ MẶT HÀNG TỪ TRÊN TRỜI DƯỚI ĐẤT CÁC GÌ CŨNG BÁN</marquee>
+			<marquee style="color: red">SHOP NHÓM 6 ORDER TẤT CẢ MẶT HÀNG TỪ TRÊN TRỜI DƯỚI ĐẤT CÁC GÌ CŨNG BÁN</marquee>
 			<nav aria-label="breadcrumb" style="max-height: 60px; border-radius:0; margin-top: 1px;">
 				<ol class="breadcrumb" style="height: 100%; border-radius:0;align-items: center;">
 					<li class="breadcrumb-item"><a href="http://localhost/btl_web">Trang Chủ</a></li>
-					<li class="breadcrumb-item active" aria-current="page">Product</li>
+					<?php if ($_SESSION['page'] != "Home") : ?>
+
+						<li class="breadcrumb-item
+						 <?php if (isset($_SESSION['pageSub'])) {
+								echo "";
+							} else {
+								echo 'active"';
+							} ?>" aria-current="page">
+
+							<?php echo $_SESSION['page'] ?></li>
+
+						<?php if (isset($_SESSION['pageSub'])) : ?>
+							<li class="breadcrumb-item active" aria-current="page">
+								<?php echo $_SESSION['pageSub'] ?></li>
+						<?php endif ?>
+					<?php endif ?>
 				</ol>
 			</nav>
-			<?php if(isset($_SESSION['page']))
-				if($_SESSION['page']=="home")
-			:?> 
-			<div class="container_carousel">
-				<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-					<ol class="carousel-indicators">
-						<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-						<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-						<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-					</ol>
-					<div class="carousel-inner cs_innerCarousel">
-						<div class="carousel-item active ">
-							<img class="d-block w-100 cs_activeCarou" src="http://localhost/btl_web/public/img/banner.gif" alt="First slide">
+			<?php if (isset($_SESSION['page']))
+				if ($_SESSION['page'] == "Home") : ?>
+				<div class="container_carousel">
+					<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+						<ol class="carousel-indicators">
+							<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+							<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+							<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+						</ol>
+						<div class="carousel-inner cs_innerCarousel">
+							<div class="carousel-item active ">
+								<img class="d-block w-100 cs_activeCarou" src="http://localhost/btl_web/public/img/banner.gif" alt="First slide">
+							</div>
+							<div class="carousel-item">
+								<img class="d-block w-100 cs_activeCarou" src="http://localhost/btl_web/public/img/banner1.gif" alt="Second slide">
+							</div>
+							<div class="carousel-item">
+								<img class="d-block w-100 cs_activeCarou" src="http://localhost/btl_web/public/img/banner2.gif" alt="Third slide">
+							</div>
 						</div>
-						<div class="carousel-item">
-							<img class="d-block w-100 cs_activeCarou" src="http://localhost/btl_web/public/img/banner1.gif" alt="Second slide">
-						</div>
-						<div class="carousel-item">
-							<img class="d-block w-100 cs_activeCarou" src="http://localhost/btl_web/public/img/banner2.gif" alt="Third slide">
-						</div>
+						<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							<span class="sr-only">Previous</span>
+						</a>
+						<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							<span class="sr-only">Next</span>
+						</a>
 					</div>
-					<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-						<span class="sr-only">Previous</span>
-					</a>
-					<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-						<span class="carousel-control-next-icon" aria-hidden="true"></span>
-						<span class="sr-only">Next</span>
-					</a>
 				</div>
-			</div>
-			<?php endif?>
+			<?php endif ?>
 			<div class="content_Render">
 				<?php
 				include_once './MVC/Views/pages/' . $data['page'] . '.php';
