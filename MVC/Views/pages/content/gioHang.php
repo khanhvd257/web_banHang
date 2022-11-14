@@ -70,9 +70,10 @@ if (!isset($_SESSION['user'])) {
         min-width: 5%;
     }
 
-    .btn_huyOrder {
+    .btn_EditOrder {
         flex-grow: 1;
         cursor: pointer;
+        display: none;
     }
 
     .header_content {
@@ -143,6 +144,17 @@ if (!isset($_SESSION['user'])) {
         display: flex;
         flex-direction: row;
     }
+
+    .txtSoLuongOrder {
+        border: none;
+        background: transparent;
+
+    }
+
+    .SLkho_GioHang {
+        background: transparent;
+        border: none;
+    }
 </style>
 <div class="wrap_container">
     <div class="header_content">
@@ -167,21 +179,23 @@ if (!isset($_SESSION['user'])) {
     <div class="datHang">
         <?php if (mysqli_num_rows($data['dataOrder']) > 0) : ?>
             <div class="container_order_button">
-                <form action="http://localhost/btl_web/order/thanhToan" id="btnThanhToan" method="post">
-                    <input id="arrOrder" name="strOrder" value="" style="display: none;"></input>
-                    <button type="submit" onclick="ThanhToanCheck()" name="btnOrder" class="btn btn-success">
+                <form action="http://localhost/btl_web/order/thanhToan" id="btnThanhToan" name="formDatHang" method="post" onsubmit="return validateformThanhToan_GioHang()">
+                    <input id="arrOrder" name="strOrder" value="" style="display: none;"/>
+                    <input id="arrOrderSL" name="strOrderSL" value="" style="display: none;"/>
+                    <input id="arrOrderKho" name="strOrderKho" value="" style="display: none;"/>
+                                        <button type="submit" name="btnOrder" class="btn btn-success">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
                             <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
                         </svg>
                         Thanh Toán
                     </button>
                 </form>
-                <form action="http://localhost/btl_web/order/HuyOrder" id="btnHuy" method="post">
-                    <button type="submit" onclick="confirmHuy()" name="" class="btn btn-danger" style="margin-left: 26px;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
-                            <path fill="currentColor" d="M7 3h2a1 1 0 0 0-2 0ZM6 3a2 2 0 1 1 4 0h4a.5.5 0 0 1 0 1h-.564l-1.205 8.838A2.5 2.5 0 0 1 9.754 15H6.246a2.5 2.5 0 0 1-2.477-2.162L2.564 4H2a.5.5 0 0 1 0-1h4Zm1 3.5a.5.5 0 0 0-1 0v5a.5.5 0 0 0 1 0v-5ZM9.5 6a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 1 0v-5a.5.5 0 0 0-.5-.5Z" />
-                        </svg>
-                        Hủy Order
+                <form action="http://localhost/btl_web/order/HuyOrder" id="btnHuy" method="post" name="formHuyOrder_GioHang>
+                    <button type= " submit" onclick="confirmHuy()" class="btn btn-danger" style="margin-left: 26px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
+                        <path fill="currentColor" d="M7 3h2a1 1 0 0 0-2 0ZM6 3a2 2 0 1 1 4 0h4a.5.5 0 0 1 0 1h-.564l-1.205 8.838A2.5 2.5 0 0 1 9.754 15H6.246a2.5 2.5 0 0 1-2.477-2.162L2.564 4H2a.5.5 0 0 1 0-1h4Zm1 3.5a.5.5 0 0 0-1 0v5a.5.5 0 0 0 1 0v-5ZM9.5 6a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 1 0v-5a.5.5 0 0 0-.5-.5Z" />
+                    </svg>
+                    Hủy Order
                     </button>
                 </form>
             </div>
@@ -200,7 +214,7 @@ if (!isset($_SESSION['user'])) {
                 <div class="soLuong lablecs txt_center">SỐ LƯỢNG MUA</div>
                 <div class="SLkho lablecs txt_center">SỐ LƯỢNG KHO</div>
                 <div class="thanhTien lablecs txt_center">THÀNH TIỀN</div>
-                <div class="btn_huyOrder lablecs txt_center">SỬA ORDER</div>
+                <div class="btn_EditOrder lablecs txt_center">SỬA ORDER</div>
             </div>
             <?php while ($orderRow = mysqli_fetch_assoc($data['dataOrder'])) : ?>
                 <div class="container_Item">
@@ -215,17 +229,15 @@ if (!isset($_SESSION['user'])) {
                     <?php endif ?>
                     <div class="tenSP lablecss"><?php echo $orderRow['tenSanPham'] ?></div>
                     <div class="giaSp lablecss  txt_center"><?php echo $orderRow['giaSanPham'] ?></div>
-                    <div class="soLuong lablecss txt_center"><?php echo $orderRow['TongSL'] ?></div>
-                    <div class="SLkho lablecss txt_center"><?php echo $orderRow['soLuongKho'] ?></div>
+                    <input disabled type="number" class="soLuong lablecss txt_center txtSoLuongOrder" onchange="getValueChuoiTT()" value="<?php echo $orderRow['TongSL'] ?>"></input>
+                    <input disabled class="SLkho_GioHang  SLkho lablecss txt_center" value="<?php echo $orderRow['soLuongKho'] ?>" />
                     <span class="thanhTien lablecss txt_center"><?php echo ($orderRow['TongSL'] * $orderRow['giaSanPham'])  ?></span>
-                    <div class="btn_huyOrder btn_sua_item">
-                        <a href="http://localhost/btl_web/order/deteOrder/<?php echo $orderRow['productID'] ?>">
-                            <button type="button" class="btn btn-warning btn_huy_item btn_huyOrder">
-                                Sửa
-                            </button>
-                        </a>
+                    <!-- <div class="btn_EditOrder btn_sua_item">
+                        <button type="button" class="btn btn-warning btn_huy_item btn_EditOrder">
+                            Sửa
+                        </button>
 
-                    </div>
+                    </div> -->
                 </div>
             <?php endwhile ?>
         </div>
@@ -235,8 +247,51 @@ if (!isset($_SESSION['user'])) {
 
 </div>
 <script>
+    function validateformThanhToan_GioHang() {
+        var a = document.getElementsByClassName("txtSoLuongOrder");
+        var b = document.getElementsByClassName("SLkho_GioHang");
+        for (var i = 0; i < a.length; i++) {
+            if (a[i].value > b[i].value || a[i].value < 1) {
+                alert("số lượng không hợp lệ");
+                return false;
+            } else if (confirm(`Bạn chắc chắn muốn đặt sản phẩm chứ`)) {
+                return true;
+            } else {
+                return false;
+            }
 
-    function suaSLDat(){
-        var a = document.getElementsByClassName("")
+        }
+
+    }
+
+    function getValueChuoiTT() {
+        var arrIDProduct = [];
+        var arrSLProduct = [];
+        var arrSLKho = [];
+        var count = 0;
+        var inputElems = document.getElementsByClassName('checkOrder');
+        var b = document.getElementsByClassName('txtSoLuongOrder');
+        var c = document.getElementsByClassName('SLkho_GioHang');
+        for (var i = 0; i < inputElems.length; i++) {
+            if (inputElems[i].checked == true) {
+                count++;
+
+                arrIDProduct.push(inputElems[i].id);
+                arrSLProduct.push(b[i].value);
+                arrSLKho.push(c[i].value);
+            }
+        }
+        var str0 = arrIDProduct.join('_');
+        var str1 = arrSLProduct.join('_');
+        var str2 = arrSLKho.join('_');
+        console.log(str0 , "id");
+        console.log(str1, "sl");
+        console.log(str2, "kho");
+        document.getElementById('arrOrder').value = str0;
+        document.getElementById('arrOrderSL').value = str1;
+        document.getElementById('arrOrderKho').value = str2;
+        console.log(document.getElementById('arrOrder').value, "arrr");
+        console.log(document.getElementById('arrOrderSL').value, "arrr1");
+        console.log(document.getElementById('arrOrderKho').value, "arrr2");
     }
 </script>

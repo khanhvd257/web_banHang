@@ -29,6 +29,16 @@ class OrderSp extends ConnectDB
         $kq = mysqli_query($this->con, $sql);
         return $kq;
     }
+    public function ThanhToanSauKhiSua($idProduct, $soLuongMua, $soLuongKhoCur ,$userID)
+    {
+        $soLuongKhoSau= $soLuongKhoCur - $soLuongMua;
+        //set trang thai thanh toan
+        $sql1 = "UPDATE `tblOrder` SET `soLuong` = '$soLuongMua', `productID` = '$idProduct',  `status` = '1' WHERE `userID` = '$userID'";
+        $kq1 = mysqli_query($this->con, $sql1);
+        //set lai so luong kho con
+        $sql0 = "UPDATE `tblProducts` SET `soLuongKho`='$soLuongKhoSau' WHERE productID = '$idProduct'";
+        $kq = mysqli_query($this->con, $sql0);
+    }
 
     //HÀM DELETE SẢN PHẨM ORDER
 
@@ -36,7 +46,7 @@ class OrderSp extends ConnectDB
     {
         if (isset($_POST['btnHuyOrder'])) {
             $arrOrder = $_POST['strOrder'];
-            $arr = explode('-', $_POST['strOrder']);
+            $arr = explode('_', $_POST['strOrder']);
             foreach ($arr as $idProduct) {
                 $sql = "DELETE FROM `tblOrder` WHERE productID = '$idProduct'";
                 $kq = mysqli_query($this->con, $sql);
@@ -45,13 +55,14 @@ class OrderSp extends ConnectDB
     }
 
 
-    //HÀM THANH TOÁN
+    //HÀM THANH TOÁN SP
 
     public function UpdateOrder()
     {
+
         if (isset($_POST['btnOrder'])) {
             $arrOrder = $_POST['strOrder'];
-            $arr = explode('-', $_POST['strOrder']);
+            $arr = explode('_', $_POST['strOrder']);
             foreach ($arr as $idProduct) {
                 $sql = "UPDATE tblOrder SET `status` = '1' WHERE productID = '$idProduct'";
                 $kq = mysqli_query($this->con, $sql);

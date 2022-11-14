@@ -46,7 +46,7 @@ class Order extends controller
         if (isset($_SESSION['user'])) {
             $IdUser = $_SESSION['user']['userID'];
             $idProduct = $_POST['txtIDproduct'];
-            var_dump( $idProduct );
+            var_dump($idProduct);
             $soLuong = $_POST['txtSLMua'];
             $result1 = $this->order->addMultiOrder($idProduct, $soLuong, $IdUser);
             $result = $this->order->getAll($IdUser);
@@ -77,14 +77,25 @@ class Order extends controller
     public function thanhToan()
     {
         if (isset($_SESSION['user'])) {
-            $this->order->UpdateOrder();
+            $IdUser = $_SESSION['user']['userID'];
+            $idProduct = $_POST['strOrder'];
+            $arrIDproduct = explode('_', $idProduct);
+            $sl = $_POST['strOrderSL'];
+            $arrSL =  explode('_', $sl);
+            $Kho = $_POST['strOrderKho'];
+            $arrKho =  explode('_', $Kho);
+            var_dump($IdUser);
+            for ($i = 0; $i < count($arrIDproduct); $i++) {
+                $this->order->ThanhToanSauKhiSua($arrIDproduct[$i], $arrSL[$i], $arrKho[$i], $IdUser);
+                echo $arrIDproduct[$i] ."id", $arrSL[$i]. "sl", $arrKho[$i]."kho", $IdUser ."kten";
+            }
             $result = $this->order->getAll($_SESSION['user']['userID']);
             $this->view('MasterLayout', [
                 'page' => 'content/gioHang',
                 'dataOrder' => $result
             ]);
         } else {
-            header('Location: /BTL_WEB/auth');
+            $this->render('login/LoginForm');
         }
     }
 }

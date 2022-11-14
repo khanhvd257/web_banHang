@@ -27,6 +27,21 @@ function checkOrder() {
     if (count == 0) {
         document.getElementById("btnThanhToan").style.display = "none";
     }
+    enableEditOrder();
+    getValueChuoiTT();
+}
+
+function enableEditOrder() {
+    var inputElems = document.getElementsByClassName('checkOrder');
+    var inputElemsSLuong = document.getElementsByClassName('txtSoLuongOrder');
+    for (var i = 0; i < inputElemsSLuong.length; i++) {
+        if (inputElems[i].checked == true) {
+            inputElemsSLuong[i].disabled = false;
+            inputElemsSLuong[i].focus();
+        } else {
+            inputElemsSLuong[i].disabled = true;
+        }
+    }
 }
 
 //hàm chọn bỏ tất cả tích or tắt
@@ -53,34 +68,16 @@ function DisplayBtnThanhToan() {
 
 
 //Tạo chuỗi để gửi lên SERVER THANH TOAN
-function ThanhToanCheck() {
-    const arrThanhToan = [];
-    var inputElems = document.getElementsByClassName('checkOrder');
-    for (var i = 0; i < inputElems.length; i++) {
-        if (inputElems[i].checked == true) {
-            //id cua Product
-            arrThanhToan.push(inputElems[i].id);
-        }
-    }
-    var str = arrThanhToan.join('-');
-    document.getElementById('arrOrder').value = str;
-    if (str === "") {
-        alert('Vui Lòng chọn sản phẩm thanh toán');
-    }else{
-        alert('Thanh toán thành công')
-    }
-
-}
- function confirmHuy(){
-    if(confirm("Bạn có muốn hủy order không?")){
+function confirmHuy() {
+    if (confirm("Bạn có muốn hủy order không?")) {
         HuyOrderHang();
-    }else{
+    } else {
         alert("Không hủy thì nhớ mua nhiều hàng vào nha bạn ");
     }
 
- }
+}
 
-function HuyOrderHang(){
+function HuyOrderHang() {
     const arrHuy = [];
     var inputElems = document.getElementsByClassName('checkOrder');
     for (var i = 0; i < inputElems.length; i++) {
