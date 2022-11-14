@@ -1416,7 +1416,8 @@ NAV_MENU
 }
 
 .cs_innerCarousel {
-	min-width: 1150px;
+	min-width: 1274px;
+    margin-left: -40px
 }
 
 .cs_activeCarou {

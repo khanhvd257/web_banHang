@@ -16,10 +16,13 @@ function checkOrder() {
     document.getElementById('ThanhToan').style.display = 'flex';
 
     if (total == 0) {
+        document.getElementById("btnHuy").style.display = "none";
         document.getElementById('ThanhToan').style.display = 'none';
     }
     if (count > 0) {
         document.getElementById("btnThanhToan").style.display = "flex";
+        document.getElementById("btnHuy").style.display = "flex";
+
     }
     if (count == 0) {
         document.getElementById("btnThanhToan").style.display = "none";
@@ -44,6 +47,7 @@ function DisplayBtnThanhToan() {
     }
     if (count > 0) {
         document.getElementById("btnThanhToan").style.display = "flex";
+        document.getElementById("btnHuy").style.display = "flex";
     }
 }
 
@@ -65,6 +69,28 @@ function ThanhToanCheck() {
     }else{
         alert('Thanh toán thành công')
     }
+
+}
+ function confirmHuy(){
+    if(confirm("Bạn có muốn hủy order không?")){
+        HuyOrderHang();
+    }else{
+        alert("Không hủy thì nhớ mua nhiều hàng vào nha bạn ");
+    }
+
+ }
+
+function HuyOrderHang(){
+    const arrHuy = [];
+    var inputElems = document.getElementsByClassName('checkOrder');
+    for (var i = 0; i < inputElems.length; i++) {
+        if (inputElems[i].checked == true) {
+            //id cua Product
+            arrHuy.push(inputElems[i].id);
+        }
+    }
+    var str = arrHuy.join('-');
+    document.getElementById('arrOrder').value = str;
 
 }
 

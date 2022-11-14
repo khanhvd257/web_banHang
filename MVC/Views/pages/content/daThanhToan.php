@@ -142,13 +142,18 @@ if (!isset($_SESSION['user'])) {
 </style>
 <div class="wrap_container">
     <div class="header_content">
-        DANH SÁCH HÀNG ĐÃ THANH TOÁN
+        <?php if (mysqli_num_rows($data['dataThanhToan']) > 0) : ?>
+            DANH SÁCH HÀNG ĐÃ THANH TOÁN
+        <?php endif ?>
+
         <div class="TongMH">
 
             <?php if (mysqli_num_rows($data['dataThanhToan']) == 0) : ?>
-                <span class="badge badge-primary">Bạn chưa mua hàng nào cả</span>
+                <h2>Không có sản phẩm để thanh toán</h2>
                 <br>
-                <span class="badge badge-primary">Mua sắm thôi nào</span>
+                <img style="max-width: 400px;" src="http://localhost/btl_web/public/img/96758-empty-cart.gif" alt="">
+                <br>
+                <button type="button" onclick="location.href='http://localhost/btl_web/home'" class="btn btn-warning" style="margin-top: 36px;">ĐI MUA SẢN PHẨM NGAY THÔI NÀO</button>
             <?php endif ?>
 
             <?php if (mysqli_num_rows($data['dataThanhToan']) > 0) : ?>
@@ -174,7 +179,12 @@ if (!isset($_SESSION['user'])) {
             </div>
             <?php while ($orderRow = mysqli_fetch_assoc($data['dataThanhToan'])) : ?>
                 <div class="container_Item">
-                    <img class="imgItem lablecss" src="http://localhost/btl_web/public/img/LOGO.gif" alt="">
+                    <?php if ($orderRow['pathImage'] == "") : ?>
+                        <img class="imgItem lablecss" src="http://localhost/BTL_WEB/public/img/defautImg.gif" alt="gif">
+                    <?php endif ?>
+                    <?php if ($orderRow['pathImage'] != "") : ?>
+                        <img class="imgItem lablecss" src="http://localhost/BTL_WEB/uploads/<?php echo $orderRow['pathImage'] ?>" alt="gif">
+                    <?php endif ?>
                     <div class="tenSP lablecss"><?php echo $orderRow['tenSanPham'] ?></div>
                     <div class="giaSp lablecss  txt_center"><?php echo $orderRow['giaSanPham'] ?></div>
                     <div class="soLuong lablecss txt_center"><?php echo $orderRow['TongSL'] ?></div>
@@ -203,7 +213,7 @@ if (!isset($_SESSION['user'])) {
         for (var i = 0; i < inputElems.length; i++) {
             total += parseInt(inputElems[i].value);
         }
-        document.getElementById("tongTienMua").innerText = "Tổng Hóa Đơn là: " + formatCash(total) + " VND" ;
+        document.getElementById("tongTienMua").innerText = "Tổng Hóa Đơn là: " + formatCash(total) + " VND";
 
     }
     tienMuaHang();

@@ -9,9 +9,9 @@ class OrderSp extends ConnectDB
         $kq = mysqli_query($this->con, $sql);
         return $kq;
     }
-    
 
-    // HAM ORDER SAN PHẨM
+
+    // HAM ORDER SAN PHẨM CLICK GIỎ
 
     public function addOneOrder($idProduct)
     {
@@ -20,35 +20,44 @@ class OrderSp extends ConnectDB
         $kq = mysqli_query($this->con, $sql);
         return $kq;
     }
-    public function addMultiOrder($idProduct)
+
+    // HAM ORDER SAN PHẨM NHẬP SỐ LƯỢNG
+
+    public function addMultiOrder($idProduct, $soLuong, $userID)
     {
-        $userID = $_SESSION['user']['userID'];
-        $sql = "INSERT INTO `tblOrder`( `ngayOrder`, `soLuong`, `userID`, `productID`, `status`) VALUES (now(),'','$userID','$idProduct','0')";
+        $sql = "INSERT INTO `tblOrder`( `ngayOrder`, `soLuong`, `userID`, `productID`, `status`) VALUES (now(),'$soLuong','$userID','$idProduct','0')";
         $kq = mysqli_query($this->con, $sql);
         return $kq;
     }
 
-    //HÀM DELETE SẢN PHẨM
+    //HÀM DELETE SẢN PHẨM ORDER
 
     public function deleteOrder($idProduct)
     {
-        $sql = "DELETE FROM `tblOrder` WHERE productID = '$idProduct'";
-        $kq = mysqli_query($this->con, $sql);
-        return $kq;
+        if (isset($_POST['btnHuyOrder'])) {
+            $arrOrder = $_POST['strOrder'];
+            $arr = explode('-', $_POST['strOrder']);
+            foreach ($arr as $idProduct) {
+                $sql = "DELETE FROM `tblOrder` WHERE productID = '$idProduct'";
+                $kq = mysqli_query($this->con, $sql);
+            }
+        }
     }
+
 
     //HÀM THANH TOÁN
 
     public function UpdateOrder()
     {
-        if(isset($_POST['btnOrder'])){
+        if (isset($_POST['btnOrder'])) {
             $arrOrder = $_POST['strOrder'];
-            $arr = explode('-',$_POST['strOrder']);
-            foreach($arr as $idProduct){
+            $arr = explode('-', $_POST['strOrder']);
+            foreach ($arr as $idProduct) {
                 $sql = "UPDATE tblOrder SET `status` = '1' WHERE productID = '$idProduct'";
                 $kq = mysqli_query($this->con, $sql);
             }
         }
-       
     }
+
+    //
 }

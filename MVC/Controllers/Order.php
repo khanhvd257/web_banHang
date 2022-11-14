@@ -26,8 +26,8 @@ class Order extends controller
     //kick vào thêm giỏ hàng
     public function orderSingle($idProduct)
     {
-        $IdUser = $_SESSION['user']['userID'];
         if (isset($_SESSION['user'])) {
+            $IdUser = $_SESSION['user']['userID'];
             $result1 = $this->order->addOneOrder($idProduct);
             $result = $this->order->getAll($IdUser);
             $this->view('MasterLayout', [
@@ -39,8 +39,28 @@ class Order extends controller
         }
     }
 
+    //click vào đặt số lượng sản phẩm 
+
+    public function addMultiProduct()
+    {
+        if (isset($_SESSION['user'])) {
+            $IdUser = $_SESSION['user']['userID'];
+            $idProduct = $_POST['txtIDproduct'];
+            var_dump( $idProduct );
+            $soLuong = $_POST['txtSLMua'];
+            $result1 = $this->order->addMultiOrder($idProduct, $soLuong, $IdUser);
+            $result = $this->order->getAll($IdUser);
+            $this->view('MasterLayout', [
+                'page' => 'content/gioHang',
+                'dataOrder' => $result
+            ]);
+        } else {
+            $this->render('login/LoginForm');
+        }
+    }
+
     //DELE ORDER
-    public function deteOrder($idProduct)
+    public function HuyOrder($idProduct)
     {
         if (isset($_SESSION['user'])) {
             $IdUser = $_SESSION['user']['userID'];

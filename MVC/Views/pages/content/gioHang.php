@@ -121,12 +121,27 @@ if (!isset($_SESSION['user'])) {
 
     }
 
+    .btn_sua_item {
+        transform: translateX(35%);
+    }
+
+
     .txt_center {
         text-align: center;
     }
 
     #btnThanhToan {
         display: none;
+    }
+
+    #btnHuy {
+        display: none;
+
+    }
+
+    .container_order_button {
+        display: flex;
+        flex-direction: row;
     }
 </style>
 <div class="wrap_container">
@@ -151,21 +166,25 @@ if (!isset($_SESSION['user'])) {
     </div>
     <div class="datHang">
         <?php if (mysqli_num_rows($data['dataOrder']) > 0) : ?>
-            <form action="http://localhost/btl_web/order/thanhToan" id="btnThanhToan" method="post">
-                <input id="arrOrder" name="strOrder" value="" style="display: none;"></input>
-                <button type="submit" onclick="ThanhToanCheck()" name="btnOrder" class="btn btn-success">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
-                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
-                    </svg>
-                    Thanh Toán <span id="soLuongCheck"></span>
-                </button>
-                <button type="submit" onclick="ThanhToanCheck()" name="btnOrder" class="btn btn-success">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
-                        <path fill="currentColor" d="M7 3h2a1 1 0 0 0-2 0ZM6 3a2 2 0 1 1 4 0h4a.5.5 0 0 1 0 1h-.564l-1.205 8.838A2.5 2.5 0 0 1 9.754 15H6.246a2.5 2.5 0 0 1-2.477-2.162L2.564 4H2a.5.5 0 0 1 0-1h4Zm1 3.5a.5.5 0 0 0-1 0v5a.5.5 0 0 0 1 0v-5ZM9.5 6a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 1 0v-5a.5.5 0 0 0-.5-.5Z" />
-                    </svg>
-                    Hủy Order <span id="soLuongCheck"></span>
-                </button>
-            </form>
+            <div class="container_order_button">
+                <form action="http://localhost/btl_web/order/thanhToan" id="btnThanhToan" method="post">
+                    <input id="arrOrder" name="strOrder" value="" style="display: none;"></input>
+                    <button type="submit" onclick="ThanhToanCheck()" name="btnOrder" class="btn btn-success">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+                        </svg>
+                        Thanh Toán
+                    </button>
+                </form>
+                <form action="http://localhost/btl_web/order/HuyOrder" id="btnHuy" method="post">
+                    <button type="submit" onclick="confirmHuy()" name="" class="btn btn-danger" style="margin-left: 26px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
+                            <path fill="currentColor" d="M7 3h2a1 1 0 0 0-2 0ZM6 3a2 2 0 1 1 4 0h4a.5.5 0 0 1 0 1h-.564l-1.205 8.838A2.5 2.5 0 0 1 9.754 15H6.246a2.5 2.5 0 0 1-2.477-2.162L2.564 4H2a.5.5 0 0 1 0-1h4Zm1 3.5a.5.5 0 0 0-1 0v5a.5.5 0 0 0 1 0v-5ZM9.5 6a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 1 0v-5a.5.5 0 0 0-.5-.5Z" />
+                        </svg>
+                        Hủy Order
+                    </button>
+                </form>
+            </div>
             <div id="ThanhToan"><span id="tongThanhToan"></span></div>
         <?php endif ?>
     </div>
@@ -199,7 +218,7 @@ if (!isset($_SESSION['user'])) {
                     <div class="soLuong lablecss txt_center"><?php echo $orderRow['TongSL'] ?></div>
                     <div class="SLkho lablecss txt_center"><?php echo $orderRow['soLuongKho'] ?></div>
                     <span class="thanhTien lablecss txt_center"><?php echo ($orderRow['TongSL'] * $orderRow['giaSanPham'])  ?></span>
-                    <div class="btnSua">
+                    <div class="btn_huyOrder btn_sua_item">
                         <a href="http://localhost/btl_web/order/deteOrder/<?php echo $orderRow['productID'] ?>">
                             <button type="button" class="btn btn-warning btn_huy_item btn_huyOrder">
                                 Sửa
@@ -216,5 +235,8 @@ if (!isset($_SESSION['user'])) {
 
 </div>
 <script>
-    var p1 = "success";
+
+    function suaSLDat(){
+        var a = document.getElementsByClassName("")
+    }
 </script>

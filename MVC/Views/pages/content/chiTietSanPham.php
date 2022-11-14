@@ -9,6 +9,7 @@ $sanpham = mysqli_fetch_assoc($data['data']);
         min-height: 700px;
         display: flex;
         justify-content: center;
+        margin-left: 110px;
 
     }
 
@@ -34,6 +35,7 @@ $sanpham = mysqli_fetch_assoc($data['data']);
 
 
     .wrap_detail {
+        margin-left: 4%;
         margin-top: 6%;
         display: flex;
         justify-content: flex-start;
@@ -63,6 +65,7 @@ $sanpham = mysqli_fetch_assoc($data['data']);
 
     .moTaSP {
         margin-top: 6%;
+        max-width: 666px;
     }
 
     .giaTien {
@@ -74,6 +77,7 @@ $sanpham = mysqli_fetch_assoc($data['data']);
         font-style: initial;
         text-align: right;
     }
+
 
     .btnMua {
         color: chocolate;
@@ -89,7 +93,7 @@ $sanpham = mysqli_fetch_assoc($data['data']);
 
     .btnMua:hover {
         transition: all 0.4s;
-        background: linear-gradient(#ee4d2d, #ff7337);
+        background: linear-gradient(134deg, #ed93a0, #7f4782);
         color: white;
 
     }
@@ -98,14 +102,21 @@ $sanpham = mysqli_fetch_assoc($data['data']);
         font-size: 14px;
         font-weight: 600;
     }
+
+    .giaSP::before {
+        content: "Giá: ";
+    }
+
+    .giaSP::after {
+        content: " VND";
+
+    }
+
+    #txtSLKho::before {
+        content: "Số lượng kho: ";
+    }
 </style>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-</head>
 
 <body>
     <div class="wrap_item">
@@ -120,32 +131,54 @@ $sanpham = mysqli_fetch_assoc($data['data']);
             </div>
         <?php endif ?>
         <div class="wrap_detail">
-            <div class="title">
-                <?php echo $sanpham['tenSanPham'] ?>
-            </div>
-            <div class="giaTien">
-                <span class="badge badge-success"><?php echo 'GIÁ:' . $sanpham['giaSanPham'] ?></span>
-            </div>
-            <div class="moTaSP"><label class="lablecss" for="">Mô tả sản phầm: </label>
+            <form action="http://localhost/btl_web/order/addMultiProduct" name="formDatHang" method="post" onsubmit="return validateFormMuaHang()">
+                <div class="title">
+                    <?php echo $sanpham['tenSanPham'] ?>
+                    <input type="text" name="txtIDproduct" value=" <?php echo $sanpham['productID'] ?>" style="display:none">
+                </div>
+                <div class="giaTien">
+                    <span class="badge badge-warning giaSP "><?php echo $sanpham['giaSanPham'] ?></span>
+                </div>
+                <div class="moTaSP"><label class="lablecss" for="">Mô tả sản phầm: </label>
 
-                <?php echo $sanpham['moTaSanPham'] ?>
-                <br>
+                    <?php echo $sanpham['moTaSanPham'] ?>
+                    <br>
 
-                <label for="" class="lablecss">Xuất xứ: &nbsp;</label><?php echo $sanpham['xuatXu'] ?>
-            </div>
+                    <label for="" class="lablecss">Xuất xứ: &nbsp;</label><?php echo $sanpham['xuatXu'] ?>
+                </div>
 
-            <div class="soLuong">
-                <label for="" class="lablecss">Số lượng kho: </label> <?php echo $sanpham['soLuongKho'] ?>
-            </div>
-            <div class="slDat">
-                <label for="" class="lablecss">Số Lượng mua&nbsp; &nbsp;</label>
-                <input type="number" name="" id="" style="">
-            </div>
-            <div class="btnDat">
-                <button class="btnMua">Đặt hàng</button> &nbsp; <button class="btnMua">Thêm vào giỏ </button>
-            </div>
+                <div class="soLuong">
+                    <label for="" id="txtSLKho" class="lablecss"><?php echo $sanpham['soLuongKho'] ?></label>
+                </div>
+                <div class="slDat">
+                    <label for="" class="lablecss">Số Lượng mua&nbsp; &nbsp;</label>
+                    <input type="number" placeholder="Số lượng" name="txtSLMua" aria-required="true" style="max-width: 90px; border: 0; box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;">
+                </div>
+                <div class="btnDat">
+                    <button class="btnMua" type="submit">Đặt hàng</button> &nbsp;
+                </div>
+            </form>
         </div>
     </div>
 </body>
 
 </html>
+
+<script>
+    function validateFormMuaHang() {
+        var b = Number.parseInt(document.getElementById('txtSLKho').innerText);
+        let a = document.forms["formDatHang"]["txtSLMua"].value;
+        if (a == "") {
+            alert("Bạn chưa nhập số lượng Mua rồi");
+            return false;
+        }
+        if (a > b) {
+            alert("Kho thiếu hàng rồi");
+            return false;
+        } else if (confirm(`Bạn chắc chắn muốn đặt số lượng sản phẩm là: ${a} chứ`)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>

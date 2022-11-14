@@ -38,7 +38,7 @@
         }
 
         .imgItem {
-            border-top: solid #fff;
+            border-bottom: solid #fff;
             max-width: 220px;
             max-height: 200px;
             min-width: 220px;
