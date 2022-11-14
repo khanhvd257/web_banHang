@@ -125,10 +125,6 @@ if (!isset($_SESSION['user'])) {
         text-align: center;
     }
 
-    .btn_huy_item {
-        transform: translateX(50%);
-    }
-
     #btnThanhToan {
         display: none;
     }
@@ -163,6 +159,12 @@ if (!isset($_SESSION['user'])) {
                     </svg>
                     Thanh Toán <span id="soLuongCheck"></span>
                 </button>
+                <button type="submit" onclick="ThanhToanCheck()" name="btnOrder" class="btn btn-success">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
+                        <path fill="currentColor" d="M7 3h2a1 1 0 0 0-2 0ZM6 3a2 2 0 1 1 4 0h4a.5.5 0 0 1 0 1h-.564l-1.205 8.838A2.5 2.5 0 0 1 9.754 15H6.246a2.5 2.5 0 0 1-2.477-2.162L2.564 4H2a.5.5 0 0 1 0-1h4Zm1 3.5a.5.5 0 0 0-1 0v5a.5.5 0 0 0 1 0v-5ZM9.5 6a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 1 0v-5a.5.5 0 0 0-.5-.5Z" />
+                    </svg>
+                    Hủy Order <span id="soLuongCheck"></span>
+                </button>
             </form>
             <div id="ThanhToan"><span id="tongThanhToan"></span></div>
         <?php endif ?>
@@ -179,7 +181,7 @@ if (!isset($_SESSION['user'])) {
                 <div class="soLuong lablecs txt_center">SỐ LƯỢNG MUA</div>
                 <div class="SLkho lablecs txt_center">SỐ LƯỢNG KHO</div>
                 <div class="thanhTien lablecs txt_center">THÀNH TIỀN</div>
-                <div class="btn_huyOrder lablecs txt_center">HỦY ORDER</div>
+                <div class="btn_huyOrder lablecs txt_center">SỬA ORDER</div>
             </div>
             <?php while ($orderRow = mysqli_fetch_assoc($data['dataOrder'])) : ?>
                 <div class="container_Item">
@@ -197,10 +199,10 @@ if (!isset($_SESSION['user'])) {
                     <div class="soLuong lablecss txt_center"><?php echo $orderRow['TongSL'] ?></div>
                     <div class="SLkho lablecss txt_center"><?php echo $orderRow['soLuongKho'] ?></div>
                     <span class="thanhTien lablecss txt_center"><?php echo ($orderRow['TongSL'] * $orderRow['giaSanPham'])  ?></span>
-                    <div class="btn_huyOrder">
+                    <div class="btnSua">
                         <a href="http://localhost/btl_web/order/deteOrder/<?php echo $orderRow['productID'] ?>">
-                            <button type="button" class="btn btn-danger btn_huy_item">
-                                HỦY ĐẶT
+                            <button type="button" class="btn btn-warning btn_huy_item btn_huyOrder">
+                                Sửa
                             </button>
                         </a>
 
