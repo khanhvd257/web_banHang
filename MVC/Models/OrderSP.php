@@ -33,7 +33,7 @@ class OrderSp extends ConnectDB
     {
         $soLuongKhoSau= $soLuongKhoCur - $soLuongMua;
         //set trang thai thanh toan
-        $sql1 = "UPDATE `tblOrder` SET `soLuong` = '$soLuongMua', `productID` = '$idProduct',  `status` = '1' WHERE `userID` = '$userID'";
+        $sql1 = "UPDATE `tblOrder` SET `soLuong` = '$soLuongMua',  `status` = '1' WHERE `userID` = '$userID' AND `productID` = '$idProduct'";
         $kq1 = mysqli_query($this->con, $sql1);
         //set lai so luong kho con
         $sql0 = "UPDATE `tblProducts` SET `soLuongKho`='$soLuongKhoSau' WHERE productID = '$idProduct'";

@@ -2,7 +2,7 @@
 class SanPham extends ConnectDB{
 
     public function getAll(){
-        $sql = "SELECT * FROM tblProducts ";
+        $sql = "SELECT * FROM `tblProducts` ORDER BY soLuongKho DESC";
         $kq=mysqli_query($this->con,$sql);
         return $kq;
     }

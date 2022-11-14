@@ -9,8 +9,14 @@ class Auth extends controller
         $this->user = $this->model('KhachHang');
     }
     function index()
+
     {
-        $this->render('login/LoginForm', []);
+        if (isset($_SESSION['user'])) {
+            header('Location: /BTL_web');
+        } else {
+
+            $this->render('login/LoginForm', []);
+        }
     }
 
     public function login()
@@ -25,7 +31,7 @@ class Auth extends controller
             $count =  mysqli_num_rows($result);
             if ($count > 0) {
                 session_start();
-                $_SESSION['user'] = $kq;        
+                $_SESSION['user'] = $kq;
                 //session login = 1 roleName(quyen han) = admin va nguoc lai;
                 // nên chỉ rõ đương dẫn cha nếu thư mục redirect thấp hơn ;
                 header('Location: /BTL_WEB/');

@@ -180,10 +180,10 @@ if (!isset($_SESSION['user'])) {
         <?php if (mysqli_num_rows($data['dataOrder']) > 0) : ?>
             <div class="container_order_button">
                 <form action="http://localhost/btl_web/order/thanhToan" id="btnThanhToan" name="formDatHang" method="post" onsubmit="return validateformThanhToan_GioHang()">
-                    <input id="arrOrder" name="strOrder" value="" style="display: none;"/>
-                    <input id="arrOrderSL" name="strOrderSL" value="" style="display: none;"/>
-                    <input id="arrOrderKho" name="strOrderKho" value="" style="display: none;"/>
-                                        <button type="submit" name="btnOrder" class="btn btn-success">
+                    <input id="arrOrder" name="strOrder" value="" style="display: none;" />
+                    <input id="arrOrderSL" name="strOrderSL" value="" style="display: none;" />
+                    <input id="arrOrderKho" name="strOrderKho" value="" style="display: none;" />
+                    <button type="submit" name="btnOrder" class="btn btn-success">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
                             <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
                         </svg>
@@ -229,15 +229,9 @@ if (!isset($_SESSION['user'])) {
                     <?php endif ?>
                     <div class="tenSP lablecss"><?php echo $orderRow['tenSanPham'] ?></div>
                     <div class="giaSp lablecss  txt_center"><?php echo $orderRow['giaSanPham'] ?></div>
-                    <input disabled type="number" class="soLuong lablecss txt_center txtSoLuongOrder" onchange="getValueChuoiTT()" value="<?php echo $orderRow['TongSL'] ?>"></input>
+                    <input disabled type="number" class="soLuong lablecss txt_center txtSoLuongOrder" oninput="getValueChuoiTT()" value="<?php echo $orderRow['TongSL'] ?>"></input>
                     <input disabled class="SLkho_GioHang  SLkho lablecss txt_center" value="<?php echo $orderRow['soLuongKho'] ?>" />
-                    <span class="thanhTien lablecss txt_center"><?php echo ($orderRow['TongSL'] * $orderRow['giaSanPham'])  ?></span>
-                    <!-- <div class="btn_EditOrder btn_sua_item">
-                        <button type="button" class="btn btn-warning btn_huy_item btn_EditOrder">
-                            Sửa
-                        </button>
-
-                    </div> -->
+                    <span class="thanhTien txthanhTien lablecss txt_center"><?php echo ($orderRow['TongSL'] * $orderRow['giaSanPham'])  ?></span>
                 </div>
             <?php endwhile ?>
         </div>
@@ -251,8 +245,12 @@ if (!isset($_SESSION['user'])) {
         var a = document.getElementsByClassName("txtSoLuongOrder");
         var b = document.getElementsByClassName("SLkho_GioHang");
         for (var i = 0; i < a.length; i++) {
-            if (a[i].value > b[i].value || a[i].value < 1) {
-                alert("số lượng không hợp lệ");
+            if (a <= 0) {
+                alert("Số luọng phải lớn hơn 0");
+                return false;
+            }
+            if (a[i].value > b[i].value) {
+                alert("Hàng lớn không đủ");
                 return false;
             } else if (confirm(`Bạn chắc chắn muốn đặt sản phẩm chứ`)) {
                 return true;
@@ -261,6 +259,18 @@ if (!isset($_SESSION['user'])) {
             }
 
         }
+
+    }
+
+    function tongTienSP() {
+        var a = document.getElementsByClassName("txtSoLuongOrder");
+        var b = document.getElementsByClassName("giaSp");
+        var c = document.getElementsByClassName("txthanhTien");
+        for (var i = 0; i < a.length; i++) {
+            let d = Number.parseFloat(b[i + 1].innerHTML) * a[i].value;
+            c[i].innerHTML = d;
+        }
+
 
     }
 
@@ -284,7 +294,7 @@ if (!isset($_SESSION['user'])) {
         var str0 = arrIDProduct.join('_');
         var str1 = arrSLProduct.join('_');
         var str2 = arrSLKho.join('_');
-        console.log(str0 , "id");
+        console.log(str0, "id");
         console.log(str1, "sl");
         console.log(str2, "kho");
         document.getElementById('arrOrder').value = str0;
@@ -293,5 +303,23 @@ if (!isset($_SESSION['user'])) {
         console.log(document.getElementById('arrOrder').value, "arrr");
         console.log(document.getElementById('arrOrderSL').value, "arrr1");
         console.log(document.getElementById('arrOrderKho').value, "arrr2");
+        tongTienSP();
+        getTT();
+    }
+
+    function getTT() {
+        let inputElems = document.getElementsByClassName('checkOrder'),
+            count = 0,
+            total = 0;
+        var c = document.getElementsByClassName("txthanhTien");
+        for (var i = 0; i < inputElems.length; i++) {
+            if (inputElems[i].checked == true) {
+                count++;
+                total += parseFloat(c[i].innerHTML);
+            }
+        }
+        var docTien = new DocTienBangChu();
+        document.getElementById('tongThanhToan').innerText = "Tổng thanh toán " + count + " (SP): " + formatCash(total) + " VND " + " (" + docTien.doc(total) + " )";
+        console.log("111")
     }
 </script>

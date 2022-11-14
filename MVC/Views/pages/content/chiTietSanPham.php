@@ -69,6 +69,7 @@ $sanpham = mysqli_fetch_assoc($data['data']);
     }
 
     .giaTien {
+        display: flex;
         margin-top: 6%;
         font-size: 22px;
         font-family: monospace;
@@ -177,6 +178,10 @@ $sanpham = mysqli_fetch_assoc($data['data']);
         let a = document.forms["formDatHang"]["txtSLMua"].value;
         if (a == "") {
             alert("Bạn chưa nhập số lượng Mua rồi");
+            return false;
+        }
+        if(a<=0){
+            alert("Số luọng phải lớn hơn 0");
             return false;
         }
         if (a > b) {
