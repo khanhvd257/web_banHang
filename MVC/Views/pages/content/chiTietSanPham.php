@@ -151,11 +151,18 @@ $sanpham = mysqli_fetch_assoc($data['data']);
                     <label for="" id="txtSLKho" class="lablecss"><?php echo $sanpham['soLuongKho'] ?></label>
                 </div>
                 <div class="slDat">
-                    <label for="" class="lablecss">Số Lượng mua&nbsp; &nbsp;</label>
-                    <input type="number" placeholder="Số lượng" name="txtSLMua" aria-required="true" style="max-width: 90px; border: 0; box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;">
+                    <?php if ($sanpham['soLuongKho'] != '0') : ?>
+                        <label for="" class="lablecss">Số Lượng mua&nbsp; &nbsp;</label>
+                        <input type="number" placeholder="Số lượng" name="txtSLMua" aria-required="true" style="max-width: 90px; border: 0; box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;">
+                    <?php endif ?>
                 </div>
                 <div class="btnDat">
-                    <button class="btnMua" type="submit">Đặt hàng</button> &nbsp;
+                    <?php if ($sanpham['soLuongKho'] == '0') : ?>
+                        <button type="button" class="btn btn-danger">Đã cháy hàng</button>
+                    <?php endif ?>
+                    <?php if ($sanpham['soLuongKho'] != '0') : ?>
+                        <button class="btnMua" type="submit">Đặt hàng</button> &nbsp;
+                    <?php endif ?>
                 </div>
             </form>
         </div>

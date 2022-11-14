@@ -14,6 +14,7 @@
         }
 
         .container_item {
+            position: relative;
             box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
             margin: 20px 20px;
             display: flex;
@@ -106,6 +107,20 @@
             font-family: monospace;
         }
 
+        .hetHang {
+            text-shadow: 5px 3px 4px #202020;
+            margin-top: 12px;
+            text-align: center;
+            white-space: nowrap;
+            max-height: 20px;
+            width: 100%;
+            font-size: 18px;
+            text-transform: capitalize;
+            font-family: monospace;
+            text-decoration: line-through;
+
+        }
+
         .giaSP {
             font-size: 14px;
             text-align: center;
@@ -174,7 +189,7 @@
 
 <body>
     <div class="wrap_container">
-        
+
         <?php while ($sanpham = mysqli_fetch_assoc($data['dataProduct'])) : ?>
             <div class="container_item">
                 <?php if ($sanpham['pathImage'] == "") : ?>
@@ -190,14 +205,27 @@
                     </div>
                 <?php endif ?>
                 <div class="tenSpham_container">
-                    <div class="tenSP"><?php echo $sanpham['tenSanPham'] ?></div>
+                    <?php if ($sanpham['soLuongKho'] == "0") : ?>
+                        <div class="hetHang"><?php echo $sanpham['tenSanPham'] ?></div>
+                    <?php endif ?>
+                    <?php if ($sanpham['soLuongKho'] != '0') : ?>
+                        <div class="tenSP"><?php echo $sanpham['tenSanPham'] ?></div>
+                    <?php endif ?>
+
                     <div class="motaItem">
                         <span class="badge badge-warning giaSP "><?php echo $sanpham['giaSanPham'] ?></span>
                     </div>
                     <div class="motaItem">
-                        <a href="http://localhost/btl_web/order/orderSingle/<?php echo $sanpham['productID'] ?>">
-                            <button class="button-hover-addcart button"><span>Mua ngay</span><i class="fa fa-shopping-cart"></i></button>
-                        </a>
+                        <?php if ($sanpham['soLuongKho'] != '0') : ?>
+                            <a href="http://localhost/btl_web/order/orderSingle/<?php echo $sanpham['productID'] ?>">
+                                <button class="button-hover-addcart button"><span>Mua ngay</span><i class="fa fa-shopping-cart"></i></button>
+                            </a>
+                        <?php endif ?>
+                        <?php if ($sanpham['soLuongKho'] == '0') : ?>
+                            <button type="button" class="btn btn-danger">Đã cháy hàng</button>
+                        <?php endif ?>
+
+
                     </div>
                 </div>
             </div>
