@@ -245,9 +245,12 @@ if (!isset($_SESSION['user'])) {
         var a = document.getElementsByClassName("txtSoLuongOrder");
         var b = document.getElementsByClassName("SLkho_GioHang");
         for (var i = 0; i < a.length; i++) {
-            if (a <= 0) {
+            if (a[i].value <= 0) {
                 alert("Số luọng phải lớn hơn 0");
                 return false;
+            }
+            if(a[i].value == ""){
+                alert("Nhập số lượng");
             }
             if (a[i].value > b[i].value) {
                 alert("Hàng lớn không đủ");

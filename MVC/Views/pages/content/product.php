@@ -184,6 +184,16 @@
         .button-hover-addcart:hover .fa {
             right: 0px;
         }
+
+        .notFound {
+            text-align: center;
+            transform: translateY(168px);
+            font-family: fantasy;
+            font-weight: 900;
+            letter-spacing: 8px;
+            color: #8f5387;
+
+        }
     </style>
 </head>
 
@@ -192,6 +202,7 @@
 
         <?php while ($sanpham = mysqli_fetch_assoc($data['dataProduct'])) : ?>
             <div class="container_item">
+
                 <?php if ($sanpham['pathImage'] == "") : ?>
                     <div class="imgItem_container">
                         <a href="http://localhost/btl_web/product/detail/<?php echo $sanpham['productID'] ?>">
@@ -228,8 +239,14 @@
 
                     </div>
                 </div>
+
             </div>
         <?php endwhile ?>
+        <?php if (mysqli_num_rows($data['dataProduct']) == 0) : ?>
+            <H4 class="notFound">
+               Không tìm thấy sản phẩm tìm kiếm nào
+            </H4>
+        <?php endif ?>
     </div>
 </body>
 

@@ -37,24 +37,25 @@ $danhmuc = mysqli_query($conn, $sql);
 			<ul class="navbar_user ">
 				<div class="searchFrom">
 					<form action="http://localhost/BTL_WEB/product/searchName" method="post" name="formSearch">
-						<input name="txtSearchName" type="text" style="border: none; box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px; font-family: fangsong;" placeholder="Tìm kiếm sản phẩm">
+						<input name="txtSearchName" type="text" style="border: none; box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px; font-family: fangsong; border-radius:6px" placeholder="Tìm kiếm sản phẩm">
 						<li><button type="submit" class=" button_Search" name="btnSearchProduct"><i class="fa fa-search" aria-hidden="true"></i></button>
 					</form>
 				</div>
 				<li class="checkout">
 					<a href="http://localhost/BTL_WEB/order">
 						<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+						<?php
+							if (isset($_SESSION['user'])) : ?>
 						<span id="checkout_items" class="checkout_items">
 							<?php
-							if (isset($_SESSION['user'])) {
 								$idUser = $dataUser['userID'];
 								$sql = "SELECT *, SUM(soLuong) as TongSL FROM tblOrder, tblProducts, tblUsers WHERE tblUsers.userID = tblOrder.userID 
 								AND tblProducts.productID = tblOrder.productID AND tblOrder.userID = '$idUser' AND tblOrder.status='0' GROUP BY tblProducts.productID ORDER BY tblOrder.orderID DESC";
 								$kq = mysqli_query($conn, $sql);
 								$countOrder = mysqli_num_rows($kq);
 								echo $countOrder;
-							}
 							?>
+							<?php endif?>
 						</span>
 					</a>
 				</li>
@@ -194,6 +195,7 @@ $danhmuc = mysqli_query($conn, $sql);
 					</div>
 				</div>
 			<?php endif ?>
+
 			<div class="content_Render">
 				<?php
 				include_once './MVC/Views/pages/' . $data['page'] . '.php';

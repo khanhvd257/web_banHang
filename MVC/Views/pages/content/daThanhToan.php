@@ -186,9 +186,9 @@ if (!isset($_SESSION['user'])) {
                         <img class="imgItem lablecss" src="http://localhost/BTL_WEB/uploads/<?php echo $orderRow['pathImage'] ?>" alt="gif">
                     <?php endif ?>
                     <div class="tenSP lablecss"><?php echo $orderRow['tenSanPham'] ?></div>
-                    <div class="giaSp lablecss  txt_center"><?php echo $orderRow['giaSanPham'] ?></div>
+                    <div class="giaSp giaSP lablecss  txt_center"><?php echo $orderRow['giaSanPham'] ?></div>
                     <div class="soLuong lablecss txt_center"><?php echo $orderRow['TongSL'] ?></div>
-                    <input type="text" class="thanhTientxt lablecss txt_center" disabled="disabled" value="<?php echo ($orderRow['TongSL'] * $orderRow['giaSanPham'])  ?>"></input>
+                    <input type="text" class="thanhTientxt giaSP lablecss txt_center" disabled="disabled" value="<?php echo ($orderRow['TongSL'] * $orderRow['giaSanPham'])  ?>"></input>
                     <div class="ngayOrder lablecss txt_center"><?php echo $orderRow['ngayOrder'] ?></div>
                 </div>
             <?php endwhile ?>

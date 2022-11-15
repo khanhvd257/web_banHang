@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
+  <title>Register</title>
   <link rel="stylesheet" type="text/css" href="http://localhost/BTL_WEB/public/plugins/bootstrap-5.2.2-dist/css/bootstrap.min.css">
   <style>
     .header-form {
@@ -43,34 +43,37 @@
               <div class="col-md-6 col-lg-7 d-flex align-items-center">
                 <div class="card-body p-4 p-lg-5 text-black">
 
-                  <form method="post" action="http://localhost/BTL_WEB/auth/login">
+                  <form method="post" action="http://localhost/BTL_WEB/auth/HandleRegister" name="formRegister" onsubmit="return validateFormRegister()">
 
                     <div class="d-flex align-items-center mb-3 pb-1">
                       <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
                       <span class="h1 fw-bold mb-0">Shop quần áo KDCP</span>
                     </div>
 
-                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account</h5>
-
+                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Đăng kí Tài khoản mới</h5>
                     <div class="form-outline mb-4">
-                      <label class="form-label" for="form2Example17">Username</label>
-                      <input id="form2Example17" class="form-control form-control-lg" name="txtUser" value="<?php echo $data['user']?>"/>
-
+                      <label class="form-label" for="form2Example17">Tài khoản đăng nhập</label>
+                      <input id="form2Example17" class="form-control form-control-lg" name="txtUserRe" />
                     </div>
-
                     <div class="form-outline mb-4">
-                      <label class="form-label" for="form2Example27">Password</label>
-                      <input type="password" id="form2Example27" class="form-control form-control-lg" name="txtPassword" value="<?php echo $data['pass']?>" />
+                      <label class="form-label" for="form2Example17">Họ và tên</label>
+                      <input id="form2Example17" class="form-control form-control-lg" name="txtFullName" />
+                    </div>
+                    <div class="form-outline mb-4">
+                      <label class="form-label" for="form2Example27">Mật khẩu đăng nhập</label>
+                      <input type="password" id="form2Example27" class="form-control form-control-lg" name="txtPasswordRe" />
+                    </div>
+                    <div class="form-outline mb-4">
+                      <label class="form-label" for="form2Example27">Nhập lại Mật khẩu</label>
+                      <input type="password" id="form2Example27" class="form-control form-control-lg" name="txtRepeatPassword">
                     </div>
                     <div style="margin-bottom: 10px; color:red" class="lblThongBao">
-                      <span ><?php echo $data['thongBao']?></span>
+                      <span><?php echo $data['thongBao'] ?></span>
                     </div>
                     <div class="pt-1 mb-4">
-                      <button class="btn btn-dark btn-lg btn-block" type="submit" name="btnLogin">Login</button>
+                      <button class="btn btn-dark btn-lg btn-block" name="btnRegister">Đăng kí</button>
                     </div>
-
-                    <a class="small text-muted" href="#!">Forgot password?</a>
-                    <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a href="http://localhost/BTL_WEB/auth/register" style="color: #393f81;">Register here</a></p>
+                    <p class="mb-5 pb-lg-2" style="color: #393f81;">Đã có tài khoản &nbsp;&nbsp;<a href="http://localhost/BTL_WEB/auth" style="color: #393f81;">Đăng nhập ngay</a></p>
                     <a href="http://localhost/BTL_WEB" class="small text-muted">Trang chủ</a>
                     <a href="#!" class="small text-muted">Privacy policy</a>
                   </form>
@@ -85,6 +88,28 @@
   </section>
   <script src="http://localhost/BTL_WEB/public/Css/bootstrap4/bootstrap.min.js"></script>
 </body>
-
+<script>
+  function validateFormRegister() {
+    var a = document.forms.formRegister.txtPasswordRe.value;
+    var b = document.forms.formRegister.txtRepeatPassword.value;
+    var c= document.forms.formRegister.txtFullName.value;
+    if (a === "") {
+      alert("Vui lòng nhập mật khẩu");
+      return false;
+    }
+    if (c === "") {
+      alert("Vui lòng nhập Họ tên");
+      return false;
+    }
+    if (b === "") {
+      alert("Vui lòng xác nhận mật khẩu");
+      return false;
+    }
+    if (a !== b) {
+      alert("mật khẩu không khớp, kiểm tra lại");
+      return false;
+    }
+  }
+</script>
 
 </html>
