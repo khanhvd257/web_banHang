@@ -149,7 +149,7 @@ if (!isset($_SESSION['user'])) {
         <div class="TongMH">
 
             <?php if (mysqli_num_rows($data['dataThanhToan']) == 0) : ?>
-                <h2>Không có sản phẩm để thanh toán</h2>
+                <h2>Không có sản phẩm nào đã thanh toán</h2>
                 <br>
                 <img style="max-width: 400px;" src="http://localhost/btl_web/public/img/96758-empty-cart.gif" alt="">
                 <br>

@@ -248,7 +248,7 @@ section {
 	top: 0;
 	left: 0;
 	width: 100%;
-	background: linear-gradient(200deg, #ed93a0, #7f4782);
+	background: linear-gradient(to right, #ee5a6f, #f29263);
 	z-index: 10;
 }
 
@@ -587,14 +587,15 @@ section {
 .navbar_user li a:hover {
 	color: #b5aec4;
 }
-.button_Search{
+
+.button_Search {
 	border: none;
-    margin: 8px;
-    transform: translateX(1px);
-    font-size: 20px;
-    cursor: pointer;
-    background: transparent;
-    color: white;
+	margin: 8px;
+	transform: translateX(1px);
+	font-size: 20px;
+	cursor: pointer;
+	background: transparent;
+	color: white;
 }
 
 .checkout a {
@@ -1288,7 +1289,7 @@ NAV_MENU
 	color: white;
 	font-weight: 800;
 	background: #834b84;
-	background: linear-gradient(134deg, #ed93a0, #7f4782);
+	background: linear-gradient(to right, #ee5a6f, #f29263);
 	width: 220px;
 	text-align: center;
 	height: 60px;
@@ -1338,7 +1339,8 @@ NAV_MENU
 11. Footer
 *********************************/
 .chan_trang {
-	Background: linear-gradient(#ee8d9af2, #4d2577);
+
+	background: linear-gradient(to right, #ee5a6f, #f29263);
 }
 
 .footer_nav_container {
@@ -1417,7 +1419,7 @@ NAV_MENU
 
 .cs_innerCarousel {
 	min-width: 1274px;
-    margin-left: -40px
+	margin-left: -40px
 }
 
 .cs_activeCarou {
