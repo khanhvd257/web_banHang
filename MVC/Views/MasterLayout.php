@@ -12,12 +12,13 @@ $danhmuc = mysqli_query($conn, $sql);
 <html lang="en">
 
 <head>
-	<title> SHOP</title>
+	<title>SHOP VẬT PHẨM</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="description" content="Colo Shop Template">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="http://localhost/BTL_WEB/public/Css/bootstrap4/bootstrap.min.css">
+	<link rel="icon" href="http://localhost/BTL_WEB/public/img/logoShop.png">
 	<link rel="stylesheet" href="http://localhost/BTL_WEB/public/Css/main_styles.css">
 	<link rel="stylesheet" href="http://localhost/BTL_WEB/public/plugins/font-awesome-4.7.0/css/font-awesome.css">
 </head>
@@ -166,7 +167,7 @@ $danhmuc = mysqli_query($conn, $sql);
 			</nav>
 			<?php if (isset($_SESSION['page']))
 				if ($_SESSION['page'] == "Home") : ?>
-				<div class="container_carousel">
+				<div class="container_carousel" >
 					<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
 						<ol class="carousel-indicators">
 							<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>

@@ -1411,6 +1411,7 @@ NAV_MENU
 
 
 .container_carousel {
+	z-index: 0;
 	max-height: 305px;
 	align-self: center;
 	margin-top: 20px;
