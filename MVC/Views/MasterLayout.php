@@ -46,18 +46,18 @@ $danhmuc = mysqli_query($conn, $sql);
 					<a href="http://localhost/BTL_WEB/order">
 						<i class="fa fa-shopping-cart" aria-hidden="true"></i>
 						<?php
-							if (isset($_SESSION['user'])) : ?>
-						<span id="checkout_items" class="checkout_items">
-							<?php
+						if (isset($_SESSION['user'])) : ?>
+							<span id="checkout_items" class="checkout_items">
+								<?php
 								$idUser = $dataUser['userID'];
 								$sql = "SELECT *, SUM(soLuong) as TongSL FROM tblOrder, tblProducts, tblUsers WHERE tblUsers.userID = tblOrder.userID 
 								AND tblProducts.productID = tblOrder.productID AND tblOrder.userID = '$idUser' AND tblOrder.status='0' GROUP BY tblProducts.productID ORDER BY tblOrder.orderID DESC";
 								$kq = mysqli_query($conn, $sql);
 								$countOrder = mysqli_num_rows($kq);
 								echo $countOrder;
-							?>
-							<?php endif?>
-						</span>
+								?>
+							<?php endif ?>
+							</span>
 					</a>
 				</li>
 				</li>
@@ -160,14 +160,16 @@ $danhmuc = mysqli_query($conn, $sql);
 
 						<?php if (isset($_SESSION['pageSub'])) : ?>
 							<li class="breadcrumb-item active" aria-current="page">
-								<?php echo $_SESSION['pageSub'] ?></li>
+								<?php echo $_SESSION['pageSub'] ?>
+							</li>
 						<?php endif ?>
 					<?php endif ?>
 				</ol>
+
 			</nav>
 			<?php if (isset($_SESSION['page']))
 				if ($_SESSION['page'] == "Home") : ?>
-				<div class="container_carousel" >
+				<div class="container_carousel">
 					<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
 						<ol class="carousel-indicators">
 							<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>

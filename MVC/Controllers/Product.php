@@ -7,6 +7,7 @@ class Product extends controller
     {
         unset($_SESSION['pageSub']);
         $this->sanpham = $this->model('SanPham');
+        $this->danhmuc = $this->model('DanhMuc');
     }
     public function Detail($id)
     {
@@ -25,16 +26,37 @@ class Product extends controller
     public function DanhMuc($id)
     {
 
-        //'ấy ra tên danh mục
+        //ấy ra tên danh mục
         $this->danhmuc = $this->model('DanhMuc');
         $tenDM = $this->danhmuc->getByID($id);
         $DMuc = mysqli_fetch_assoc($tenDM);
         $result = $this->sanpham->getByCategory($id);
         $_SESSION['page'] = $DMuc['tenDanhMuc'];
+        $idDM =  $DMuc['danhMucID'];
         $result = $this->sanpham->getByCategory($id);
         $this->view('MasterLayout', [
             'page' => 'content/danhMuc',
-            'data' => $result
+            'data' => $result,
+            'idDanhMuc' =>  $idDM 
+        ]);
+    }
+
+
+    //tham số Order nhận DESC OR ASC
+    public function SortDanhMuc($id)
+    {
+
+        $order = $_POST['sortProduct'];
+        //'ấy ra tên danh mục
+        $tenDM = $this->danhmuc->getByID($id);
+        $DMuc = mysqli_fetch_assoc($tenDM);
+        $result = $this->sanpham->getByCategorySort($id,$order);
+        $_SESSION['page'] = $DMuc['tenDanhMuc'];
+        $idDM =  $DMuc['danhMucID'];
+        $this->view('MasterLayout', [
+            'page' => 'content/danhMuc',
+            'data' => $result,
+            'idDanhMuc' =>  $idDM 
         ]);
     }
 

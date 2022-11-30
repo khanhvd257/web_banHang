@@ -67,31 +67,6 @@ function DisplayBtnThanhToan() {
 }
 
 
-//Tạo chuỗi để gửi lên SERVER THANH TOAN
-function confirmHuy() {
-    if (confirm("Bạn có muốn hủy order không?")) {
-        HuyOrderHang();
-    } else {
-        alert("Không hủy thì nhớ mua nhiều hàng vào nha bạn ");
-    }
-
-}
-
-function HuyOrderHang() {
-    const arrHuy = [];
-    var inputElems = document.getElementsByClassName('checkOrder');
-    for (var i = 0; i < inputElems.length; i++) {
-        if (inputElems[i].checked == true) {
-            //id cua Product
-            arrHuy.push(inputElems[i].id);
-        }
-    }
-    var str = arrHuy.join('-');
-    document.getElementById('arrOrder').value = str;
-
-}
-
-
 function formatGiaSP() {
     const element = document.getElementsByClassName('giaSP');
     for (var i = 0; i < element.length; i++) {

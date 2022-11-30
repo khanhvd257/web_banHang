@@ -198,6 +198,17 @@
 </head>
 
 <body>
+    <div class="locSP" style="margin: 10px 47px;">
+        <form action="http://localhost/btl_web/home/sort" method="post">
+            <label class="mr-sm-2" for="locsanPham">Lọc sản Phẩm: </label>
+            <select class="custom-select mr-sm-2" id="locsanPham" name="sortProduct">
+                <option value="ASC" selected>Giá Tiền...</option>
+                <option value="ASC">Giá Tiền Tăng</option>
+                <option value="DESC">Giá tiền Giảm</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Lọc</button>
+        </form>
+    </div>
     <div class="wrap_container">
 
         <?php while ($sanpham = mysqli_fetch_assoc($data['dataProduct'])) : ?>
@@ -244,7 +255,7 @@
         <?php endwhile ?>
         <?php if (mysqli_num_rows($data['dataProduct']) == 0) : ?>
             <H4 class="notFound">
-               Không tìm thấy sản phẩm tìm kiếm nào
+                Không tìm thấy sản phẩm tìm kiếm nào
             </H4>
         <?php endif ?>
     </div>

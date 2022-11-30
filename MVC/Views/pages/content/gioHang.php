@@ -190,12 +190,13 @@ if (!isset($_SESSION['user'])) {
                         Thanh Toán
                     </button>
                 </form>
-                <form action="http://localhost/btl_web/order/HuyOrder" id="btnHuy" method="post" name="formHuyOrder_GioHang>
-                    <button type= " submit" onclick="confirmHuy()" class="btn btn-danger" style="margin-left: 26px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
-                        <path fill="currentColor" d="M7 3h2a1 1 0 0 0-2 0ZM6 3a2 2 0 1 1 4 0h4a.5.5 0 0 1 0 1h-.564l-1.205 8.838A2.5 2.5 0 0 1 9.754 15H6.246a2.5 2.5 0 0 1-2.477-2.162L2.564 4H2a.5.5 0 0 1 0-1h4Zm1 3.5a.5.5 0 0 0-1 0v5a.5.5 0 0 0 1 0v-5ZM9.5 6a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 1 0v-5a.5.5 0 0 0-.5-.5Z" />
-                    </svg>
-                    Hủy Order
+                <form action="http://localhost/btl_web/order/HuyOrder" id="btnHuy" method="post" name="formHuyOrder_GioHang" onsubmit="return confirmHuy()">
+                    <input id="arrOrderHuy" name="strOrder" value="" style="display: none;" />
+                    <button type="submit" class="btn btn-danger" style="margin-left: 26px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
+                            <path fill="currentColor" d="M7 3h2a1 1 0 0 0-2 0ZM6 3a2 2 0 1 1 4 0h4a.5.5 0 0 1 0 1h-.564l-1.205 8.838A2.5 2.5 0 0 1 9.754 15H6.246a2.5 2.5 0 0 1-2.477-2.162L2.564 4H2a.5.5 0 0 1 0-1h4Zm1 3.5a.5.5 0 0 0-1 0v5a.5.5 0 0 0 1 0v-5ZM9.5 6a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 1 0v-5a.5.5 0 0 0-.5-.5Z" />
+                        </svg>
+                        Hủy Order
                     </button>
                 </form>
             </div>
@@ -242,27 +243,29 @@ if (!isset($_SESSION['user'])) {
 </div>
 <script>
     function validateformThanhToan_GioHang() {
+        let inputElems = document.getElementsByClassName('checkOrder');
         var a = document.getElementsByClassName("txtSoLuongOrder");
         var b = document.getElementsByClassName("SLkho_GioHang");
-        for (var i = 0; i < a.length; i++) {
-            if (a[i].value <= 0) {
-                alert("Số luọng phải lớn hơn 0");
-                return false;
-            }
-            if(a[i].value == ""){
-                alert("Nhập số lượng");
-            }
-            if (a[i].value > b[i].value) {
-                alert("Hàng lớn không đủ");
-                return false;
-            } else if (confirm(`Bạn chắc chắn muốn đặt sản phẩm chứ`)) {
-                return true;
-            } else {
-                return false;
-            }
+        for (var i = 0; i < inputElems.length; i++) {
+            if (inputElems[i].checked == true) {
+                if (a[i].value <= 0) {
+                    alert("Số luọng phải lớn hơn 0");
+                    return false;
+                }
+                if (a[i].value == "") {
+                    alert("Nhập số lượng");
+                }
+                if (a[i].value > b[i].value) {
+                    alert("Hàng lớn không đủ");
+                    return false;
+                } else if (confirm(`Bạn chắc chắn muốn đặt sản phẩm chứ`)) {
+                    return true;
+                } else {
+                    return false;
+                }
 
+            }
         }
-
     }
 
     function tongTienSP() {
@@ -277,6 +280,8 @@ if (!isset($_SESSION['user'])) {
 
     }
 
+
+    //Tạo chuỗi truy vấn đến DB lựa chọn nhiều sản phẩm
     function getValueChuoiTT() {
         var arrIDProduct = [];
         var arrSLProduct = [];
@@ -288,7 +293,6 @@ if (!isset($_SESSION['user'])) {
         for (var i = 0; i < inputElems.length; i++) {
             if (inputElems[i].checked == true) {
                 count++;
-
                 arrIDProduct.push(inputElems[i].id);
                 arrSLProduct.push(b[i].value);
                 arrSLKho.push(c[i].value);
@@ -301,6 +305,7 @@ if (!isset($_SESSION['user'])) {
         console.log(str1, "sl");
         console.log(str2, "kho");
         document.getElementById('arrOrder').value = str0;
+        document.getElementById('arrOrderHuy').value = str0;
         document.getElementById('arrOrderSL').value = str1;
         document.getElementById('arrOrderKho').value = str2;
         console.log(document.getElementById('arrOrder').value, "arrr");
@@ -324,5 +329,15 @@ if (!isset($_SESSION['user'])) {
         var docTien = new DocTienBangChu();
         document.getElementById('tongThanhToan').innerText = "Tổng thanh toán " + count + " (SP): " + formatCash(total) + " VND " + " (" + docTien.doc(total) + " )";
         console.log("111")
+    }
+
+    //Tạo chuỗi để gửi lên SERVER THANH TOAN
+    function confirmHuy() {
+        if (confirm("Bạn có muốn hủy order không?")) {
+            return true;
+        } else {
+            alert("Không hủy thì nhớ mua nhiều hàng vào nha bạn ");
+            return false;
+        }
     }
 </script>

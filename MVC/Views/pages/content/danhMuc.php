@@ -199,7 +199,19 @@
 
 <body>
     <?php if (mysqli_num_rows($data['data']) > 0) : ?>
+        <div class="locSP" style="margin: 10px 47px;">
+            <form action="http://localhost/btl_web/product/SortDanhMuc/<?php echo $data['idDanhMuc'] ?>" method="post">
+                <label class="mr-sm-2" for="locsanPham">Lọc sản Phẩm: </label>
+                <select class="custom-select mr-sm-2" id="locsanPham" name="sortProduct">
+                    <option value="ASC" selected>Giá Tiền...</option>
+                    <option value="ASC">Giá Tiền Tăng</option>
+                    <option value="DESC">Giá tiền Giảm</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Lọc</button>
+            </form>
+        </div>
         <div class="wrap_container">
+
             <?php while ($sanpham = mysqli_fetch_assoc($data['data'])) : ?>
                 <div class="container_item">
                     <?php if ($sanpham['pathImage'] == "") : ?>

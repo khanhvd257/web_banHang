@@ -40,13 +40,11 @@ class Order extends controller
     }
 
     //click vào đặt số lượng sản phẩm 
-
     public function addMultiProduct()
     {
         if (isset($_SESSION['user'])) {
             $IdUser = $_SESSION['user']['userID'];
             $idProduct = $_POST['txtIDproduct'];
-            var_dump($idProduct);
             $soLuong = $_POST['txtSLMua'];
             $result1 = $this->order->addMultiOrder($idProduct, $soLuong, $IdUser);
             $result = $this->order->getAll($IdUser);
@@ -60,11 +58,17 @@ class Order extends controller
     }
 
     //DELE ORDER
-    public function HuyOrder($idProduct)
+    public function HuyOrder()
     {
         if (isset($_SESSION['user'])) {
             $IdUser = $_SESSION['user']['userID'];
-            $result = $this->order->deleteOrder($idProduct);
+            $idProduct = $_POST['strOrder'];
+            $arrIDproduct = explode('_', $idProduct);
+            var_dump($arrIDproduct[0]);
+            var_dump($IdUser);
+            for ($i = 0; $i < count($arrIDproduct); $i++) {
+                $this->order->deleOrder($IdUser, $arrIDproduct[$i]);
+            }
             $result1 = $this->order->getAll($IdUser);
             $this->view('MasterLayout', [
                 'page' => 'content/gioHang',
@@ -84,10 +88,9 @@ class Order extends controller
             $arrSL =  explode('_', $sl);
             $Kho = $_POST['strOrderKho'];
             $arrKho =  explode('_', $Kho);
-            var_dump($IdUser);
             for ($i = 0; $i < count($arrIDproduct); $i++) {
                 $this->order->ThanhToanSauKhiSua($arrIDproduct[$i], $arrSL[$i], $arrKho[$i], $IdUser);
-                echo $arrIDproduct[$i] ."id", $arrSL[$i]. "sl", $arrKho[$i]."kho", $IdUser ."kten";
+                echo $arrIDproduct[$i] . "id", $arrSL[$i] . "sl", $arrKho[$i] . "kho", $IdUser . "kten";
             }
             $result = $this->order->getAll($_SESSION['user']['userID']);
             $this->view('MasterLayout', [

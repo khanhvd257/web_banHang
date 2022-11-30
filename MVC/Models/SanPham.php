@@ -14,6 +14,18 @@ class SanPham extends ConnectDB{
         return $kq;
     }
 
+    public function sortAll($orderby){
+        $sql = "SELECT * FROM tblProducts ORDER BY giaSanPham $orderby ";
+        $kq=mysqli_query($this->con,$sql);
+        return $kq;
+    }
+
+    public function getByCategorySort($id,$orderby){
+        $sql = "SELECT * FROM tblProducts WHERE danhMucID = '$id' ORDER BY giaSanPham $orderby ";
+        $kq=mysqli_query($this->con,$sql);
+        return $kq;
+    }
+
     public function getDetail($IDpro){
         $sql = "SELECT * FROM tblProducts WHERE productID = '$IDpro'";
         $kq=mysqli_query($this->con,$sql);

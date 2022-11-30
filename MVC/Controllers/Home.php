@@ -23,6 +23,18 @@ class Home extends controller{
             'dataOrder' => $result1
         ]);
     }  
+    function sort(){
+        $orderBy = $_POST['sortProduct'];
+        $result = $this->product->sortAll($orderBy);
+        // if(isset($_SESSION['user']['userID'])){
+        //     $result1 = $this->order->getAll($_SESSION['user']['userID']);
+        // }
+        $this->view('MasterLayout',[
+            'page'=>'content/product',
+            'dataProduct' => $result,
+        ]);
+        // var_dump($result);
+    }  
     function Profile(){
         if(isset($_SESSION['user'])){
             $idUser = $_SESSION['user']['userID'];

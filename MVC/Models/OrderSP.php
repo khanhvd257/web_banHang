@@ -29,9 +29,9 @@ class OrderSp extends ConnectDB
         $kq = mysqli_query($this->con, $sql);
         return $kq;
     }
-    public function ThanhToanSauKhiSua($idProduct, $soLuongMua, $soLuongKhoCur ,$userID)
+    public function ThanhToanSauKhiSua($idProduct, $soLuongMua, $soLuongKhoCur, $userID)
     {
-        $soLuongKhoSau= $soLuongKhoCur - $soLuongMua;
+        $soLuongKhoSau = $soLuongKhoCur - $soLuongMua;
         //set trang thai thanh toan
         $sql1 = "UPDATE `tblOrder` SET `soLuong` = '$soLuongMua',  `status` = '1' WHERE `userID` = '$userID' AND `productID` = '$idProduct'";
         $kq1 = mysqli_query($this->con, $sql1);
@@ -41,17 +41,10 @@ class OrderSp extends ConnectDB
     }
 
     //HÀM DELETE SẢN PHẨM ORDER
-
-    public function deleteOrder($idProduct)
+    public function deleOrder($userID,$idProduct)
     {
-        if (isset($_POST['btnHuyOrder'])) {
-            $arrOrder = $_POST['strOrder'];
-            $arr = explode('_', $_POST['strOrder']);
-            foreach ($arr as $idProduct) {
-                $sql = "DELETE FROM `tblOrder` WHERE productID = '$idProduct'";
-                $kq = mysqli_query($this->con, $sql);
-            }
-        }
+            $sql = "DELETE FROM `tblOrder` WHERE productID = '$idProduct' AND userID = '$userID' ";
+            $kq = mysqli_query($this->con, $sql);
     }
 
 
