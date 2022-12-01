@@ -1,3 +1,9 @@
+<?php
+while ($row = mysqli_fetch_assoc($data['dataMua'])) {
+    $tongTien += $row['soLuong'] * $row['giaSanPham'];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,7 +45,7 @@
                                             <div class="col-sm-4" style="display: flex;">
                                                 <button id="btnEDIT" type="button" class="btn btn-primary btnEdit1" onclick="enableForm()">Chỉnh sửa</button>
                                                 <button id="btnHUY" type="button" class="btn btn-danger btnEdit" style="display: none ;" onclick="disableForm()">Hủy</button>
-                                                <button id="btnLUU" type="submit" class="btn btn-success btnEdit" style="display: none ;" >Lưu</button>
+                                                <button id="btnLUU" type="submit" class="btn btn-success btnEdit" style="display: none ;">Lưu</button>
 
                                             </div>
                                         </div>
@@ -58,7 +64,7 @@
                                                 <p class="m-b-10 ">Giới tính</p>
                                                 <select class="inputCss" disabled name="selectGioiTinh">
                                                     <option value="0">Nữ</option>
-                                                    <option <?php if(($data['dataUser']['gioiTinh']) == 1) echo "selected";?> value="1">Nam</option>
+                                                    <option <?php if (($data['dataUser']['gioiTinh']) == 1) echo "selected"; ?> value="1">Nam</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-3" style="text-align: center;">
@@ -74,7 +80,7 @@
                                             </div>
                                             <div class="col-sm-4">
                                                 <p class="m-b-10 f-w-600">Số điện thoại</p>
-                                                <input disabled type="tel" name="txtEditSDT" class=" inputCss text-muted f-w-400" value="<?php echo $data['dataUser']['soDienThoai'] ?>" />
+                                                <input disabled type="number" name="txtEditSDT" class=" inputCss text-muted f-w-400" value="<?php echo $data['dataUser']['soDienThoai'] ?>" />
                                             </div>
                                             <div class="col-sm-4">
                                                 <p class="m-b-10 f-w-600">Email</p>
@@ -85,11 +91,18 @@
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <p class="m-b-10 f-w-600">Tổng số Đơn đã mua</p>
-                                                <h6>0</h6>
+                                                <h6><?php echo mysqli_num_rows($data['dataMua']) ?></h6>
                                             </div>
                                             <div class="col-sm-6">
                                                 <p class="m-b-10 f-w-600">Tổng số Tiền đã mua</p>
-                                                <h6>0</h6>
+                                                <span class="giaSP " id="tongTienProfile">
+                                                    <?php if($tongTien >0){
+                                                        echo $tongTien;
+                                                        }else{
+                                                        echo "0";
+                                                        }?> 
+                                                    
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -132,8 +145,6 @@
         c.style.display = 'none';
         var d = document.getElementById('btnLUU');
         d.style.display = 'none';
-
-
     }
 </script>
 

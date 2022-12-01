@@ -328,7 +328,6 @@ if (!isset($_SESSION['user'])) {
         }
         var docTien = new DocTienBangChu();
         document.getElementById('tongThanhToan').innerText = "Tổng thanh toán " + count + " (SP): " + formatCash(total) + " VND " + " (" + docTien.doc(total) + " )";
-        console.log("111")
     }
 
     //Tạo chuỗi để gửi lên SERVER THANH TOAN

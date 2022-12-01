@@ -71,7 +71,7 @@ function formatGiaSP() {
     const element = document.getElementsByClassName('giaSP');
     for (var i = 0; i < element.length; i++) {
         let tmp = element[i].innerHTML;
-        let a = formatCash(tmp);
+        let a = formatCash(tmp.trim());
         element[i].innerHTML = a;
     }
 }

@@ -209,7 +209,6 @@ if (!isset($_SESSION['user'])) {
     function tienMuaHang() {
         var inputElems = document.getElementsByClassName("thanhTientxt"),
             total = 0;
-        console.log(inputElems, "kk")
         for (var i = 0; i < inputElems.length; i++) {
             total += parseInt(inputElems[i].value);
         }
