@@ -152,3 +152,9 @@ h6 {
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
+
+.btnEdit1{
+    font-size: 12px;
+    transform: translateY(-13PX);
+    margin-left: 100px;
+}

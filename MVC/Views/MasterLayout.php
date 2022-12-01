@@ -73,7 +73,7 @@ $danhmuc = mysqli_query($conn, $sql);
 								BORDER: NONE;
 								background: none;
 								width: 100%;"
-								href="http://localhost/BTL_WEB/home/profile">Profile</a></li>
+								href="http://localhost/BTL_WEB/profile">Profile</a></li>
 								<li><a style="   
 								color: black;
 								font-size: 14px;
