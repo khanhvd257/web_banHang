@@ -132,6 +132,9 @@ $danhmuc = mysqli_query($conn, $sql);
 						<li class="menu-list">
 							<a href="http://localhost/btl_web">Tất Cả Danh Mục</a>
 						</li>
+						<li class="menu-list">
+							<a href="http://localhost/btl_web/blog">BLOG</a>
+						</li>
 						<?php while ($row = mysqli_fetch_array($danhmuc)) : ?>
 							<li class="menu-list">
 								<a href="http://localhost/btl_web/product/danhmuc/<?php echo $row['danhMucID'] ?>"><?php echo ($row['tenDanhMuc']); ?></a>
