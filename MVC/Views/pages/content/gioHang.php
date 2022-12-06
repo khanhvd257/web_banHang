@@ -228,7 +228,11 @@ if (!isset($_SESSION['user'])) {
                     <?php if ($orderRow['pathImage'] != "") : ?>
                         <img class="imgItem lablecss" src="http://localhost/BTL_WEB/uploads/<?php echo $orderRow['pathImage'] ?>" alt="gif">
                     <?php endif ?>
-                    <div class="tenSP lablecss"><?php echo $orderRow['tenSanPham'] ?></div>
+                    <div class="tenSP lablecss">
+                        <a href="http://localhost/btl_web/product/detail/<?php echo $orderRow['productID'] ?>">
+                            <?php echo $orderRow['tenSanPham'] ?>
+                        </a>
+                    </div>
                     <div class="giaSp lablecss  txt_center"><?php echo $orderRow['giaSanPham'] ?></div>
                     <input disabled type="number" class="soLuong lablecss txt_center txtSoLuongOrder" oninput="getValueChuoiTT()" value="<?php echo $orderRow['TongSL'] ?>"></input>
                     <input disabled class="SLkho_GioHang  SLkho lablecss txt_center" value="<?php echo $orderRow['soLuongKho'] ?>" />

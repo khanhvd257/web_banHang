@@ -257,7 +257,11 @@
 
         <H4 class="notFound">
             DANH MỤC HIỆN KHÔNG CÓ SẢN PHẨM NÀO
+
         </H4>
+        <div class="img_notfound" style=" text-align-last: center; z-index: -10;">
+            <img src="http://localhost/btl_web/public/img/search-not-found.gif" alt="" srcset="">
+        </div>
     <?php endif ?>
 
 </body>

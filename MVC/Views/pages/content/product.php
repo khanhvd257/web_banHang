@@ -257,6 +257,9 @@
             <H4 class="notFound">
                 Không tìm thấy sản phẩm tìm kiếm nào
             </H4>
+            <div class="img_notfound" style=" text-align-last: center; z-index: -10;">
+                <img src="http://localhost/btl_web/public/img/search-not-found.gif" alt="" srcset="">
+            </div>
         <?php endif ?>
     </div>
 </body>

@@ -185,7 +185,11 @@ if (!isset($_SESSION['user'])) {
                     <?php if ($orderRow['pathImage'] != "") : ?>
                         <img class="imgItem lablecss" src="http://localhost/BTL_WEB/uploads/<?php echo $orderRow['pathImage'] ?>" alt="gif">
                     <?php endif ?>
-                    <div class="tenSP lablecss"><?php echo $orderRow['tenSanPham'] ?></div>
+                    <div class="tenSP lablecss">
+                        <a href="http://localhost/btl_web/product/detail/<?php echo $orderRow['productID'] ?>">
+                            <?php echo $orderRow['tenSanPham'] ?>
+                        </a>
+                    </div>
                     <div class="giaSp giaSP lablecss  txt_center"><?php echo $orderRow['giaSanPham'] ?></div>
                     <div class="soLuong lablecss txt_center"><?php echo $orderRow['TongSL'] ?></div>
                     <input type="text" class="thanhTientxt giaSP lablecss txt_center" disabled="disabled" value="<?php echo ($orderRow['TongSL'] * $orderRow['giaSanPham'])  ?>"></input>

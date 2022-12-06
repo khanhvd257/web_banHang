@@ -21,7 +21,7 @@ class profile extends controller
             $this->view('MasterLayout', [
                 'page' => 'content/profile',
                 'dataUser' => $kq,
-                'dataMua' =>$dataMua
+                'dataMua' => $dataMua
             ]);
         }
     }
@@ -43,8 +43,10 @@ class profile extends controller
             $this->view('MasterLayout', [
                 'page' => 'content/profile',
                 'dataUser' => $kq,
-                'dataMua' =>$dataMua
+                'dataMua' => $dataMua
             ]);
+        } else {
+            $this->render('login/LoginForm', []);
         }
     }
 }

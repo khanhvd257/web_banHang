@@ -1,6 +1,7 @@
 <?php
+$tongTien=0;
 while ($row = mysqli_fetch_assoc($data['dataMua'])) {
-    $tongTien += $row['soLuong'] * $row['giaSanPham'];
+    $tongTien += ($row['soLuong'] * $row['giaSanPham']);
 }
 ?>
 

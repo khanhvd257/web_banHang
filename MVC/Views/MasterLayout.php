@@ -80,14 +80,14 @@ $danhmuc = mysqli_query($conn, $sql);
 								BORDER: NONE;
 								background: none;
 								width: 100%;"
-							href="http://localhost/BTL_WEB/auth/logout" name="btnLogout" >Logout</a></li>
-							<li><a style="   
+							href="http://localhost/BTL_WEB/product/damua" >Hóa Đơn</a></li>
+								<li><a style="   
 								color: black;
 								font-size: 14px;
 								BORDER: NONE;
 								background: none;
 								width: 100%;"
-							href="http://localhost/BTL_WEB/product/damua" name="btnLogout" >Hóa Đơn</a></li>
+							href="http://localhost/BTL_WEB/auth/logout" name="btnLogout" >Logout</a></li>
 							';
 						}
 						if (!isset($_SESSION['user'])) {
