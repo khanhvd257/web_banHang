@@ -93,7 +93,7 @@ if (isset($_POST['btnXuatexcel'])) {
     );
     $sheet->getStyle('A1:' . 'H1' . ($rowCount))->applyFromArray($styleAray);
     $objWriter = new PHPExcel_Writer_Excel2007($objExcel);
-    $fileName = 'Product_xuatfile.xlsx';
+    $fileName = 'ExportExcel.xlsx';
     // $objWriter->save($fileName);
     header('Content-Disposition: attachment; filename="' . $fileName . '"');
     header('Content-Type: application/vnd.openxlmformatsofficedocument.speadsheetml.sheet');

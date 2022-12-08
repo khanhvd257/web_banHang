@@ -1,6 +1,6 @@
 <?php
 $dataBlog = mysqli_fetch_array($data['dataBlog']);
-$dataAnh= $dataBlog['hinhAnh'];
+$dataAnh = $dataBlog['hinhAnh'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,6 +68,20 @@ $dataAnh= $dataBlog['hinhAnh'];
         font-style: italic;
         font-weight: 600;
     }
+
+    .css_img {
+        min-width: 286px;
+        min-height: 260px;
+        max-width: 286px;
+        max-height: 260px;
+        box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
+        border-radius: 12px;
+    }
+     .css_img1 {
+       
+        box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
+        border-radius: 12px;
+    }
 </style>
 
 <body>
@@ -77,9 +91,9 @@ $dataAnh= $dataBlog['hinhAnh'];
                 <h2><?php echo $dataBlog['tenBlog'] ?></h2>
             </div>
             <?php if ($dataBlog['hinhAnh'] = null) : ?>
-                <img class="blogAnh" src="http://localhost/btl_web/public/img/blog/defaultBlog.jpeg" alt="Card image cap">
+                <img class="blogAnh css_img1" src="http://localhost/btl_web/public/img/blog/defaultBlog.jpeg" alt="Card image cap">
             <?php else : ?>
-                <img class="blogAnh" src="http://localhost/btl_web/MVC/Views/pages/admin/quanlyBlog/upload/<?php echo $dataAnh ?>" alt="Anh">
+                <img class="blogAnh css_img1" src="http://localhost/btl_web/MVC/Views/pages/admin/quanlyBlog/upload/<?php echo $dataAnh ?>" alt="Anh">
             <?php endif ?>
             <div class="tgia_thoiGian">
                 <label class="tg">
@@ -102,9 +116,9 @@ $dataAnh= $dataBlog['hinhAnh'];
                 <div class="card card_item" style="width: 18rem;">
                     <a href="http://localhost/btl_web/blog/detailBlog/<?php echo $blog['idBlog'] ?>">
                         <?php if ($blog['hinhAnh'] == null) : ?>
-                            <img class="card-img-top" src="http://localhost/btl_web/public/img/blog/defaultBlog.jpeg" alt="Card image cap">
+                            <img class="card-img-top css_img" src="http://localhost/btl_web/public/img/blog/defaultBlog.jpeg" alt="Card image cap">
                         <?php endif ?>
-                        <img class="card-img-top" src="http://localhost/btl_web/MVC/Views/pages/admin/quanlyBlog/upload/<?php echo $blog['hinhAnh']?>" alt="Hinh anh Blog">
+                        <img class="card-img-top css_img" src="http://localhost/btl_web/MVC/Views/pages/admin/quanlyBlog/upload/<?php echo $blog['hinhAnh'] ?>" alt="Hinh anh Blog">
                         <div class="card-body">
                             <h5 class="card-text"><?php echo $blog['tenBlog'] ?></h5>
                             <p class="card-text">Tác giả: <?php echo $blog['fullName']  ?></p>

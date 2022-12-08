@@ -83,6 +83,12 @@ if (isset($_POST['btnXuatexcel'])) {
     <link rel="stylesheet" href="http://localhost/BTL_WEB/public/Css/main_styles.css">
     <link rel="stylesheet" href="http://localhost/BTL_WEB/public/plugins/font-awesome-4.7.0/css/font-awesome.css">
     <style>
+        .css_color {
+            height: 60px;
+            background: linear-gradient(#ee4d2d, #ff7337);
+            border: none;
+            color: white;
+        }
         .header {
             text-align: center;
             width: 100%;
@@ -190,7 +196,7 @@ if (isset($_POST['btnXuatexcel'])) {
                 </form>
             </div>
             <table class="table">
-                <thead class="thead-dark">
+                <thead class="css_color">
                     <tr>
                         <th scope="col">ID Blog</th>
                         <th scope="col">Tên Blog</th>

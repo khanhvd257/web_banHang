@@ -323,20 +323,6 @@ if(isset($_POST['btnXuatexcel'])){
         
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <?php $i = 1 ?>
 <?php while ($row = mysqli_fetch_assoc($result)) : ?>
 <?php if ($i % 2 == 0) : ?>
