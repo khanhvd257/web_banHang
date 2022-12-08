@@ -260,7 +260,7 @@ if (!isset($_SESSION['user'])) {
                     alert("Nhập số lượng");
                 }
                 if (a[i].value > b[i].value) {
-                    alert("Hàng lớn không đủ");
+                    alert("Hàng lớn không đủ rồi");
                     return false;
                 } else if (confirm(`Bạn chắc chắn muốn đặt sản phẩm chứ`)) {
                     return true;
