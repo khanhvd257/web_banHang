@@ -135,7 +135,7 @@ if(isset($_POST['btnLuu'])){
 </style>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title></title>
+	<title>SỬA SẢN PHẨM</title>
 </head>
 <body>
 	<div class="header">

@@ -195,7 +195,7 @@ if (isset($_POST['btnLuu'])) {
     </style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Đào</title>
+    <title>THÊM SẢN PHẨM</title>
 </head>
 
 <body>
@@ -210,10 +210,10 @@ if (isset($_POST['btnLuu'])) {
     <form method="post" enctype="multipart/form-data">
         <div class="content2">
             <table>
-                <h2>Thêm Thông tin khách Hàng</h2>
+                <h2>Thêm Thông tin Sản phẩm</h2>
                 <div class="form-group">
                     <label for="title" class=" mau">Danh Mục</label>
-                    <select name="txtdanhMucID">
+                    <select name="txtdanhMucID" class="form-control" aria-describedby="helpId">
                         <?php while ($row = mysqli_fetch_assoc($getDanhMuc)) : ?>
                             <option value="<?php echo $row['danhMucID'] ?>"><?php echo $row['tenDanhMuc'] ?></option>
                         <?php endwhile ?>
@@ -241,7 +241,7 @@ if (isset($_POST['btnLuu'])) {
                 </div>
                 <div class="form-group">
                     <label for="status" class="mau">Anh</label>
-                    <input type="file" name="fileToUpload" id="fileToUpload">
+                    <input type="file" name="fileToUpload" id="fileToUpload" class="form-control">
                 </div>
 
                 <tr>
