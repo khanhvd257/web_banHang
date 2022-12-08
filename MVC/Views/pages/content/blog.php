@@ -9,7 +9,7 @@
 </head>
 <style>
     .card__item {
-        margin: 20px 0;
+        margin: 20px 40px;
         transition: all 200ms;
     }
 
@@ -43,7 +43,7 @@
 
     <div class="container" style="margin-top: 20px;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-wrap: wrap;">
         <?php while ($blog = mysqli_fetch_assoc($data['dataBlog'])) : ?>
             <div class="card card__item" style="width: 18rem;">

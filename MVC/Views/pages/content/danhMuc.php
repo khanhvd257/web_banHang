@@ -63,6 +63,7 @@
 
         .tenSpham_container {
             max-width: 200px;
+            overflow: hidden;
             max-height: 220px;
             display: flex;
             flex-direction: column;

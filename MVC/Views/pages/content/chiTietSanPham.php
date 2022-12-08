@@ -128,7 +128,7 @@ $sanpham = mysqli_fetch_assoc($data['data']);
         <?php endif ?>
         <?php if ($sanpham['pathImage'] != "") : ?>
             <div class="wrap_img">
-                <img class="img_item" src="http://localhost/BTL_WEB/uploads/<?php echo $sanpham['pathImage'] ?>" alt="gif"></a>
+                <img class="img_item" src="http://localhost/BTL_WEB/MVC/Views/pages/admin/quanlySanPham/upload/<?php echo $sanpham['pathImage'] ?>"<?php echo $sanpham['pathImage'] ?>" alt="gif"></a>
             </div>
         <?php endif ?>
         <div class="wrap_detail">

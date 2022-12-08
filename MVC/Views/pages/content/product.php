@@ -48,6 +48,7 @@
         }
 
         .tenSpham_container {
+            overflow: hidden;
             max-width: 200px;
             max-height: 220px;
             display: flex;
@@ -228,10 +229,10 @@
                 <?php endif ?>
                 <div class="tenSpham_container">
                     <?php if ($sanpham['soLuongKho'] == "0") : ?>
-                        <div class="hetHang"><?php echo $sanpham['tenSanPham'] ?></div>
+                        <div class="hetHang"><span style="text-overflow:ellipsis"><?php echo $sanpham['tenSanPham'] ?></span></div>
                     <?php endif ?>
                     <?php if ($sanpham['soLuongKho'] != '0') : ?>
-                        <div class="tenSP"><?php echo $sanpham['tenSanPham'] ?></div>
+                        <div class="tenSP"><span style="text-overflow:ellipsis"><?php echo $sanpham['tenSanPham'] ?></span></div>
                     <?php endif ?>
 
                     <div class="motaItem">

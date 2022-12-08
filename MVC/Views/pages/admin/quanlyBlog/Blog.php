@@ -124,7 +124,7 @@ $result = mysqli_query($mysqli, $sql);
                     <td><input type="button" name="btnSua"
                     value="Sửa" onclick=\' window.open("SuaBlog.php?userID=' . $row['userID'] . '","_seft") \' ></td>
                     <td><input type="button" name="btnXoa"
-                    value="Xóa" onclick=\' window.open("XoaBlog.php?userID=' . $row['userID'] . '","_seft") \'></td>
+                    value="Xóa" onclick=\' window.open("XoaBlog.php?BlogID=' . $row['idBlog'] . '","_seft") \'></td>
                     </tr>';
                 $i++;
             }

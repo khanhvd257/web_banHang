@@ -74,13 +74,18 @@ $dataAnh = $dataBlog['hinhAnh'];
         min-height: 260px;
         max-width: 286px;
         max-height: 260px;
+    }
+
+    .css_img1 {
+
         box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
         border-radius: 12px;
     }
-     .css_img1 {
-       
-        box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
-        border-radius: 12px;
+
+    .hinhAnh {
+        text-align: center;
+        margin-bottom: 30px;
+        margin-left: -30px;
     }
 </style>
 
@@ -90,11 +95,13 @@ $dataAnh = $dataBlog['hinhAnh'];
             <div class="title_blog">
                 <h2><?php echo $dataBlog['tenBlog'] ?></h2>
             </div>
-            <?php if ($dataBlog['hinhAnh'] = null) : ?>
-                <img class="blogAnh css_img1" src="http://localhost/btl_web/public/img/blog/defaultBlog.jpeg" alt="Card image cap">
-            <?php else : ?>
-                <img class="blogAnh css_img1" src="http://localhost/btl_web/MVC/Views/pages/admin/quanlyBlog/upload/<?php echo $dataAnh ?>" alt="Anh">
-            <?php endif ?>
+            <div class="hinhAnh">
+                <?php if ($dataBlog['hinhAnh'] = null) : ?>
+                    <img class="blogAnh css_img1" src="http://localhost/btl_web/public/img/blog/defaultBlog.jpeg" alt="Card image cap">
+                <?php else : ?>
+                    <img class="blogAnh css_img1" src="http://localhost/btl_web/MVC/Views/pages/admin/quanlyBlog/upload/<?php echo $dataAnh ?>" alt="Anh">
+                <?php endif ?>
+            </div>
             <div class="tgia_thoiGian">
                 <label class="tg">
                     Ngày đăng: <?php echo $dataBlog['thoiGian'] ?>

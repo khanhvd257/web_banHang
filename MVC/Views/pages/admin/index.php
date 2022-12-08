@@ -64,9 +64,6 @@ $_SESSION['login'] = 1;
 							<a href="http://localhost/BTL_WEB/MVC/Views/pages/admin/quanLyKhachHang/qlKhachHang.php">Quản lý Khách hàng</a>
 						</li>
 						<li class="menu-list">
-							<a href="/">Quản lý Đơn hàng</a>
-						</li>
-						<li class="menu-list">
 							<a href="http://localhost/BTL_WEB/MVC/Views/pages/admin/quanlyBlog/Blog.php">Quản lý BLOG</a>
 						</li>
 						<li class="menu-list">

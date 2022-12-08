@@ -3,8 +3,8 @@
 $_SESSION['login'] = 1;
 $mysqli = new mysqli("localhost", "root", "", "shopquanao_btlweb");
 $thongbao = '';
-$mn = $_GET['userID'];
-$sql = " DELETE FROM tblblog WHERE userID = '$mn'";
+$mn = $_GET['BlogID'];
+$sql = " DELETE FROM tblblog WHERE idBlog = '$mn'";
 $kq = mysqli_query($mysqli, $sql);
 header('Location: Blog.php');
 die();

@@ -226,7 +226,7 @@ if (!isset($_SESSION['user'])) {
                         <img class="imgItem lablecss" src="http://localhost/BTL_WEB/public/img/defautImg.gif" alt="gif">
                     <?php endif ?>
                     <?php if ($orderRow['pathImage'] != "") : ?>
-                        <img class="imgItem lablecss" src="http://localhost/BTL_WEB/uploads/<?php echo $orderRow['pathImage'] ?>" alt="gif">
+                        <img class="imgItem lablecss" src="http://localhost/BTL_WEB/MVC/Views/pages/admin/quanlySanPham/upload/<?php echo $orderRow['pathImage'] ?>" alt="gif">
                     <?php endif ?>
                     <div class="tenSP lablecss">
                         <a href="http://localhost/btl_web/product/detail/<?php echo $orderRow['productID'] ?>">
