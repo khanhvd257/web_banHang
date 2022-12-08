@@ -30,7 +30,10 @@
     flex-wrap: wrap;">
         <?php while ($blog = mysqli_fetch_assoc($data['dataBlog'])) : ?>
             <div class="card card__item" style="width: 18rem;">
+                <?php if($blog['hinhAnh']==null):?>
                 <img class="card-img-top" src="http://localhost/btl_web/public/img/blog/defaultBlog.jpeg" alt="Card image cap">
+                <?php endif ?>
+                <img class="card-img-top" src="http://localhost/btl_web/MVC/Views/pages/admin/quanlyBlog/upload/<?php echo $blog['hinhAnh']?>" alt="hinh anh Blog">
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $blog['tenBlog'] ?></h5>
                     <p style="margin-bottom: 0;" class="card-text">Thời gian: <?php echo $blog['thoiGian']  ?></p>

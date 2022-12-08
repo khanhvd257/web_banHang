@@ -223,7 +223,7 @@
                     <?php if ($sanpham['pathImage'] != "") : ?>
                         <div class="imgItem_container">
                             <a href="http://localhost/btl_web/product/detail/<?php echo $sanpham['productID'] ?>">
-                                <img class="imgItem" src="http://localhost/BTL_WEB/uploads/<?php echo $sanpham['pathImage'] ?>" alt="gif"></a>
+                                <img class="imgItem" src="http://localhost/BTL_WEB/MVC/Views/pages/admin/quanlySanPham/upload/<?php echo $sanpham['pathImage'] ?>" alt="gif"></a>
                         </div>
                     <?php endif ?>
 

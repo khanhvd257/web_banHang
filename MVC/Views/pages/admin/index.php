@@ -61,16 +61,16 @@ $_SESSION['login'] = 1;
 				<div class="item-list">
 					<ul>
 						<li class="menu-list">
-							<a href="/">Quản lý Khách hàng</a>
+							<a href="http://localhost/BTL_WEB/MVC/Views/pages/admin/quanLyKhachHang/qlKhachHang.php">Quản lý Khách hàng</a>
 						</li>
 						<li class="menu-list">
 							<a href="/">Quản lý Đơn hàng</a>
 						</li>
 						<li class="menu-list">
-							<a href="/">Quản lý Sản phẩm</a>
+							<a href="http://localhost/BTL_WEB/MVC/Views/pages/admin/quanlyBlog/Blog.php">Quản lý BLOG</a>
 						</li>
 						<li class="menu-list">
-							<a href="/">Quản lý Blog</a>
+							<a href="http://localhost/BTL_WEB/MVC/Views/pages/admin/quanlySanPham/qlSanPham.php">Quản lý Sản phẩm</a>
 						</li>
 						<li class="menu-list">
 							<a onclick="confirmLogout()"><i class="fa fa-sign-out" aria-hidden="true"></i>Đăng xuất</a>

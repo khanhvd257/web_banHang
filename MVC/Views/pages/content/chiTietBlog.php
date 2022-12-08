@@ -1,5 +1,6 @@
 <?php
 $dataBlog = mysqli_fetch_array($data['dataBlog']);
+$dataAnh= $dataBlog['hinhAnh'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -78,7 +79,7 @@ $dataBlog = mysqli_fetch_array($data['dataBlog']);
             <?php if ($dataBlog['hinhAnh'] = null) : ?>
                 <img class="blogAnh" src="http://localhost/btl_web/public/img/blog/defaultBlog.jpeg" alt="Card image cap">
             <?php else : ?>
-                <img class="blogAnh" src="http://localhost/btl_web/public/img/blog/defaultBlog.jpeg" alt="Card image cap">
+                <img class="blogAnh" src="http://localhost/btl_web/MVC/Views/pages/admin/quanlyBlog/upload/<?php echo $dataAnh ?>" alt="Anh">
             <?php endif ?>
             <div class="tgia_thoiGian">
                 <label class="tg">
@@ -100,7 +101,10 @@ $dataBlog = mysqli_fetch_array($data['dataBlog']);
             <?php while ($blog = mysqli_fetch_assoc($data['AllBlog'])) : ?>
                 <div class="card card_item" style="width: 18rem;">
                     <a href="http://localhost/btl_web/blog/detailBlog/<?php echo $blog['idBlog'] ?>">
-                        <img class="card-img-top" src="http://localhost/btl_web/public/img/blog/defaultBlog.jpeg" alt="Card image cap">
+                        <?php if ($blog['hinhAnh'] == null) : ?>
+                            <img class="card-img-top" src="http://localhost/btl_web/public/img/blog/defaultBlog.jpeg" alt="Card image cap">
+                        <?php endif ?>
+                        <img class="card-img-top" src="http://localhost/btl_web/MVC/Views/pages/admin/quanlyBlog/upload/<?php echo $blog['hinhAnh']?>" alt="Hinh anh Blog">
                         <div class="card-body">
                             <h5 class="card-text"><?php echo $blog['tenBlog'] ?></h5>
                             <p class="card-text">Tác giả: <?php echo $blog['fullName']  ?></p>

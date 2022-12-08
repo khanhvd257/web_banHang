@@ -18,11 +18,13 @@ class profile extends controller
             $kq = mysqli_fetch_assoc($this->user->getDeltailUser($idUser));
             $dataMua = $this->sanpham->hangDaThanhToan($idUser);
             $_SESSION['page'] = "Profile";
-            $this->view('MasterLayout', [
+                $this->view('MasterLayout', [
                 'page' => 'content/profile',
                 'dataUser' => $kq,
                 'dataMua' => $dataMua
             ]);
+        }else{
+            $this->render('login/LoginForm', []);
         }
     }
     public function editProfile()

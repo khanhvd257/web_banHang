@@ -220,7 +220,7 @@ $danhmuc = mysqli_query($conn, $sql);
 				<div class="col-lg-6">
 					<div class="footer_nav_container d-flex flex-sm-row flex-column align-items-center justify-content-lg-start justify-content-center text-center">
 						<ul class="footer_nav">
-							<li><a style="color: white;" href="#">Blog</a></li>
+							<li><a style="color: white;" href="http://localhost/btl_web/blog">Blog</a></li>
 							<li><a style="color: white;" href="#">FAQs</a></li>
 							<li><a style="color: white;" href="">Contact us</a></li>
 						</ul>
