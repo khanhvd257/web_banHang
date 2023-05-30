@@ -1,6 +1,6 @@
 <?php
 require_once "./Classes/PHPExcel.php";
-$con  = mysqli_connect('localhost', 'root', '', 'shopQuanAo_btlWeb');
+$con  = mysqli_connect('localhost', 'root', '', 'shopBanHang');
 
 if (isset($_GET['productID'])) {
     $productID = $_GET['productID'];
@@ -31,6 +31,7 @@ if (isset($_POST['btnTimkiem'])) {
     $sql = "select * from tblproducts LEFT JOIN tbldanhmuc ON tblproducts.danhMucID = tbldanhmuc.danhMucID where productID like '%$productID%' and tblproducts.danhMucID like '%$danhMucID%' and tenSanPham like '%$tenSanPham%'and moTaSanPham like '%$moTaSanPham%'and giaSanPham like '%$giaSanPham%'and xuatXu like '%$xuatXu%'and soLuongKho like '%$soLuongKho%' and pathImage like '%$pathImage'";
     $kq1 = mysqli_query($con, $sql);
 } else {
+    // $sql = "SELECT * FROM tblproducts,tbldanhmuc WHERE tblproducts.danhMucID = tbldanhmuc.danhMucID AND giaSanPham <50000";
     $sql = "SELECT * FROM tblproducts,tbldanhmuc WHERE tblproducts.danhMucID = tbldanhmuc.danhMucID";
     $kq1 = mysqli_query($con, $sql);
 }
@@ -281,9 +282,11 @@ if (isset($_POST['btnXuatexcel'])) {
             </div>
 
             <div class="content2">
+                <div class="btnTroVe">
+                    <button style=" margin-left: 0;"> <a href="http://localhost/BTL_WEB">Trở về</a></button>
+                </div>
                 <table>
                     <h2>Danh Sách Sản Phẩm</h2>
-
 
                     <tr>
                         <td class="col1">Danh Mục</td>
@@ -380,7 +383,7 @@ if (isset($_POST['btnXuatexcel'])) {
                         <td>' . $row['xuatXu'] . '</td>
                         <td>' . $row['soLuongKho'] . '</td>
                         <td>
-                        <img  style = "width: 110px;" src ="http://localhost/BTL_WEB/MVC/Views/pages/admin/quanlySanPham/upload/'.$row['pathImage'] .'">
+                        <img  style = "width: 110px;" src ="http://localhost/BTL_WEB/MVC/Views/pages/admin/quanlySanPham/upload/' . $row['pathImage'] . '">
                         </td>
                         <td><input type="button" class = "tt" name="btnSua" value="Sửa" onclick=\'window.open("Suasp.php? productID=' . $row['productID'] . '","_seft")\' ></td>
                         <td><input type="button" class =" tt" name="btnXoa" value="Xóa" onclick=\'window.open("Xoasp.php?productID=' . $row['productID'] . '","_seft")\'></td>

@@ -1,7 +1,7 @@
 <?php
 $tongTien=0;
-while ($row = mysqli_fetch_assoc($data['dataMua'])) {
-    $tongTien += ($row['soLuong'] * $row['giaSanPham']);
+foreach ($data['dataMua'] as $row) {
+    $tongTien += ($row['tongSL'] * $row['giaSanPham']);
 }
 ?>
 
@@ -32,8 +32,8 @@ while ($row = mysqli_fetch_assoc($data['dataMua'])) {
                                         <div class="m-b-25">
                                             <img src="http://localhost/BTL_WEB/public/img/avatarDefautl.jpeg" class="img-radius" alt="User-Profile-Image">
                                         </div>
-                                        <input disabled name="txtEditTen" class="f-w-600 m-b-10 inputCss " style="  background: none;  border: none;  color: white;   FONT-SIZE: 22PX;   font-family: monospace;   
-                                     letter-spacing: 2px; text-align: center;" value="<?php echo $data['dataUser']['fullName'] ?>" />
+                                        <input disabled name="txtEditTen" class="f-w-600 m-b-10 inputCss " style="  background: none;  border: none;  color: white;   FONT-SIZE: 22PX;   font-family: monospace;
+                                     letter-spacing: 2px; text-align: center;" value="<?php echo $data['dataUser'][0]['fullName'] ?>" />
                                         <span class="badge badge-success" style="font-size: 16px;">Đang hoạt động</span>
                                     </div>
                                 </div>
@@ -53,11 +53,11 @@ while ($row = mysqli_fetch_assoc($data['dataMua'])) {
                                         <div class="row" style="justify-content: space-between;">
                                             <div class="col-sm-3">
                                                 <p class="m-b-10 f-w-600">Tên đăng nhập</p>
-                                                <input disabled class="text-muted f-w-400" id="1xx" value="<?php echo $data['dataUser']['loginName'] ?>" />
+                                                <input disabled class="text-muted f-w-400" id="1xx" value="<?php echo $data['dataUser'][0]['loginName'] ?>" />
                                             </div>
                                             <div class="col-sm-3" style="TEXT-ALIGN: center;">
                                                 <p class="m-b-10 ">Loại Tài khoản</p>
-                                                <input disabled name="" class="text-muted txt_cennter" value="<?php if (($data['dataUser']['roleName']) == 0) echo "User";
+                                                <input disabled name="" class="text-muted txt_cennter" value="<?php if (($data['dataUser'][0]['roleName']) == 0) echo "User";
                                                                                                                 else echo "Admin"  ?>" />
 
                                             </div>
@@ -65,34 +65,34 @@ while ($row = mysqli_fetch_assoc($data['dataMua'])) {
                                                 <p class="m-b-10 ">Giới tính</p>
                                                 <select class="inputCss" disabled name="selectGioiTinh">
                                                     <option value="0">Nữ</option>
-                                                    <option <?php if (($data['dataUser']['gioiTinh']) == 1) echo "selected"; ?> value="1">Nam</option>
+                                                    <option <?php if (($data['dataUser'][0]['gioiTinh']) == 1) echo "selected"; ?> value="1">Nam</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-3" style="text-align: center;">
                                                 <p class="m-b-10 ">Ngày sinh</p>
-                                                <input disabled type="date" name="txtEdiNgaySinh" class=" inputCss text-muted txt_cennter" value="<?php echo $data['dataUser']['ngaySinh'] ?>" />
+                                                <input disabled type="date" name="txtEdiNgaySinh" class=" inputCss text-muted txt_cennter" value="<?php echo $data['dataUser'][0]['ngaySinh'] ?>" />
                                             </div>
                                         </div>
                                         <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Thông tin liên hệ</h6>
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <p class="m-b-10 f-w-600">Địa chỉ</p>
-                                                <input disabled name="txtEditDiaChi" class=" inputCss text-muted f-w-400" value="<?php echo $data['dataUser']['diaChi'] ?>" />
+                                                <input disabled name="txtEditDiaChi" class=" inputCss text-muted f-w-400" value="<?php echo $data['dataUser'][0]['diaChi'] ?>" />
                                             </div>
                                             <div class="col-sm-4">
                                                 <p class="m-b-10 f-w-600">Số điện thoại</p>
-                                                <input disabled type="number" name="txtEditSDT" class=" inputCss text-muted f-w-400" value="<?php echo $data['dataUser']['soDienThoai'] ?>" />
+                                                <input disabled type="number" name="txtEditSDT" class=" inputCss text-muted f-w-400" value="<?php echo $data['dataUser'][0]['soDienThoai'] ?>" />
                                             </div>
                                             <div class="col-sm-4">
                                                 <p class="m-b-10 f-w-600">Email</p>
-                                                <input disabled name="txtEditEmail" type="email" class=" inputCss text-muted f-w-400" value="<?php echo $data['dataUser']['email'] ?>" />
+                                                <input disabled name="txtEditEmail" type="email" class=" inputCss text-muted f-w-400" value="<?php echo $data['dataUser'][0]['email'] ?>" />
                                             </div>
                                         </div>
                                         <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Thông tin mua hàng</h6>
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <p class="m-b-10 f-w-600">Tổng số Đơn đã mua</p>
-                                                <h6><?php echo mysqli_num_rows($data['dataMua']) ?></h6>
+                                                <h6><?php echo ($data['dataMua']['total']) ?></h6>
                                             </div>
                                             <div class="col-sm-6">
                                                 <p class="m-b-10 f-w-600">Tổng số Tiền đã mua</p>
@@ -101,8 +101,8 @@ while ($row = mysqli_fetch_assoc($data['dataMua'])) {
                                                         echo $tongTien;
                                                         }else{
                                                         echo "0";
-                                                        }?> 
-                                                    
+                                                        }?>
+
                                                 </span>
                                             </div>
                                         </div>

@@ -4,7 +4,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "shopQuanAo_btlWeb";
+$dbname = "shopBanHang";
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 

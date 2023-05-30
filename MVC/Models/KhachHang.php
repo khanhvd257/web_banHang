@@ -1,7 +1,14 @@
 <?php
+include_once "./MVC/Config/APIHelper.php";
+
 class KhachHang extends ConnectDB
 {
+    private $apiCon;
 
+    function __construct()
+    {
+        $this->apiCon = new APIHelper();
+    }
     public function getAll()
     {
         $sql = "SELECT * FROM tblUsers ";
@@ -10,9 +17,13 @@ class KhachHang extends ConnectDB
     }
     public function loginUser($user, $pass)
     {
-        $sql = "SELECT * FROM tblUsers WHERE loginName= '$user' AND password= '$pass'";
-        $kq = mysqli_query($this->con, $sql);
-        return $kq;
+        $endpoint = 'auth/login.php';
+        $method = 'POST';
+        $data = array(
+            'loginName' => $user,
+            'password' => $pass
+        );
+        return $this->apiCon->callAPI($endpoint, $method, $data);
     }
 
     public function RegisterAccount($user, $pass, $fullName)
@@ -25,11 +36,16 @@ class KhachHang extends ConnectDB
         $kq1 = mysqli_query($this->con, $sql1);
         return $kq1;
     }
-    function getDeltailUser($idUser)
+    function getDeltailUser($userId)
     {
-        $sql = "SELECT * FROM tblUsers WHERE userID = '$idUser'";
-        $kq = mysqli_query($this->con, $sql);
-        return $kq;
+        $method = 'GET';
+        $params = array(
+            'id' => $userId
+        );
+        $queryString = http_build_query($params);
+        $endpoint = 'auth/detail.php'. '?'.$queryString;
+        return $this->apiCon->callAPI($endpoint, $method);
+
     }
 
     public function CheckDuplicateUser($user)
@@ -39,12 +55,20 @@ class KhachHang extends ConnectDB
         return $kq;
     }
 
-    public function EditUser($idUser,$fullName,$gt,$NS,$dc,$email,$sdt)
+    public function EditUser($userId,$fullName,$gt,$ngaySinh,$dc,$email,$sdt)
     {
+        $endpoint = 'auth/updateUser.php';
+        $method = 'PUT';
+        $data = array(
 
-        $sql = " UPDATE `tblUsers` SET `fullName`='$fullName',`gioiTinh`='$gt',`soDienThoai`='$sdt',`email`='$email',`diaChi`='$dc',`ngaySinh`='$NS' WHERE userID = '$idUser'";
-        $kq = mysqli_query($this->con, $sql);
-        return $kq;
-
+            'userId' => $userId,
+            'ngaySinh' => $ngaySinh,
+            'gioiTinh' =>$gt,
+            'email' => $email,
+            'soDienThoai' => $sdt,
+            'fullName' => $fullName,
+            'diaChi'=> $dc
+        );
+        return $this->apiCon->callAPI($endpoint, $method, $data);
     }
 }

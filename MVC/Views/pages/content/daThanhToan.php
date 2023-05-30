@@ -142,13 +142,13 @@ if (!isset($_SESSION['user'])) {
 </style>
 <div class="wrap_container">
     <div class="header_content">
-        <?php if (mysqli_num_rows($data['dataThanhToan']) > 0) : ?>
+        <?php if (($data['total']) > 0) : ?>
             DANH SÁCH HÀNG ĐÃ THANH TOÁN
         <?php endif ?>
 
         <div class="TongMH">
 
-            <?php if (mysqli_num_rows($data['dataThanhToan']) == 0) : ?>
+            <?php if (($data['total']) == 0) : ?>
                 <h2>Không có sản phẩm nào đã thanh toán</h2>
                 <br>
                 <img style="max-width: 400px;" src="http://localhost/btl_web/public/img/96758-empty-cart.gif" alt="">
@@ -156,16 +156,16 @@ if (!isset($_SESSION['user'])) {
                 <button type="button" onclick="location.href='http://localhost/btl_web/home'" class="btn btn-warning" style="margin-top: 36px;">ĐI MUA SẢN PHẨM NGAY THÔI NÀO</button>
             <?php endif ?>
 
-            <?php if (mysqli_num_rows($data['dataThanhToan']) > 0) : ?>
+            <?php if (($data['total']) > 0) : ?>
 
-                <span class="badge badge-primary">Bạn đã mua <span style="font-weight: bolder; font-size: 16px;"><?php echo mysqli_num_rows($data['dataThanhToan']) ?></span> Sản phẩm</span>
+                <span class="badge badge-primary">Bạn đã mua <span style="font-weight: bolder; font-size: 16px;"><?php echo ($data['total']) ?></span> Sản phẩm</span>
                 <br>
 
 
             <?php endif ?>
         </div>
     </div>
-    <?php if (mysqli_num_rows($data['dataThanhToan']) > 0) : ?>
+    <?php if (($data['total']) > 0) : ?>
         <label id="tongTienMua"> </label>
         <div class="wrapOrder">
             <div id="ThanhToan"><span id="tongThanhToan"></span></div>
@@ -177,7 +177,7 @@ if (!isset($_SESSION['user'])) {
                 <div class="thanhTien lablecs txt_center">THÀNH TIỀN</div>
                 <div class="ngayOrder lablecs txt_center">NGÀY ĐẶT HÀNG</div>
             </div>
-            <?php while ($orderRow = mysqli_fetch_assoc($data['dataThanhToan'])) : ?>
+            <?php foreach (($data['data']) as $orderRow) : ?>
                 <div class="container_Item">
                     <?php if ($orderRow['pathImage'] == "") : ?>
                         <img class="imgItem lablecss" src="http://localhost/BTL_WEB/public/img/defautImg.gif" alt="gif">
@@ -190,12 +190,12 @@ if (!isset($_SESSION['user'])) {
                             <?php echo $orderRow['tenSanPham'] ?>
                         </a>
                     </div>
-                    <div class="giaSp giaSP lablecss  txt_center"><?php echo $orderRow['giaSanPham'] ?></div>
-                    <div class="soLuong lablecss txt_center"><?php echo $orderRow['TongSL'] ?></div>
-                    <input type="text" class="thanhTientxt giaSP lablecss txt_center" disabled="disabled" value="<?php echo ($orderRow['TongSL'] * $orderRow['giaSanPham'])  ?>"></input>
+                    <div class="giaSp giaSP lablecss txt_center"><?php echo $orderRow['giaSanPham'] ?></div>
+                    <div class="soLuong lablecss txt_center"><?php echo $orderRow['tongSL'] ?></div>
+                    <input type="text" class="thanhTientxt giaSP lablecss txt_center" disabled="disabled" value="<?php echo ($orderRow['tongSL'] * $orderRow['giaSanPham'])  ?>"></input>
                     <div class="ngayOrder lablecss txt_center"><?php echo $orderRow['ngayOrder'] ?></div>
                 </div>
-            <?php endwhile ?>
+            <?php endforeach; ?>
         </div>
     <?php endif ?>
 

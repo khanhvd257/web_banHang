@@ -2,7 +2,7 @@
 // 
 require_once "./Classes/PHPExcel.php";
 $_SESSION['login'] = 1;
-$mysqli = new mysqli("localhost", "root", "", "shopquanao_btlweb");
+$mysqli = new mysqli("localhost", "root", "", "shopBanHang");
 $thongbao = '';
 $kq = '';
 $TenBlog = '';

@@ -1,6 +1,6 @@
 <?php
 require_once "./Classes/PHPExcel.php";
-$con = mysqli_connect('localhost', 'root', '', 'shopquanao_btlweb');
+$con = mysqli_connect('localhost', 'root', '', 'shopBanHang');
 if (isset($_POST['btnTimkiem'])) {
     // code...
     $usersID = $_POST['txtusersID'];

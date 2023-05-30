@@ -1,16 +1,21 @@
 <?php
+include_once "./MVC/Config/APIHelper.php";
 class BlogModel extends ConnectDB{
-
+    private $apiCon;
+    function __construct()
+    {
+        $this->apiCon = new APIHelper();
+    }
     public function getAll(){
-        $sql = "SELECT * FROM tblUsers,tblBlog WHERE tblBlog.userID = tblUsers.userID ORDER BY idBlog DESC";
-        $kq = mysqli_query($this->con,$sql);
-        return $kq;
+        $method = 'GET';
+        $endpoint = 'blog/getAll.php';
+        return $this->apiCon->callAPI($endpoint, $method);
     }
 
-    public function getByID($idBlog){
-        $sql = "SELECT * FROM tblUsers,tblBlog WHERE tblBlog.userID = tblUsers.userID AND idBlog = '$idBlog' ";
-        $kq = mysqli_query($this->con, $sql);
-        return $kq;
+    public function getByID($blogId){
+        $method = 'GET';
+        $endpoint = 'blog/detail.php?id='.$blogId;
+        return $this->apiCon->callAPI($endpoint, $method);
     }
 
     public function getOtherBlog($idBlog){

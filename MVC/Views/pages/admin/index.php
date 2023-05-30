@@ -1,7 +1,22 @@
 <?php
 session_start();
 $_SESSION['login'] = 1;
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "shopBanHang";
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+$sqlSp = "SELECT COUNT(productID) AS TONGSP FROM `tblProducts` ";
+$SQL1 = mysqli_query($conn, $sqlSp);
+$sqlkhach = "SELECT COUNT(tblUsers.userID) AS TONGKH FROM tblUsers";
+$SQL2 = mysqli_query($conn, $sqlkhach);
+$sqlblog = "SELECT COUNT(tblBlog.idBlog) AS TONGBL FROM tblBlog";
+$SQL3 = mysqli_query($conn, $sqlblog);
 
+$sqlTong = "SELECT SUM(tblOrder.soLuong*tblProducts.giaSanPham) AS Tong FROM tblOrder, tblProducts WHERE
+tblProducts.productID = tblOrder.productID AND tblOrder.status = '1' ";
+
+$SQL4 =  mysqli_query($conn, $sqlTong);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,6 +53,21 @@ $_SESSION['login'] = 1;
 			margin-bottom: 0 !important;
 			margin-top: 24px;
 		}
+
+		.render_noidung {
+			justify-content: space-evenly;
+			margin-top: 100px;
+			margin-left: 20px;
+			display: flex;
+			width: 100%;
+		}
+
+		.css_img {
+			min-width: 286px;
+			min-height: 286px;
+		}
+
+		.CSS_CARD {}
 	</style>
 
 </head>
@@ -77,9 +107,34 @@ $_SESSION['login'] = 1;
 			</div>
 		</div>
 		<div class="render_noidung">
-			<?php
-			//include file o day
-			?>
+			<div class="card CSS_CARD" style="width: 18rem;">
+				<img class="card-img-top css_img" src="http://localhost/BTL_WEB/public/img/khachHangicon.jpeg" alt="Card image cap">
+				<div class="card-body">
+					<h5 class="card-title">TỔNG KHÁCH HÀNG <br> --<span style="color: red;"><?php $ROW = mysqli_fetch_assoc($SQL2);
+					echo $ROW['TONGKH'] . " Khách đang hoạt động" ?></span> </h5>
+					<p class="card-text">Số lượng người tiêu dùng đông đảo, chiếm ưu thế</p>
+					<a href="http://localhost/BTL_WEB/MVC/Views/pages/admin/quanLyKhachHang/qlKhachHang.php" class="btn btn-primary">Đi tới quản lý</a>
+				</div>
+			</div>
+			<div class="card CSS_CARD" style="width: 18rem;">
+				<img class="card-img-top css_img" src="http://localhost/BTL_WEB/public/img/blogicon.jpeg" alt="Card image cap">
+				<div class="card-body">
+					<h5 class="card-title">TỔNG SỐ TIN TỨC <br> -- <span style="color: red;"><?php $ROW =  mysqli_fetch_assoc($SQL3);
+					echo $ROW['TONGBL'] . " Bài Báo đã đăng" ?></span></h5>
+					<p class="card-text">Tin tức cập nhập nhanh chóng, chinh xác đến từng giây</p>
+					<a href="http://localhost/BTL_WEB/MVC/Views/pages/admin/quanlyBlog/Blog.php" class="btn btn-primary">Đi tới quản lý</a>
+				</div>
+			</div>
+			<div class="card CSS_CARD" style="width: 18rem;">
+				<img class="card-img-top css_img" src="http://localhost/BTL_WEB/public/img/sanphamicon.jpeg" alt="Card image cap">
+				<div class="card-body">
+					<h5 class="card-title">SẢN PHẨM KINH DOANH <br> --<span style="color: red;"><?php $ROW = mysqli_fetch_assoc($SQL1);
+					echo $ROW['TONGSP'] . " Sản phẩm Kinh doanh" ?></span></h5>
+					<p class="card-text">Sản phẩm đa dạng mẫu mã, mặt hàng</p>
+					<a href="http://localhost/BTL_WEB/MVC/Views/pages/admin/quanlySanPham/qlSanPham.php" class="btn btn-primary">Đi tới quản lý</a>
+				</div>
+			</div>
+
 		</div>
 
 	</div>

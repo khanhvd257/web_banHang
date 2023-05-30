@@ -1,7 +1,7 @@
 <?php
 
 $_SESSION['login'] = 1;
-$mysqli = new mysqli("localhost", "root", "", "shopquanao_btlweb");
+$mysqli = new mysqli("localhost", "root", "", "shopBanHang");
 $thongbao = '';
 $mn = $_GET['BlogID'];
 $sql = " DELETE FROM tblblog WHERE idBlog = '$mn'";

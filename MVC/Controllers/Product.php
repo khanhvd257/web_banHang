@@ -11,14 +11,11 @@ class Product extends controller
     }
     public function Detail($id)
     {
-
         $result = $this->sanpham->getDetail($id);
-        $result1 = $this->sanpham->getDetail($id);
-        $tenSp = mysqli_fetch_assoc($result1);
-        $_SESSION['pageSub'] = $tenSp['tenSanPham'];
+        $_SESSION['pageSub'] = $result["data"][0]["tenSanPham"];
         $this->view('MasterLayout', [
             'page' => 'content/chiTietSanPham',
-            'data' => $result
+            'data' => $result["data"][0]
         ]);
     }
 
@@ -28,16 +25,14 @@ class Product extends controller
 
         //ấy ra tên danh mục
         $this->danhmuc = $this->model('DanhMuc');
-        $tenDM = $this->danhmuc->getByID($id);
-        $DMuc = mysqli_fetch_assoc($tenDM);
-        $result = $this->sanpham->getByCategory($id);
-        $_SESSION['page'] = $DMuc['tenDanhMuc'];
-        $idDM =  $DMuc['danhMucID'];
-        $result = $this->sanpham->getByCategory($id);
+        $tenDM = $this->danhmuc->getNameCate($id)["data"][0]["tenDanhMuc"];
+        $result = $this->danhmuc->getByID($id);
+        $_SESSION['page'] = $tenDM;
         $this->view('MasterLayout', [
             'page' => 'content/danhMuc',
-            'data' => $result,
-            'idDanhMuc' =>  $idDM 
+            'data' => $result["data"],
+            'total' => $result["total"],
+            'idDanhMuc' => $id
         ]);
     }
 
@@ -56,21 +51,24 @@ class Product extends controller
         $this->view('MasterLayout', [
             'page' => 'content/danhMuc',
             'data' => $result,
-            'idDanhMuc' =>  $idDM 
+            'idDanhMuc' =>  $idDM
         ]);
     }
 
     //SẢN PHẨM USER ĐÃ MUA
     public function DaMua()
     {
+//
         $_SESSION['page'] = "Đã mua hàng";
         if (isset($_SESSION['user'])) {
-            $idUser = $_SESSION['user']['userID'];
-            $result = $this->sanpham->hangDaThanhToan($idUser);
+            $userId = $_SESSION['user']['userID'];
+            $result = $this->sanpham->hangDaThanhToan($userId);
             $this->view('MasterLayout', [
                 'page' => 'content/daThanhToan',
-                'dataThanhToan' => $result
+                'data' => $result["data"],
+                'total' => $result["total"]
             ]);
+
         }
     }
 
@@ -80,10 +78,10 @@ class Product extends controller
         if (isset($_POST['btnSearchProduct'])) {
             $stringName = $_POST['txtSearchName'];
             $result = $this->sanpham->TimKiemSP($stringName);
-            $_SESSION['page'] = "Tìm kiếm";
+            $_SESSION['page'] = "Tìm kiếm" . $stringName;
             $this->view('MasterLayout', [
                 'page' => 'content/product',
-                'dataProduct' => $result
+                'dataProduct' => $result["data"]
             ]);
         } else {
             header('Location: /BTL_WEB/home');

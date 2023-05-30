@@ -158,12 +158,12 @@ if (!isset($_SESSION['user'])) {
 </style>
 <div class="wrap_container">
     <div class="header_content">
-        <?php if (mysqli_num_rows($data['dataOrder']) > 0) : ?>
+        <?php if ($data['total'] > 0) : ?>
             DANH SÁCH SẢN PHẨM ORDER
         <?php endif ?>
         <div class="TongMH">
 
-            <?php if (mysqli_num_rows($data['dataOrder']) == 0) : ?>
+            <?php if ($data['total'] == 0) : ?>
                 <h2>Không có sản phẩm để thanh toán</h2>
                 <br>
                 <img style="max-width: 400px;" src="http://localhost/btl_web/public/img/96758-empty-cart.gif" alt="">
@@ -171,13 +171,13 @@ if (!isset($_SESSION['user'])) {
                 <button type="button" onclick="location.href='http://localhost/btl_web/home'" class="btn btn-warning" style="margin-top: 36px;">ĐI MUA SẢN PHẨM NGAY THÔI NÀO</button>
             <?php endif ?>
 
-            <?php if (mysqli_num_rows($data['dataOrder']) > 0) : ?>
-                <span class="badge badge-primary">Tổng có <span style="font-weight: bolder; font-size: 16px;"><?php echo mysqli_num_rows($data['dataOrder']) ?></span> Sản phẩm đang chờ Thanh Toán</span>
+            <?php if ($data['total'] > 0) : ?>
+                <span class="badge badge-primary">Tổng có <span style="font-weight: bolder; font-size: 16px;"><?php echo $data['total']  ?></span> Sản phẩm đang chờ Thanh Toán</span>
             <?php endif ?>
         </div>
     </div>
     <div class="datHang">
-        <?php if (mysqli_num_rows($data['dataOrder']) > 0) : ?>
+        <?php if (($data['total']) > 0) : ?>
             <div class="container_order_button">
                 <form action="http://localhost/btl_web/order/thanhToan" id="btnThanhToan" name="formDatHang" method="post" onsubmit="return validateformThanhToan_GioHang()">
                     <input id="arrOrder" name="strOrder" value="" style="display: none;" />
@@ -203,7 +203,7 @@ if (!isset($_SESSION['user'])) {
             <div id="ThanhToan"><span id="tongThanhToan"></span></div>
         <?php endif ?>
     </div>
-    <?php if (mysqli_num_rows($data['dataOrder']) > 0) : ?>
+    <?php if (($data['total']) > 0) : ?>
         <div class="wrapOrder">
             <div class="container_Item">
                 <div class="check_box">
@@ -217,7 +217,7 @@ if (!isset($_SESSION['user'])) {
                 <div class="thanhTien lablecs txt_center">THÀNH TIỀN</div>
                 <div class="btn_EditOrder lablecs txt_center">SỬA ORDER</div>
             </div>
-            <?php while ($orderRow = mysqli_fetch_assoc($data['dataOrder'])) : ?>
+            <?php foreach (($data['dataOrder']) as $orderRow) : ?>
                 <div class="container_Item">
                     <div class="check_box">
                         <input id="<?php echo $orderRow['productID'] ?>" onchange="checkOrder()" type="checkbox" class="checkOrder" value="<?php echo ($orderRow['TongSL'] * $orderRow['giaSanPham']) ?>" name="order">
@@ -238,7 +238,7 @@ if (!isset($_SESSION['user'])) {
                     <input disabled class="SLkho_GioHang  SLkho lablecss txt_center" value="<?php echo $orderRow['soLuongKho'] ?>" />
                     <span class="thanhTien txthanhTien lablecss txt_center"><?php echo ($orderRow['TongSL'] * $orderRow['giaSanPham'])  ?></span>
                 </div>
-            <?php endwhile ?>
+            <?php endforeach; ?>
         </div>
     <?php endif ?>
 
@@ -251,7 +251,7 @@ if (!isset($_SESSION['user'])) {
         var a = document.getElementsByClassName("txtSoLuongOrder");
         var b = document.getElementsByClassName("SLkho_GioHang");
         for (var i = 0; i < inputElems.length; i++) {
-            if (inputElems[i].checked == true) {
+            // if (inputElems[i].checked == true) {
                 if (a[i].value <= 0) {
                     alert("Số luọng phải lớn hơn 0");
                     return false;
@@ -259,16 +259,16 @@ if (!isset($_SESSION['user'])) {
                 if (a[i].value == "") {
                     alert("Nhập số lượng");
                 }
-                if (a[i].value > b[i].value) {
+                if (parseInt(a[i].value) > parseInt(b[i].value)) {
                     alert("Hàng lớn không đủ rồi");
                     return false;
-                } else if (confirm(`Bạn chắc chắn muốn đặt sản phẩm chứ`)) {
+                } else if (confirm(`Bạn chắc chắn muốn mua sản phẩm chứ`)) {
                     return true;
                 } else {
                     return false;
                 }
 
-            }
+            // }
         }
     }
 

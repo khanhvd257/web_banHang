@@ -1,7 +1,7 @@
 
 
  <?php
-    $con  = mysqli_connect ('localhost', 'root','','shopQuanAo_btlWeb');
+    $con  = mysqli_connect ('localhost', 'root','','shopBanHang');
     
     if(isset($_GET['productID'])){
         $productID=$_GET['productID'];

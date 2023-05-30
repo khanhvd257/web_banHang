@@ -1,28 +1,30 @@
 <?php
 
-class profile extends controller
+class Profile extends controller
 {
-
     public $user;
     public $sanpham;
     function __construct()
     {
-        $this->user = $this->model('KhachHang');
-        $this->sanpham = $this->model('SanPham');
+//
+        $this->user = $this->model("KhachHang");
+        $this->sanpham = $this->model("SanPham");
     }
+
 
     public function index()
     {
         if (isset($_SESSION['user'])) {
-            $idUser = $_SESSION['user']['userID'];
-            $kq = mysqli_fetch_assoc($this->user->getDeltailUser($idUser));
-            $dataMua = $this->sanpham->hangDaThanhToan($idUser);
+            $result = $this->sanpham->hangDaThanhToan($_SESSION['user']['userID']);
+            $userData = $this->user->getDeltailUser($_SESSION['user']['userID']);
             $_SESSION['page'] = "Profile";
                 $this->view('MasterLayout', [
                 'page' => 'content/profile',
-                'dataUser' => $kq,
-                'dataMua' => $dataMua
+                'dataUser' => $userData["data"],
+                'dataMua' => $result["data"]
             ]);
+//            var_dump($userData["data"]);
+
         }else{
             $this->render('login/LoginForm', []);
         }
@@ -38,15 +40,9 @@ class profile extends controller
             $email = $_POST['txtEditEmail'];
             $sdt = $_POST['txtEditSDT'];
             $idUser = $_SESSION['user']['userID'];
-            $re = $this->user->EditUser($idUser, $fullName, $gt, $NS, $dc, $email, $sdt);
-            $dataMua = $this->sanpham->hangDaThanhToan($idUser);
-            $kq = mysqli_fetch_assoc($this->user->getDeltailUser($idUser));
+            $this->user->EditUser($idUser, $fullName, $gt, $NS, $dc, $email, $sdt);
             $_SESSION['page'] = "Profile";
-            $this->view('MasterLayout', [
-                'page' => 'content/profile',
-                'dataUser' => $kq,
-                'dataMua' => $dataMua
-            ]);
+            header('Location:  http://localhost/BTL_WEB/profile');
         } else {
             $this->render('login/LoginForm', []);
         }

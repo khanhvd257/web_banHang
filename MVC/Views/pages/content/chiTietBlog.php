@@ -1,5 +1,5 @@
 <?php
-$dataBlog = mysqli_fetch_array($data['dataBlog']);
+$dataBlog = $data['dataBlog'];
 $dataAnh = $dataBlog['hinhAnh'];
 ?>
 <!DOCTYPE html>
@@ -119,7 +119,7 @@ $dataAnh = $dataBlog['hinhAnh'];
         <div class="baivietKhac col-4">
 
             <h3>BÀI VIẾT KHÁC</h3>
-            <?php while ($blog = mysqli_fetch_assoc($data['AllBlog'])) : ?>
+            <?php foreach (($data['AllBlog']) as $blog) : ?>
                 <div class="card card_item" style="width: 18rem;">
                     <a href="http://localhost/btl_web/blog/detailBlog/<?php echo $blog['idBlog'] ?>">
                         <?php if ($blog['hinhAnh'] == null) : ?>
@@ -132,7 +132,7 @@ $dataAnh = $dataBlog['hinhAnh'];
                         </div>
                     </a>
                 </div>
-            <?php endwhile ?>
+            <?php endforeach ?>
             <a href="http://localhost/btl_web/blog">Xem tất cả bài Viết...</a>
             <br>
         </div>

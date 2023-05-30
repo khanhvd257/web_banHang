@@ -1,6 +1,6 @@
 <?php
 //tao ket noi 
-$con=mysqli_connect('localhost','root','','shopQuanAo_btlWeb');
+$con=mysqli_connect('localhost','root','','shopBanHang');
 $thongbao='';
 if(isset ($_GET['productID'])){
 	$productID=$_GET['productID'];
@@ -29,7 +29,7 @@ if(isset($_POST['btnLuu'])){
     $xuatXu = $_POST['txtxuatXu'];
     $soLuongKho = $_POST['txtsoLuongKho'];
     $pathImage =$_POST['txtpathImage'];
-		$sql="UPDATE tblproducts Set danhMucID = '$danhMucID', tenSanPham = '$tenSanPham', moTaSanPham = '$moTaSanPham', giaSanPham = '$giaSanPham',xuatXu= '$xuatXu',soLuongKho= '$soLuongKho',pathImage= '$pathImage' Where productID='$productID'";
+		$sql="UPDATE tblproducts Set danhMucID = '$danhMucID', tenSanPham = '$tenSanPham', moTaSanPham = '$moTaSanPham', giaSanPham = '$giaSanPham',xuatXu= '$xuatXu',soLuongKho= '$soLuongKho' Where productID='$productID'";
 		$kq=mysqli_query($con, $sql);
 		if($kq){
 			$thongbao = "Sửa thành công";
@@ -178,10 +178,6 @@ if(isset($_POST['btnLuu'])){
         <div class="form-group">
             <label for="status" class = " mau">Số Lượng</label>
             <input type="text" value="<?php echo $soLuongKho ?>" name="txtsoLuongKho" id="" class="form-control" placeholder="" aria-describedby="helpId">
-        </div>
-        <div class="form-group">
-            <label for="status" class = " mau">Anh</label>
-            <input type="file" value="<?php echo $pathImage ?>" name="txtpathImage" id="" class="form-control" placeholder="" aria-describedby="helpId">
         </div>
          <button class="btn "  name="btnLuu" type="submit"> SỬA </button>
         

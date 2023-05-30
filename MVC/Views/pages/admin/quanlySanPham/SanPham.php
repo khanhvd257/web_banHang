@@ -2,7 +2,7 @@
 
 require_once "./Classes/PHPExcel.php";
 //tao ket noi 
-$con = mysqli_connect('localhost', 'root', '', 'shopQuanAo_btlWeb');
+$con = mysqli_connect('localhost', 'root', '', 'shopBanHang');
 $thongbao = '';
 $productID = '';
 $danhMucID = '';
@@ -207,7 +207,7 @@ if (isset($_POST['btnLuu'])) {
             </div>
         </nav>
     </div>
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" >
         <div class="content2">
             <table>
                 <h2>Thêm Thông tin Sản phẩm</h2>
@@ -260,6 +260,13 @@ if (isset($_POST['btnLuu'])) {
 
 <script>
     function checkDieuKien() {
+        var a = document.getElementsByClassName('form-control')
+        for(var i = 0 ; i <length.a; i++){
+            if(a[i].value.length==0){
+                alert('Chưa nhập đủ dữ liệu');
+                return;
+            }
+        }
 
     }
 </script>

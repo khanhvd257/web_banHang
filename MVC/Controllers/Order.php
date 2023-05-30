@@ -1,8 +1,10 @@
 <?php
+
 class Order extends controller
 {
 
     public $order;
+
     function __construct()
     {
         unset($_SESSION['pageSub']);
@@ -17,29 +19,31 @@ class Order extends controller
             $result = $this->order->getAll($_SESSION['user']['userID']);
             $this->view('MasterLayout', [
                 'page' => 'content/gioHang',
-                'dataOrder' => $result
+                'dataOrder' => $result["data"],
+                'total' => $result["total"]
             ]);
         } else {
             header('Location: /BTL_WEB/auth');
         }
     }
+
     //kick vào thêm giỏ hàng
-    public function orderSingle($idProduct)
+    public function orderSingle($productId)
     {
         if (isset($_SESSION['user'])) {
             $IdUser = $_SESSION['user']['userID'];
-            $result1 = $this->order->addOneOrder($idProduct);
-            $result = $this->order->getAll($IdUser);
-            $this->view('MasterLayout', [
-                'page' => 'content/gioHang',
-                'dataOrder' => $result
-            ]);
-        } else {
-            $this->render('login/LoginForm');
+
+            $result = $this->order->addOneOrder($productId);
+            var_dump($result);
+            if ($result["success"] === true) {
+                header('Location: http://localhost/BTL_WEB/order');
+            } else {
+                $this->render('login/LoginForm');
+            }
         }
     }
 
-    //click vào đặt số lượng sản phẩm 
+    //click vào đặt số lượng sản phẩm
     public function addMultiProduct()
     {
         if (isset($_SESSION['user'])) {
@@ -48,10 +52,7 @@ class Order extends controller
             $soLuong = $_POST['txtSLMua'];
             $result1 = $this->order->addMultiOrder($idProduct, $soLuong, $IdUser);
             $result = $this->order->getAll($IdUser);
-            $this->view('MasterLayout', [
-                'page' => 'content/gioHang',
-                'dataOrder' => $result
-            ]);
+            header('Location: http://localhost/BTL_WEB/order');
         } else {
             $this->render('login/LoginForm');
         }
@@ -64,41 +65,30 @@ class Order extends controller
             $IdUser = $_SESSION['user']['userID'];
             $idProduct = $_POST['strOrder'];
             $arrIDproduct = explode('_', $idProduct);
-            var_dump($arrIDproduct[0]);
-            var_dump($IdUser);
             for ($i = 0; $i < count($arrIDproduct); $i++) {
                 $this->order->deleOrder($IdUser, $arrIDproduct[$i]);
             }
             $result1 = $this->order->getAll($IdUser);
-            $this->view('MasterLayout', [
-                'page' => 'content/gioHang',
-                'dataOrder' => $result1
-            ]);
+            header('Location: http://localhost/BTL_WEB/order');
         } else {
             $this->render('login/LoginForm');
         }
     }
+
     public function thanhToan()
     {
         if (isset($_SESSION['user'])) {
-            $IdUser = $_SESSION['user']['userID'];
             $idProduct = $_POST['strOrder'];
             $arrIDproduct = explode('_', $idProduct);
-            $sl = $_POST['strOrderSL'];
-            $arrSL =  explode('_', $sl);
-            $Kho = $_POST['strOrderKho'];
-            $arrKho =  explode('_', $Kho);
+            $arr = [];
             for ($i = 0; $i < count($arrIDproduct); $i++) {
-                $this->order->ThanhToanSauKhiSua($arrIDproduct[$i], $arrSL[$i], $arrKho[$i], $IdUser);
-                echo $arrIDproduct[$i] . "id", $arrSL[$i] . "sl", $arrKho[$i] . "kho", $IdUser . "kten";
+
+                $row = $this->order->ThanhToanSauKhiSua($arrIDproduct[$i]);
+                array_push($arr, $row);
             }
-            $result = $this->order->getAll($_SESSION['user']['userID']);
-            $this->view('MasterLayout', [
-                'page' => 'content/gioHang',
-                'dataOrder' => $result
-            ]);
+            header('Location: http://localhost/BTL_WEB/order');
         } else {
-            $this->render('login/LoginForm');
+            header('Location: http://localhost/BTL_WEB/auth');
         }
     }
 }

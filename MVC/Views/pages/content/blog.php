@@ -45,7 +45,7 @@
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;">
-        <?php while ($blog = mysqli_fetch_assoc($data['dataBlog'])) : ?>
+        <?php foreach ( ($data['dataBlog']) as $blog) : ?>
             <div class="card card__item" style="width: 18rem;">
                 <?php if ($blog['hinhAnh'] == null) : ?>
                     <img class="card-img-top css_img" src="http://localhost/btl_web/public/img/blog/defaultBlog.jpeg" alt="Card image cap">
@@ -59,7 +59,7 @@
                 </div>
             </div>
 
-        <?php endwhile ?>
+        <?php endforeach; ?>
 
     </div>
 

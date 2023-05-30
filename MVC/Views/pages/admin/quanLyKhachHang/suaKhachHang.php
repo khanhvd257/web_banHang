@@ -1,6 +1,6 @@
 <?php
 //tao ket noi 
-$con = mysqli_connect('localhost', 'root', '', 'shopquanao_btlweb');
+$con = mysqli_connect('localhost', 'root', '', 'shopBanHang');
 $thongbao = '';
 $kq = '';
 $userID = '';

@@ -2,7 +2,7 @@
 //
 require_once "./Classes/PHPExcel.php";
 $_SESSION['login'] = 1;
-$mysqli = new mysqli("localhost", "root", "", "shopquanao_btlweb");
+$mysqli = new mysqli("localhost", "root", "", "shopBanHang");
 if (isset($_POST['btnSearch'])) {
     $IDBlog = $_POST['txtIDBlog'];
     $IDUser = $_POST['txtIDUser'];

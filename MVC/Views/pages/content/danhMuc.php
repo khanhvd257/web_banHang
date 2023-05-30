@@ -199,7 +199,7 @@
 </head>
 
 <body>
-    <?php if (mysqli_num_rows($data['data']) > 0) : ?>
+    <?php if ($data['total'] > 0) : ?>
         <div class="locSP" style="margin: 10px 47px;">
             <form action="http://localhost/btl_web/product/SortDanhMuc/<?php echo $data['idDanhMuc'] ?>" method="post">
                 <label class="mr-sm-2" for="locsanPham">Lọc sản Phẩm: </label>
@@ -213,7 +213,7 @@
         </div>
         <div class="wrap_container">
 
-            <?php while ($sanpham = mysqli_fetch_assoc($data['data'])) : ?>
+            <?php foreach ($data['data'] as $sanpham) : ?>
                 <div class="container_item">
                     <?php if ($sanpham['pathImage'] == "") : ?>
                         <div class="imgItem_container">
@@ -250,11 +250,11 @@
                         </div>
                     </div>
                 </div>
-            <?php endwhile ?>
+            <?php endforeach; ?>
 
         </div>
     <?php endif ?>
-    <?php if (mysqli_num_rows($data['data']) == 0) : ?>
+    <?php if (($data['total']) == 0) : ?>
 
         <H4 class="notFound">
             DANH MỤC HIỆN KHÔNG CÓ SẢN PHẨM NÀO

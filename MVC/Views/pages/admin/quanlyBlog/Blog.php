@@ -1,7 +1,7 @@
 <?php
 // 
 $_SESSION['login'] = 1;
-$mysqli = new mysqli("localhost", "root", "", "shopquanao_btlweb");
+$mysqli = new mysqli("localhost", "root", "", "shopBanHang");
 $sql = "SELECT * FROM tblblog";
 $result = mysqli_query($mysqli, $sql);
 ?>

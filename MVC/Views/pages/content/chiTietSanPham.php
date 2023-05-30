@@ -1,5 +1,5 @@
 <?php
-$sanpham = mysqli_fetch_assoc($data['data']);
+$sanpham = $data['data'];
 ?>
 
 <!DOCTYPE html>
@@ -102,6 +102,7 @@ $sanpham = mysqli_fetch_assoc($data['data']);
     .lablecss {
         font-size: 14px;
         font-weight: 600;
+        margin: 0;
     }
 
     .giaSP::before {

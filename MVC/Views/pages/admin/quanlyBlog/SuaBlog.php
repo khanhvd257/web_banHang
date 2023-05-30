@@ -1,7 +1,7 @@
 <?php
 // 
 $_SESSION['login'] = 1;
-$mysqli = mysqli_connect('localhost', 'root', '', 'shopquanao_btlweb');
+$mysqli = mysqli_connect('localhost', 'root', '', 'shopBanHang');
 $thongbao = '';
 $kq = '';
 $IDUser = '';

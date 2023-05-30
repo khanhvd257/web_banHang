@@ -1,43 +1,53 @@
 <?php
-class OrderSp extends ConnectDB
-{
+include_once "./MVC/Config/APIHelper.php";
 
+class OrderSP extends ConnectDB
+{
+    private $apiCon;
+
+    function __construct()
+    {
+        $this->apiCon = new APIHelper();
+    }
     public function getAll($idUser)
     {
-        $sql = "SELECT *, SUM(soLuong) as TongSL FROM tblOrder, tblProducts, tblUsers WHERE tblUsers.userID = tblOrder.userID 
-        AND tblProducts.productID = tblOrder.productID AND tblOrder.userID = '$idUser' AND tblOrder.status = '0' GROUP BY tblProducts.productID ORDER BY tblOrder.orderID DESC";
-        $kq = mysqli_query($this->con, $sql);
-        return $kq;
+        $method = 'GET';
+        $endpoint = 'order/getOrder.php?' . 'userId=' . $idUser;
+        return $this->apiCon->callAPI($endpoint, $method);
     }
 
-
-    // HAM ORDER SAN PHẨM CLICK GIỎ
-
-    public function addOneOrder($idProduct)
+    public function addOneOrder($productId)
     {
-        $userID = $_SESSION['user']['userID'];
-        $sql = "INSERT INTO `tblOrder`( `ngayOrder`, `soLuong`, `userID`, `productID`, `status`) VALUES (now(),'1','$userID','$idProduct','0')";
-        $kq = mysqli_query($this->con, $sql);
-        return $kq;
+
+        $endpoint = 'order/add.php';
+        $method = 'POST';
+        $data = array(
+            'productId' => $productId,
+            'soLuong' => '1',
+            'userID' => $_SESSION['user']['userID']
+        );
+        return $this->apiCon->callAPI($endpoint, $method, $data);
+
     }
 
     // HAM ORDER SAN PHẨM NHẬP SỐ LƯỢNG
 
     public function addMultiOrder($idProduct, $soLuong, $userID)
     {
-        $sql = "INSERT INTO `tblOrder`( `ngayOrder`, `soLuong`, `userID`, `productID`, `status`) VALUES (now(),'$soLuong','$userID','$idProduct','0')";
+        $sql = "INSERT INTO `tblOrder`( `ngayOrder`, `soLuong`, `userID`, `productID`, `payStatus`) VALUES (now(),'$soLuong','$userID','$idProduct','0')";
         $kq = mysqli_query($this->con, $sql);
         return $kq;
     }
-    public function ThanhToanSauKhiSua($idProduct, $soLuongMua, $soLuongKhoCur, $userID)
+    public function ThanhToanSauKhiSua($productId)
     {
-        $soLuongKhoSau = $soLuongKhoCur - $soLuongMua;
-        //set trang thai thanh toan
-        $sql1 = "UPDATE `tblOrder` SET `soLuong` = '$soLuongMua',  `status` = '1' WHERE `userID` = '$userID' AND `productID` = '$idProduct'";
-        $kq1 = mysqli_query($this->con, $sql1);
-        //set lai so luong kho con
-        $sql0 = "UPDATE `tblProducts` SET `soLuongKho`='$soLuongKhoSau' WHERE productID = '$idProduct'";
-        $kq = mysqli_query($this->con, $sql0);
+
+        $endpoint = 'order/thanhToan.php';
+        $method = 'PUT';
+        $data = array(
+            'productId' => $productId,
+            'userId' => $_SESSION['user']['userID']
+        );
+        return $this->apiCon->callAPI($endpoint, $method, $data);
     }
 
     //HÀM DELETE SẢN PHẨM ORDER
@@ -57,7 +67,7 @@ class OrderSp extends ConnectDB
             $arrOrder = $_POST['strOrder'];
             $arr = explode('_', $_POST['strOrder']);
             foreach ($arr as $idProduct) {
-                $sql = "UPDATE tblOrder SET `status` = '1' WHERE productID = '$idProduct'";
+                $sql = "UPDATE tblOrder SET `payStatus` = '1' WHERE productID = '$idProduct'";
                 $kq = mysqli_query($this->con, $sql);
             }
         }

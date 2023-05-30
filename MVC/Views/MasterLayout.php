@@ -51,7 +51,7 @@ $danhmuc = mysqli_query($conn, $sql);
 								<?php
 								$idUser = $dataUser['userID'];
 								$sql = "SELECT *, SUM(soLuong) as TongSL FROM tblOrder, tblProducts, tblUsers WHERE tblUsers.userID = tblOrder.userID 
-								AND tblProducts.productID = tblOrder.productID AND tblOrder.userID = '$idUser' AND tblOrder.status='0' GROUP BY tblProducts.productID ORDER BY tblOrder.orderID DESC";
+								AND tblProducts.productID = tblOrder.productID AND tblOrder.userID = '$idUser' AND tblOrder.payStatus='0' GROUP BY tblProducts.productID ORDER BY tblOrder.orderID DESC";
 								$kq = mysqli_query($conn, $sql);
 								$countOrder = mysqli_num_rows($kq);
 								echo $countOrder;

@@ -12,17 +12,12 @@ class Home extends controller{
         $this->user = $this->model('KhachHang');
     }
     function index(){
-        $result1='';
-        $result = $this->product->getAll();
-        if(isset($_SESSION['user']['userID'])){
-            $result1 = $this->order->getAll($_SESSION['user']['userID']);
-        }
+        $result = $this->product->getAllNew();
         $this->view('MasterLayout',[
             'page'=>'content/product',
-            'dataProduct' => $result,
-            'dataOrder' => $result1
+            'dataProduct' => $result["data"],
         ]);
-    }  
+    }
     function sort(){
         $orderBy = $_POST['sortProduct'];
         $result = $this->product->sortAll($orderBy);
@@ -34,7 +29,7 @@ class Home extends controller{
             'dataProduct' => $result,
         ]);
         // var_dump($result);
-    }  
+    }
     function Profile(){
         if(isset($_SESSION['user'])){
             $idUser = $_SESSION['user']['userID'];
@@ -43,8 +38,8 @@ class Home extends controller{
             $this->view('MasterLayout',[
                 'page'=>'content/profile',
                 'dataUser'=> $kq
-            ]);      
+            ]);
         }
-       
+
     }
 }

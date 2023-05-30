@@ -212,7 +212,7 @@
     </div>
     <div class="wrap_container">
 
-        <?php while ($sanpham = mysqli_fetch_assoc($data['dataProduct'])) : ?>
+        <?php foreach ( $data['dataProduct'] as $sanpham) : ?>
             <div class="container_item">
 
                 <?php if ($sanpham['pathImage'] == "") : ?>
@@ -241,7 +241,7 @@
                     <div class="motaItem">
                         <?php if ($sanpham['soLuongKho'] != '0') : ?>
                             <a href="http://localhost/btl_web/order/orderSingle/<?php echo $sanpham['productID'] ?>">
-                                <button class="button-hover-addcart button"><span>Mua ngay</span><i class="fa fa-shopping-cart"></i></button>
+                                <button class="button-hover-addcart button"><?php if($sanpham['productID']==46){echo "NEW";} ?> <span>Mua ngay</span><i class="fa fa-shopping-cart"></i></button>
                             </a>
                         <?php endif ?>
                         <?php if ($sanpham['soLuongKho'] == '0') : ?>
@@ -253,7 +253,7 @@
                 </div>
 
             </div>
-        <?php endwhile ?>
+        <?php endforeach; ?>
         <?php if (mysqli_num_rows($data['dataProduct']) == 0) : ?>
             <H4 class="notFound">
                 Không tìm thấy sản phẩm tìm kiếm nào
