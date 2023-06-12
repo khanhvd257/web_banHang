@@ -18,6 +18,8 @@ class APIHelper {
         }elseif ($method == 'PUT') {
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PUT');
             curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+        }elseif ($method == 'DELETE') {
+            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE'); // Set the request method to DELETE
         }
 
         $response = curl_exec($curl);

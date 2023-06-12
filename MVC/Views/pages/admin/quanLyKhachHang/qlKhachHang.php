@@ -1,5 +1,7 @@
 <?php
 require_once "./Classes/PHPExcel.php";
+include_once "../quanLyKhachHang/API/APIHelper.php";
+$apiCon = new APIHelper();
 $con = mysqli_connect('localhost', 'root', '', 'shopBanHang');
 if (isset($_POST['btnTimkiem'])) {
     // code...
@@ -7,11 +9,21 @@ if (isset($_POST['btnTimkiem'])) {
     $loginName = $_POST['txtloginName'];
     $soDienThoai = $_POST['txtsoDienThoai'];
     $gioiTinh = $_POST['txtgioiTinh'];
-    $sql = "Select * From tblusers Where userID like '%$usersID%' and loginName like '%$loginName%'and soDienThoai like '%$soDienThoai%' and gioiTinh like '%$gioiTinh%'";
-    $result = mysqli_query($con, $sql);
+    $method = 'GET';
+    $params = array(
+        'id' => $usersID,
+        'loginName' => $loginName,
+        'soDienThoai'=>$soDienThoai,
+        'gioiTinh' => $gioiTinh
+    );
+    $queryString = http_build_query($params);
+    $endpoint = 'KhachHang/timKiem.php'. '?'.$queryString;
+    $result = $apiCon->callAPI($endpoint, $method);
+
 } else {
-    $sql = "Select * From tblusers";
-    $result = mysqli_query($con, $sql);
+    $method = 'GET';
+    $endpoint = 'KhachHang/getAll.php';
+    $result = $apiCon->callAPI($endpoint, $method);
 }
 
 if(isset($_POST['btnXuatexcel'])){
@@ -91,27 +103,6 @@ if(isset($_POST['btnXuatexcel'])){
     }
 
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -246,7 +237,7 @@ if(isset($_POST['btnXuatexcel'])){
 
 
 <div class="menu2">
-    <form method="post">
+    <form method="post" action="">
         <table class="table" width="100%">
             <tr style="background: greenyellow;">
                 <caption style="padding-top: 20px;font-size: 24px;">THÔNG TIN TÌM KIẾM KHÁCH HÀNG</caption>
@@ -324,7 +315,7 @@ if(isset($_POST['btnXuatexcel'])){
 
 
 <?php $i = 1 ?>
-<?php while ($row = mysqli_fetch_assoc($result)) : ?>
+<?php foreach ($result["data"] as $row) : ?>
 <?php if ($i % 2 == 0) : ?>
                     <td> <?php echo $row['userID'] ?></td>
                     <td> <?php echo $row['loginName'] ?></td>
@@ -357,10 +348,6 @@ if(isset($_POST['btnXuatexcel'])){
                     <td><a href="http://localhost/btl_web/MVC/Views/pages/admin/quanLyKhachHang/xoaKhachHang.php">
                     <input type="button" name="btnXoa" value="Xóa" onclick="xoaKhachHang(<?php echo $row['userID'] ?>)">
                     </tr>
-
-
-
-
 
 
 
@@ -407,7 +394,7 @@ if(isset($_POST['btnXuatexcel'])){
 
 <?php endif ?>
 <?php $i++ ?>
-<?php endwhile ?>
+<?php endforeach ?>
             <script type="text/javascript">
                 function xoaKhachHang(userID) {
                     opt = confirm('Bạn có muốn xóa khách hàng này ko?')

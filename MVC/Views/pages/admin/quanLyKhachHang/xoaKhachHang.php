@@ -1,16 +1,17 @@
-<?php 
-	$con=mysqli_connect('localhost', 'root', '', 'shopBanHang');
-	// var_dump($_GET['userID']);
-	if (isset($_GET['userID'])) {
-		// code...
-		$userID=$_GET['userID'];
-		$sql1="DELETE FROM tblusers Where userID='$userID'";
-		// var_dump($sql);
-		$kq=mysqli_query($con, $sql1);
-		if ($kq) {
-			echo 'Xoa thanh cong!';
-			header('Location: qlKhachHang.php');
-			die();
-		}
-		}
- ?>
+<?php
+include_once "../quanLyKhachHang/API/APIHelper.php";
+$apiCon = new APIHelper();
+// $con=mysqli_connect('localhost', 'root', '', 'shopBanHang');
+// var_dump($_GET['userID']);
+if (isset($_GET['userID'])) {
+	$userID = $_GET['userID'];
+	$method= 'DELETE';
+	$endpoint = 'KhachHang/xoa.php?id='.$userID;
+	$kq = $apiCon->callAPI($endpoint, $method);
+	var_dump($kq);
+	if ($kq) {
+		echo 'Xoa thanh cong!';
+		header('Location: qlKhachHang.php');
+		die();
+	}
+}

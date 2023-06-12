@@ -1,9 +1,11 @@
 <?php
 // 
 $_SESSION['login'] = 1;
-$mysqli = new mysqli("localhost", "root", "", "shopBanHang");
-$sql = "SELECT * FROM tblblog";
-$result = mysqli_query($mysqli, $sql);
+include_once "../quanlyBlog/API/APIHelper.php";
+$apiCon = new APIHelper();
+$method = 'GET';
+$endpoint = 'blog/getAll.php';
+$result = $apiCon->callAPI($endpoint,$method)["data"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -111,7 +113,7 @@ $result = mysqli_query($mysqli, $sql);
             </thead>
             <?php
             $i = 1;
-            while ($row = mysqli_fetch_assoc($result)) {
+            foreach($result as $row) {
                 echo '<tr>
                     <td> ' . $i . '</td>
                     <td> ' . $row['tenBlog'] . '</td>
@@ -122,7 +124,7 @@ $result = mysqli_query($mysqli, $sql);
                     <img  style="width: 100px;" src="http://localhost/BTL_WEB/MVC/Views/pages/admin/quanlyBlog/upload/' . $row['hinhAnh'] . '">
                     </td>
                     <td><input type="button" name="btnSua"
-                    value="Sửa" onclick=\' window.open("SuaBlog.php?userID=' . $row['userID'] . '","_seft") \' ></td>
+                    value="Sửa" onclick=\' window.open("SuaBlog.php?blogId=' . $row['idBlog'] . '&userID=' . $row['userID'] . '","_seft") \' ></td>
                     <td><input type="button" name="btnXoa"
                     value="Xóa" onclick=\' window.open("XoaBlog.php?BlogID=' . $row['idBlog'] . '","_seft") \'></td>
                     </tr>';

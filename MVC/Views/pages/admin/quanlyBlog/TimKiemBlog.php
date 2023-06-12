@@ -1,17 +1,21 @@
 <?php
 //
 require_once "./Classes/PHPExcel.php";
+include_once "../quanlyBlog/API/APIHelper.php";
+$apiCon = new APIHelper();
 $_SESSION['login'] = 1;
 $mysqli = new mysqli("localhost", "root", "", "shopBanHang");
 if (isset($_POST['btnSearch'])) {
-    $IDBlog = $_POST['txtIDBlog'];
-    $IDUser = $_POST['txtIDUser'];
-    $sql = "SELECT * FROM tblblog WHERE idBlog LIKE '%$IDBlog%' AND 
-    userID LIKE '%$IDUser%'";
-    $result = mysqli_query($mysqli, $sql);
+    $method = 'GET';
+    $tenBlog = $_POST['txtTenBlog'];
+    $endpoint = 'blog/find.php?tenBlog='.$tenBlog;
+    $result = $apiCon->callAPI($endpoint, $method)["data"];
 } else {
-    $sql = "SELECT * FROM tblblog";
-    $result = mysqli_query($mysqli, $sql);
+    $method = 'GET';
+    $tenBlog = $_POST['txtTenBlog'];
+    $endpoint = 'blog/getAll.php';
+    $result = $apiCon->callAPI($endpoint, $method)["data"];
+    
 }
 if (isset($_POST['btnXuatexcel'])) {
     $objExcel = new PHPExcel();
@@ -169,18 +173,12 @@ if (isset($_POST['btnXuatexcel'])) {
                         </caption>
                         <table>
                             <tr style="margin-bottom: 10px;">
-                                <td>ID Blog: </td>
+                                <td>Tên Blog: </td>
                                 <td>
-                                    <input style="margin-bottom: 10px; margin-left:10px;" type="text" name="txtIDBlog" id="">
+                                    <input style="margin-bottom: 10px; margin-left:10px;" type="text" name="txtTenBlog" id="">
                                 </td>
                             </tr>
                             <br>
-                            <tr>
-                                <td>ID User: </td>
-                                <td>
-                                    <input style="margin-bottom: 10px; margin-left:10px;" type="text" name="txtIDUser" id="">
-                                </td>
-                            </tr>
                             <tr>
                                 <td></td>
                                 <td>
@@ -210,7 +208,7 @@ if (isset($_POST['btnXuatexcel'])) {
                 </thead>
                 <?php
                 $i = 1;
-                while ($row = mysqli_fetch_assoc($result)) {
+                foreach ($result as $row) {
                     echo '<tr>
                     <td> ' . $i . '</td>
                     <td> ' . $row['tenBlog'] . '</td>

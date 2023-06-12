@@ -1,19 +1,18 @@
-
-
  <?php
-    $con  = mysqli_connect ('localhost', 'root','','shopBanHang');
-    
-    if(isset($_GET['productID'])){
-        $productID=$_GET['productID'];
-        $sql="delete from tblproducts Where productID = '$productID'";
-        $kq= mysqli_query($con, $sql);
-       if ($kq){
-        echo "<script> alret('Dữ liệu đã được xóa'); </script>";
-        header('Location:qlSanPham.php');
-        die();
-       }
-       else {
-        echo "<script> alret('Dữ liệu chưa được xóa'); </script>";
-       }
+    include_once "../quanlySanPham/API/APIHelper.php";
+    $apiCon = new APIHelper();
+
+    if (isset($_GET['productID'])) {
+        $productId = $_GET['productID'];
+        $method= 'DELETE';
+        $endpoint = 'product/delete.php?productId='.$productId;
+        $kq = $apiCon->callAPI($endpoint, $method);
+        if ($kq) {
+            echo "<script> alret('Dữ liệu đã được xóa'); </script>";
+            header('Location:qlSanPham.php');
+            die();
+        } else {
+            echo "<script> alret('Dữ liệu chưa được xóa'); </script>";
+        }
     }
-?>
+    ?>

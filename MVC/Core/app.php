@@ -20,10 +20,10 @@ class app
             $url = "https://";
         else
             $url = "http://";
-        // Append the host(domain name, ip) to the URL.   
+        // Append the host(domain name, ip) to the URL.
         $url .= $_SERVER['HTTP_HOST'];
 
-        // Append the requested resource location to the URL   
+        // Append the requested resource location to the URL
         $url .= $_SERVER['REQUEST_URI'];
 
         //định nghĩa biến dùng chung
@@ -45,7 +45,6 @@ class app
         $url = $this->getUrl();
         $urlArr =  array_filter(explode('/', $url));
         $urlArr = array_values($urlArr);
-
         //Xử lí controller
         if (isset($urlArr[0])) {
             $this->controller = ucfirst($urlArr[0]); // viết hoa chữ cái đầu

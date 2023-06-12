@@ -1,6 +1,8 @@
 <?php
 
 require_once "./Classes/PHPExcel.php";
+include_once "../quanlySanPham/API/APIHelper.php";
+$apiCon = new APIHelper();
 //tao ket noi 
 $con = mysqli_connect('localhost', 'root', '', 'shopBanHang');
 $thongbao = '';
@@ -22,11 +24,9 @@ if (isset($_POST['btnLuu'])) {
     $giaSanPham = $_POST['txtgiaSanPham'];
     $xuatXu = $_POST['txtxuatXu'];
     $soLuongKho = $_POST['txtsoLuongKho'];
-    // $sql="Insert into tblproducts Values('$productID','$danhMucID','$tenSanPham','$moTaSanPham','$giaSanPham','$xuatXu','$soLuongKho','$pathImage')";
-    // $kq=mysqli_query($con,$sql);
-    //if($kq) $thongbao="Them moi thanh cong";
-    //else $thongbao="Them moi that bai";
+ 
     $pathImage = basename($_FILES["fileToUpload"]["name"]);
+    // Đường dẫn đến thư mục lưu trữ tệp ảnh
     $target_dir = "./upload/";
     $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
     $uploadOk = 1;
@@ -54,16 +54,27 @@ if (isset($_POST['btnLuu'])) {
         echo "Sorry, your file was not uploaded.";
         // if everything is ok, try to upload file
     } else {
-        // var_dump($target_file);
-        // var_dump($_FILES["fileToUpload"]["tmp_name"]);
 
         if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
             echo "The file " . htmlspecialchars(basename($_FILES["fileToUpload"]["name"])) . " has been uploaded.";
         } else {
             echo "Sorry, there was an error uploading your file.";
         }
-        $sql = "INSERT INTO tblproducts VALUES (null,'$danhMucID','$tenSanPham','$moTaSanPham','$giaSanPham','$xuatXu','$soLuongKho','$pathImage')";
-        $result = mysqli_query($con, $sql);
+        $endpoint = 'product/add.php';
+        $method = 'POST';
+        $data = array(
+            'danhMucID' => $danhMucID,
+            'tenSanPham' => $tenSanPham,
+            'moTaSanPham' => $moTaSanPham,
+            'giaSanPham' => $giaSanPham,
+            'xuatXu' => $xuatXu,
+            'soLuongKho' => $soLuongKho,
+            'pathImage' => $pathImage
+        );
+        $result = $apiCon->callAPI($endpoint, $method, $data);
+        var_dump($result);
+        // $sql = "INSERT INTO tblproducts VALUES (null,'$danhMucID','$tenSanPham','$moTaSanPham','$giaSanPham','$xuatXu','$soLuongKho','$pathImage')";
+        // $result = mysqli_query($con, $sql);
         if ($result) {
             echo "<script> alret('Thêm mới dữ liệu thành công'); </script>";
             header('Location:qlSanPham.php');
@@ -207,7 +218,7 @@ if (isset($_POST['btnLuu'])) {
             </div>
         </nav>
     </div>
-    <form method="post" enctype="multipart/form-data" >
+    <form method="post" enctype="multipart/form-data">
         <div class="content2">
             <table>
                 <h2>Thêm Thông tin Sản phẩm</h2>
@@ -261,8 +272,8 @@ if (isset($_POST['btnLuu'])) {
 <script>
     function checkDieuKien() {
         var a = document.getElementsByClassName('form-control')
-        for(var i = 0 ; i <length.a; i++){
-            if(a[i].value.length==0){
+        for (var i = 0; i < length.a; i++) {
+            if (a[i].value.length == 0) {
                 alert('Chưa nhập đủ dữ liệu');
                 return;
             }

@@ -1,5 +1,7 @@
 <?php
 require_once "./Classes/PHPExcel.php";
+include_once "../quanlySanPham/API/APIHelper.php";
+$apiCon = new APIHelper();
 $con  = mysqli_connect('localhost', 'root', '', 'shopBanHang');
 
 if (isset($_GET['productID'])) {
@@ -28,16 +30,30 @@ if (isset($_POST['btnTimkiem'])) {
     $xuatXu = $_POST['txtxuatXu'];
     $soLuongKho = $_POST['txtsoLuongKho'];
     $pathImage = $_POST['txtpathImage'];
-    $sql = "select * from tblproducts LEFT JOIN tbldanhmuc ON tblproducts.danhMucID = tbldanhmuc.danhMucID where productID like '%$productID%' and tblproducts.danhMucID like '%$danhMucID%' and tenSanPham like '%$tenSanPham%'and moTaSanPham like '%$moTaSanPham%'and giaSanPham like '%$giaSanPham%'and xuatXu like '%$xuatXu%'and soLuongKho like '%$soLuongKho%' and pathImage like '%$pathImage'";
-    $kq1 = mysqli_query($con, $sql);
+	$method = 'GET';
+    $data = array(
+        'productID' =>$productID,
+        'danhMucID' => $danhMucID,
+        'tenSanPham' => $tenSanPham,
+        'moTaSanPham' => $moTaSanPham,
+        'giaSanPham' => $giaSanPham,
+        'xuatXu' => $xuatXu,
+        'soLuongKho' => $soLuongKho,
+    );
+    $queryString = http_build_query($data);
+    $endpoint = 'product/findAll.php?'.$queryString;
+    $kq1 = $apiCon->callAPI($endpoint,$method)["data"];
+
 } else {
-    // $sql = "SELECT * FROM tblproducts,tbldanhmuc WHERE tblproducts.danhMucID = tbldanhmuc.danhMucID AND giaSanPham <50000";
-    $sql = "SELECT * FROM tblproducts,tbldanhmuc WHERE tblproducts.danhMucID = tbldanhmuc.danhMucID";
-    $kq1 = mysqli_query($con, $sql);
+    $endpoint = 'product/getAll.php';
+	$method = 'GET';
+	$kq1 = $apiCon->callAPI($endpoint, $method)["data"];
+  
 }
 if (isset($_POST['btnReSet'])) {
-    $sql = "Select * From tblproducts";
-    $result = mysqli_query($con, $sql);
+    $endpoint = 'product/getAll.php';
+	$method = 'GET';
+	$kq1 = $apiCon->callAPI($endpoint, $method)["data"];
 }
 
 if (isset($_POST['btnXuatexcel'])) {
@@ -353,7 +369,7 @@ if (isset($_POST['btnXuatexcel'])) {
                     <?php
 
                     $i = 1;
-                    while ($row = mysqli_fetch_assoc($kq1)) {
+                    foreach ($kq1 as $row ) {
                         if ($i % 2 == 0)
                             echo '<tr>
                         <td>' . $i . '</td>

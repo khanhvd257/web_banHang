@@ -20,14 +20,11 @@ class Blog extends controller{
         $result = $this->blog->getByID($blogId);
         $result1 = $this->blog->getAll();
         $_SESSION['page']= "Blog";
-        var_dump(1);
         $this->view('MasterLayout', [
             'page' => 'content/chiTietBlog',
             'dataBlog'=> $result["data"][0] ,
             'AllBlog'=> $result1["data"]
         ]);
     }
-
 }
-
 ?>

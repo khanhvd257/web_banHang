@@ -1,8 +1,8 @@
 <?php
 // 
-require_once "./Classes/PHPExcel.php";
+include_once "../quanlyBlog/API/APIHelper.php";
+$apiCon = new APIHelper();
 $_SESSION['login'] = 1;
-$mysqli = new mysqli("localhost", "root", "", "shopBanHang");
 $thongbao = '';
 $kq = '';
 $TenBlog = '';
@@ -12,7 +12,6 @@ $ThoiGian = '';
 $HinhAnh = '';
 //Nhâp Blog
 if (isset($_POST['btnLuu'])) {
-
     $TenBlog = $_POST['txtTenBlog'];
     $NoiDung = $_POST['txtNoiDung'];
     $IDUser = $_POST['txtIDUser'];
@@ -54,32 +53,23 @@ if (isset($_POST['btnLuu'])) {
             echo "Sorry, there was an error uploading your file.";
         }
     }
-    $sql = "INSERT INTO tblblog VALUES (null,'$TenBlog','$NoiDung','$IDUser','$ThoiGian','$HinhAnh')";
-    $result = mysqli_query($mysqli, $sql);
-    header('Location: Blog.php');
-    die();
+    $method = 'POST';
+    $data = array(
+        'userId' =>$IDUser,
+        'tenBlog' => $TenBlog,
+        'noiDung' => $NoiDung,
+        'hinhAnh' => $HinhAnh
+    );
+    $endpoint = 'blog/add.php';
+    $kq = $apiCon->callAPI($endpoint,$method, $data);
+    if($kq){
+        header('Location: Blog.php');
+        die();
+    }else{
+        $thongbao = 'thêm mới thất bại';
+    }
 }
-//Import excel
-// if (isset($_POST['btnGui'])) {
-//     $file = $_FILES['file']['tmp_name'];
-//     $objReader = PHPExcel_IOFactory::createReaderForFile($file);
-//     $objReader->setLoadSheetsOnly('IMPBLOG');
-//     $objExcel = $objReader->load($file);
-//     $sheetData = $objExcel->getActiveSheet()->toArray('null', true, true, true);
 
-//     $highestRow = $objExcel->getActiveSheetIndex()->getHighestRow();
-//     for ($row = 2; $row <= $highestRow; $row++) {
-//         $idBlog = $sheetData[$row]['A'];
-//         $tenBlog = $sheetData[$row]['B'];
-//         $noiDung = $sheetData[$row]['C'];
-//         $userID = $sheetData[$row]['D'];
-//         $thoiGian = $sheetData[$row]['E'];
-//         $hinhAnh = $sheetData[$row]['F'];
-
-//         $sql = "INSERT INTO tblblog(idBlog,tenBlog,noiDung,userID,thoiGian,hinhAnh) VALUES ($idBlog, '$tenBlog', '$noiDung', $userID, $thoiGian, '$hinhAnh') ";
-//         $mysqli->query($sql);
-//     }
-// }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -152,6 +142,7 @@ if (isset($_POST['btnLuu'])) {
 
     <header class="header">
         TRANG QUẢN LÝ BLOG
+        <h6 style="color: red;"><?php if($thongbao) echo $thongbao?></h6>
     </header>
 
     <div class="noidung">

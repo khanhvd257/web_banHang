@@ -2,8 +2,11 @@
 //tao ket noi 
 $con=mysqli_connect('localhost','root','','shopBanHang');
 $thongbao='';
+include_once "../quanlySanPham/API/APIHelper.php";
+$apiCon = new APIHelper();
+
 if(isset ($_GET['productID'])){
-	$productID=$_GET['productID'];
+    $productID = $_GET['productID'];
 	$sql="Select*From tblproducts where productID ='$productID'";
 	$kq= mysqli_query($con,$sql);
 	if($kq!= null){
@@ -21,7 +24,7 @@ if(isset ($_GET['productID'])){
 	}
 }
 if(isset($_POST['btnLuu'])){
-	
+    $productID = $_GET['productID'];
 	$danhMucID = $_POST['txtdanhMucID'];
     $tenSanPham=$_POST['txttenSanPham'];
     $moTaSanPham = $_POST['txtmoTaSanPham'];
@@ -29,8 +32,20 @@ if(isset($_POST['btnLuu'])){
     $xuatXu = $_POST['txtxuatXu'];
     $soLuongKho = $_POST['txtsoLuongKho'];
     $pathImage =$_POST['txtpathImage'];
-		$sql="UPDATE tblproducts Set danhMucID = '$danhMucID', tenSanPham = '$tenSanPham', moTaSanPham = '$moTaSanPham', giaSanPham = '$giaSanPham',xuatXu= '$xuatXu',soLuongKho= '$soLuongKho' Where productID='$productID'";
-		$kq=mysqli_query($con, $sql);
+    $endpoint = 'product/edit.php';
+	$method = 'PUT';
+    
+    $data = array(
+        'productID' => $productID,
+        'danhMucID' => $danhMucID,
+        'tenSanPham' => $tenSanPham,
+        'moTaSanPham' => $moTaSanPham,
+        'giaSanPham' => $giaSanPham,
+        'xuatXu' => $xuatXu,
+        'soLuongKho' => $soLuongKho
+    );
+    $kq = $apiCon->callAPI($endpoint,$method, $data);
+    var_dump($kq);
 		if($kq){
 			$thongbao = "Sửa thành công";
 			header('Location: qlSanPham.php');

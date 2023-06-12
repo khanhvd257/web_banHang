@@ -1,17 +1,26 @@
 <?php
-// 
-$_SESSION['login'] = 1;
-$mysqli = mysqli_connect('localhost', 'root', '', 'shopBanHang');
+session_start();
+include_once "../quanlyBlog/API/APIHelper.php";
+$apiCon = new APIHelper();
+// Kiểm tra xem người dùng đã đăng nhập chưa
+if (!isset($_SESSION['login']) || $_SESSION['login'] != 1) {
+    // Chưa đăng nhập, chuyển hướng về trang đăng nhập
+    header('Location: login.php');
+    exit();
+}
+
 $thongbao = '';
 $kq = '';
-$IDUser = '';
 $TenBlog = '';
 $NoiDung = '';
 $HinhAnh = '';
+$blogId = $_GET["blogId"]; 
+
 if (isset($_GET['userID'])) {
     $IDUser = $_GET['userID'];
-    $sql = "SELECT * From tblblog where userID='$IDUser'";
-    $kq = mysqli_query($mysqli, $sql);
+    $con  = mysqli_connect('localhost', 'root', '', 'shopBanHang');
+    $sql = "SELECT * FROM tblblog WHERE idBlog = '$blogId'";
+    $kq = mysqli_query($con, $sql);
     if ($kq != null) {
         while ($row = mysqli_fetch_array($kq)) {
             $IDUser = $row['userID'];
@@ -25,14 +34,33 @@ if (isset($_GET['userID'])) {
 if (isset($_POST['btnLuu'])) {
     $TenBlog = $_POST["txtTenBlog"];
     $NoiDung = $_POST["txtNoiDung"];
-    $sql = "UPDATE tblblog SET tenBlog='$TenBlog', noiDung='$NoiDung', hinhAnh='$HinhAnh' WHERE userID='$IDUser'";
-    $kql = mysqli_query($mysqli, $sql);
-    if ($kql) {
-        $thongbao = "Sửa mới thành công!";
+    $endpoint = 'blog/edit.php';
+    $method = 'PUT';
+    $data = array(
+        'blogId' => $blogId,
+        'tenBlog' => $TenBlog,
+        'noiDung' => $NoiDung,
+        'userId' => $IDUser,
+    );
+    $kq = $apiCon->callAPI($endpoint, $method, $data);
+    if ($kq) {
+        $thongbao = "Sửa thành công";
         header('Location: Blog.php');
         die();
-    } else $thongbao = "Sửa mới thất bại!";
+    } else {
+        $thongbao = "Sửa thất bại";
+    }
 }
+
+// $sql = "UPDATE tblblog SET tenBlog='$TenBlog', noiDung='$NoiDung' WHERE userID='$IDUser'";
+// $kql = mysqli_query($mysqli, $sql);
+// if ($kql) {
+//     $thongbao = "Sửa mới thành công!";
+//     header('Location: Blog.php');
+//     exit();
+// } else {
+//     $thongbao = "Sửa mới thất bại!";
+// }
 ?>
 <!DOCTYPE html>
 <html lang="en">

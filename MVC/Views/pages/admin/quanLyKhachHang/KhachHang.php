@@ -1,5 +1,7 @@
 <?php
 //tao ket noi 
+include_once "../quanLyKhachHang/API/APIHelper.php";
+$apiCon = new APIHelper();
 $con = mysqli_connect('localhost', 'root', '', 'shopBanHang');
 $thongbao = '';
 if (isset($_GET['userID'])) {
@@ -17,7 +19,6 @@ if (isset($_POST['btnLuu'])) {
 
 	$loginName = $_POST['txtloginName'];
 	$password = $_POST['txtpassword'];
-	// $status=$_POST['txtstatus'];
 	$fullName = $_POST['txtfullName'];
 	$gioiTinh = $_POST['txtGioiTinh'];
 	$soDienThoai = $_POST['txtsoDienThoai'];
@@ -25,9 +26,20 @@ if (isset($_POST['btnLuu'])) {
 	$diaChi = $_POST['txtdiaChi'];
 	$ngaySinh = $_POST['txtngaySinh'];
 	$roleName = $_POST['txtroleName'];
-	$sql = "Insert into tblusers Values(null,'$loginName',
-	'$password','1','$fullName','$gioiTinh','$soDienThoai','$email','$diaChi','$ngaySinh','$roleName')";
-	$kq = mysqli_query($con, $sql);
+	$endpoint = 'KhachHang/them.php';
+	$method = 'POST';
+	$data = array(
+		'ngaySinh' => $ngaySinh,
+		'gioiTinh' =>$gioiTinh,
+		'password' => $password,
+		'email' => $email,
+		'loginName' => $loginName,
+		'roleName' =>$roleName,
+		'soDienThoai' => $soDienThoai,
+		'fullName' => $fullName,
+		'diaChi'=> $diaChi
+	);
+	$kq = $apiCon->callAPI($endpoint, $method, $data);
 	if ($kq) $thongbao = "Them moi thanh cong";
 	else $thongbao = "Them moi that bai";
 }
